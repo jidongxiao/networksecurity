@@ -8,7 +8,9 @@ You can find the images information [here](https://seedsecuritylabs.org/labsetup
 
 Since these 3 VMs will just be used for experiments purpose and we do not intend to store any important data on these VMs, it is helpful to set up the VMs so that we can ssh from one VM to another without typing the password. To achieve this, follow these steps:
 
-# step 1: generate the key in VM1. (press enter whenever asked)
+# Step 1
+
+Generate the key in VM1. (press enter whenever asked)
 
 $ ssh-keygen
 
@@ -52,10 +54,16 @@ The key's randomart image is:
 
 +----[SHA256]-----+
 
-# step 2: ssh-copy-id remote_host_ip, let's say the remote VM's ip is 10.0.2.16, then
+# Step 2
+
+ssh-copy-id remote_host_ip, let's say the remote VM's ip is 10.0.2.16, then
 
 $ ssh-copy-id 10.0.2.16
 
-# step 3: the above step will ask you to type your password, which for seed, is dees. after typing the password, now you can ssh to the other party without providing the password.
+# Step 3
 
-# step 4: repeat the above steps on all 3 VMs - overall you need to do step 1 and step 2 6 times to ensure you can ssh from any of 3 VMs to any other VM, without providing the password.
+The above step will ask you to type your password, which for seed, is dees. after typing the password, now you can ssh to the other party without providing the password.
+
+# Step 4
+
+Repeat the above steps on all 3 VMs - overall you need to do step 1 and step 2 6 times to ensure you can ssh from any of 3 VMs to any other VM, without providing the password.
