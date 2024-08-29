@@ -57,3 +57,9 @@ A reverse shell is a type of shell session established between a victim's machin
 - **Attack Vector**: The breach exploited a vulnerability in the Apache Struts web application framework used by Equifax.
 - **Reverse Shell Usage**: The attackers used this vulnerability to gain a foothold in the network and likely established reverse shells to maintain access and move laterally across the network, exfiltrating sensitive data over several months.
 - **Impact**: The breach led to widespread identity theft concerns, multiple lawsuits, and significant scrutiny of Equifax’s security practices.
+
+### 6. Kevin Mitnick Case (1994)
+- **Overview**: Kevin Mitnick, one of the most notorious hackers in history, became the most-wanted cybercriminal in the U.S. He was involved in numerous high-profile attacks on major corporations and government networks.
+- **Attack Vector**: On Christmas Eve in 1994, Mitnick famously hacked into the computer of Tsutomu Shimomura, a cybersecurity expert. Mitnick used a combination of social engineering, IP spoofing, and exploiting vulnerabilities to gain unauthorized access.
+- **Reverse Shell Usage**: While the specific use of a reverse shell in this incident isn't widely documented, Mitnick used techniques similar to reverse shells that allowed him to remotely control and manipulate systems after gaining access.
+- **Impact**: The attack on Shimomura's system was a key event that eventually led to Mitnick's capture. This hack, along with his other activities, highlighted the vulnerabilities in computer systems and brought significant attention to cybersecurity issues. Mitnick was arrested in February 1995, and after serving time in prison, he became a cybersecurity consultant and author.
