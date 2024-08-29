@@ -1,4 +1,4 @@
-# Reverse Shell in Network Security
+# Reverse Shell
 
 ## 1. Definition
 A reverse shell is a type of shell session established between a victim's machine and an attacker's machine where the connection is initiated from the victim's side.
