@@ -4,6 +4,10 @@ In this course, every student needs to install 3 virtual machines on their own c
 
 You can find the images information [here](https://seedsecuritylabs.org/labsetup.html).
 
+When setting up networks, you are highly recommended to use NatNetwork. Follow the instructions [here](http://ns.cs.rpi.edu/vm_manual.pdf) to create the NatNetwork first.
+
+Once the network set up is finished, you should be able to ping and ssh from one VM to another VM.
+
 # SSH No Password Login
 
 Since these 3 VMs will just be used for experiments purpose and we do not intend to store any important data on these VMs, it is helpful to set up the VMs so that we can ssh from one VM to another without typing the password. To achieve this, follow these steps:
