@@ -6,7 +6,7 @@ You can find the images information [here](https://seedsecuritylabs.org/labsetup
 
 When setting up networks, you are highly recommended to use NatNetwork. Follow the instructions [here](http://ns.cs.rpi.edu/vm_manual.pdf) to create the NatNetwork first.
 
-Once the network set up is finished, you should be able to ping and ssh from one VM to another VM.
+If the network set up is successful, you should be able to ping and ssh from one VM to another VM.
 
 # SSH No Password Login
 
