@@ -10,59 +10,19 @@ Since these 3 VMs will just be used for experiments purpose and we do not intend
 
 # Step 1
 
-Generate the key in VM1. (press enter whenever asked)
+Generate the SSH keys in VM1. (press enter whenever asked)
 
 $ ssh-keygen
 
-Generating public/private rsa key pair.
-
-Enter file in which to save the key (/home/seed/.ssh/id_rsa):
-
-Enter passphrase (empty for no passphrase):
-
-Enter same passphrase again:
-
-Your identification has been saved in /home/seed/.ssh/id_rsa.
-
-Your public key has been saved in /home/seed/.ssh/id_rsa.pub.
-
-The key fingerprint is:
-
-SHA256:Y0urYmUgI78jefnm79kueD5wa0zqn5gxkp89kHpcHKc
-
-The key's randomart image is:
-
-+---[RSA 3072]----+
-
-|                 |
-
-|                 |
-
-|                 |
-
-|. o . . .        |
-
-| o o + +S        |
-
-|  ..+ Eo +       |
-
-| .o=o% .o        |
-
-|o *oOBO=         |
-
-| o OOOX=o        |
-
-+----[SHA256]-----+
-
 # Step 2
 
-ssh-copy-id remote_host_ip, let's say the remote VM's ip is 10.0.2.16, then
+Install VM1's public SSH key on VM2. Let's say the VM2's ip is 10.0.2.5, then run 
 
-$ ssh-copy-id 10.0.2.16
+$ ssh-copy-id 10.0.2.5
 
 # Step 3
 
-The above step will ask you to type your password, which for seed, is dees. after typing the password, now you can ssh to the other party without providing the password.
+The above step will ask you to type your password, which for seed, is dees. After typing the password, now you can ssh from VM1 to VM2 without providing the password.
 
 # Step 4
 
