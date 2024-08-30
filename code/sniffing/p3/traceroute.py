@@ -16,11 +16,11 @@ while 1:
         if replypkt is None:
                 break
         elif replypkt[ICMP].type == 0:
-                print "%d hops away: " %ttl,replypkt[IP].src
-                print "Done", replypkt[IP].src
+                print("%d hops away: " %ttl,replypkt[IP].src)
+                print("Done", replypkt[IP].src)
                 break
         else:
-                print "%d hops away: " %ttl,replypkt[IP].src
+                print("%d hops away: " %ttl,replypkt[IP].src)
                 ttl+=1
 
 
