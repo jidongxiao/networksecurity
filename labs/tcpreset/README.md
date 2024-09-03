@@ -8,7 +8,7 @@ In this lab, we will break an ssh connection between the victim client and the s
 
 3 Linux VMs. VM1 as the victim (ssh client); VM2 as the ssh server; VM3 as the attacker. The 3 VMs reside in the same network.
 
-In addition, make sure the python module scapy is installed in the attacker VM. If not, run this command to install scapy:
+In addition, make sure the python module scapy is installed in the attacker VM. If not, run these two commands to install scapy:
 
 ```console
 # sudo apt update
