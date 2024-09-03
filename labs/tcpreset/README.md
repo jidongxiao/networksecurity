@@ -23,6 +23,7 @@ In addition, make sure the python module scapy is installed in the attacker VM. 
 
 2. let the attacker start monitoring network traffic using wireshark.
 
+![alt text](lab-tcp-reset-start-wireshark.png "Lab tcp reset start wireshark")
 ![alt text](lab-tcp-reset-capture.png "Lab tcp reset capture")
 
 3. client produces some ssh packets. (any ssh packets, you can just type a command like ls).
