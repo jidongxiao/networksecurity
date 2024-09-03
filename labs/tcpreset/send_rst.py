@@ -10,8 +10,8 @@ def send_rst(src_ip, dst_ip, src_port, dst_port, seq_num):
 # Example usage
 src_ip = "10.0.2.5"
 dst_ip = "10.0.2.4"
-src_port = 12345
-dst_port = 22
+src_port = 22
+dst_port = 12345
 seq_num = 1000
 
 send_rst(src_ip, dst_ip, src_port, dst_port, seq_num)
