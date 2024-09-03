@@ -8,6 +8,12 @@ In this lab, we will break an ssh connection between the victim client and the s
 
 3 Linux VMs. VM1 as the victim (ssh client); VM2 as the ssh server; VM3 as the attacker. The 3 VMs reside in the same network.
 
+In addition, make sure the tool netwox is installed in the attacker VM. If not, run this command to install netwox:
+
+```console
+# sudo apt install netwox
+```
+
 ### Steps
 
 1. let the client connect to the server using ssh.
