@@ -38,10 +38,10 @@ In addition, make sure the python module scapy is installed in the attacker VM. 
 
 ```console
 source_ip = "10.0.2.5"
-destiation_ip = "10.0.2.4"
+destination_ip = "10.0.2.4"
 source_port = 22
-destiation_port = 12345
-seq_num = 1000
+destination_port = 12345
+sequence_num = 1000
 ```
 
 **Note**, because the attacker is mimicking the server, the source_ip should be the IP address of the server, the destination_ip should be the IP address of the client, the source_port should be 22 since ssh server uses port 22, the destination port and the sequence number are the two pieces which need to be found in wireshark.
