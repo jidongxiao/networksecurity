@@ -17,7 +17,7 @@ For example, if two computers want to communicate, they can have multiple TCP co
 
 ## Why Receiving a SYN on an Existing Connection Resets It
 
-- If the SYN packet’s 4-tuple matches an existing connection, the system interprets this as an error. Here's why:
+- If the SYN packet’s 4-tuple matches an existing connection, and its sequence number is within the window, the system interprets this as an error. Here's why:
 
 - Connection State: In TCP, once a connection is established, it follows a certain state (e.g., SYN → SYN-ACK → ACK → Data exchange). Sending another SYN with the same 4-tuple in the middle of an established connection doesn’t make sense because the connection is already established. TCP interprets this as a sign that something is wrong.
 
@@ -27,7 +27,7 @@ For example, if two computers want to communicate, they can have multiple TCP co
 
 ## Example:
 
-- If Computer A is communicating with Computer B on port 5000 using an established TCP connection (identified by the 4-tuple: A's IP, A's port, B's IP, B's port 5000), and suddenly A sends another SYN packet with the same source/destination IP and port, Computer B will assume there is an error.
+- If Computer A is communicating with Computer B on port 5000 using an established TCP connection (identified by the 4-tuple: A's IP, A's port, B's IP, B's port 5000), and suddenly A sends another SYN packet with the same source/destination IP and port, and its sequence number is within the window, Computer B will assume there is an error.
 - Since a SYN means "let’s start a new connection," but the connection already exists, Computer B resets the connection (sends a RST packet) to clear up any potential confusion or conflict in the TCP state machine.
 - You can establish a new TCP connection as long as the 4-tuple (source/destination IP and port) is unique. The system does not reset other connections, only the one that matches the 4-tuple in question.
 - If you want multiple connections between two computers, simply use different port numbers for each connection (or different IP addresses if applicable). Only when the SYN matches an existing 4-tuple does it cause a reset.
