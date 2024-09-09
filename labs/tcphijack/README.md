@@ -8,11 +8,11 @@ In this lab, we will hijack a telnet session (between the victim client and the 
 
 3 Linux VMs. VM1 as the victim (telnet client); VM2 as the telnet server; VM3 as the attacker. The 3 VMs reside in the same network. This README uses the following IP addresses.
 
-| VM Name     | IP Address  |
-|-------------|-------------|
-| VM1         | 10.0.2.4    |
-| VM2         | 10.0.2.5    |
-| VM3         | 10.0.2.6    |
+| VM Name | Role                 | IP Address |
+|---------|----------------------|------------|
+| VM1     | victim client        | 10.0.2.4   |
+| VM2     | victim telent server | 10.0.2.5   |
+| VM3     | attacker             | 10.0.2.6   |
 
 ### Steps
 
