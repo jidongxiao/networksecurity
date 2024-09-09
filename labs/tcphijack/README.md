@@ -36,9 +36,9 @@ In this lab, we will hijack a telnet session (between the victim client and the 
 
 ![alt text](lab-tcp-hijack-ls.png "Lab tcp hijack ls command")
 
-6. Attacker stops wireshark capturing, and navigates to the latest packet sent from the client to the server. Now we need to examine this packet carefully, so as to obtain the ip addresses, the ttl attribute, the port numbers, the next sequence number, the acknowledgment number, and the window size.
+6. Attacker stops wireshark capturing, and navigates to the latest packet sent from the client to the server. Now we need to examine this packet carefully, so as to obtain the ip addresses, the time to live (ttl) attribute, the port numbers, the next sequence number, the acknowledgment number, and the window size.
 
-This image shows the IP header, from which we see the ip addresses, and the ttl attribute.
+This image shows the IP header, from which we see the ip addresses, and the time to live (ttl) attribute.
 ![alt text](lab-tcp-hijack-ip-header.png "Lab tcp hijack latest tcp capture - part 1, ip header")
 
 This image shows the TCP header, from which we see the port numbers, the next sequence number, the acknowledgment number, and the window size - still the same packet.
