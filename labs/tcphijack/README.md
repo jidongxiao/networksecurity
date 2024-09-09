@@ -39,10 +39,10 @@ In this lab, we will hijack a telnet session (between the victim client and the 
 6. attacker stops wireshark capturing, and navigates to the latest packet sent from the client to the server.
 
 This image shows the ip addresses, and the ttl attribute.
-![alt text](lab-tcp-hijack-capture1.png "Lab tcp hijack latest tcp capture - part 1")
+![alt text](lab-tcp-hijack-ip-header.png "Lab tcp hijack latest tcp capture - part 1, ip header")
 
 This image shows the port numbers, the next sequence number, the acknowledgment number, and the window size - still the same packet.
-![alt text](lab-tcp-hijack-capture2.png "Lab tcp hijack latest tcp capture - part 2")
+![alt text](lab-tcp-hijack-tcp-header.png "Lab tcp hijack latest tcp capture - part 2, tcp header")
 
 7. the above packet provides the information which the attacker needs to know in order to perform the tcp reset attack. now, the attacker, mimicking the client, only needs to send one single regular TCP packet to the server. To send a regular TCP packet, a python script named send_tcp.py is provided. When running this script, it will send a TCP packet to a destination. You need to change the script so that the following 9 lines match with your situation.
 
