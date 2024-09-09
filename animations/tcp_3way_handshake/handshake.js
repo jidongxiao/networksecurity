@@ -112,7 +112,7 @@ layer.add(synAckText);
 var ackText = new Konva.Text({
     x: 350,
     y: 450,
-    text: 'ACK ack=y+1 seq=y=1',
+    text: 'ACK ack=y+1 seq=x+1',
     fontSize: 20,
     fill: 'black',
     visible: false,
@@ -127,7 +127,7 @@ var dataText = new Konva.Text({
     fontSize: 20,
     fill: 'black',
     visible: false,
-    id: 'ack_text'
+    id: 'data_text'
 });
 layer.add(dataText);
 
