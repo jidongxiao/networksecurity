@@ -41,3 +41,29 @@ Also, the client does not have to run a script to receive packet, it can just ru
 ```console
 $ telnet server_ip 9090
 ```
+
+## Wireshark Notes
+
+In wireshark, we can apply these filters to observe out of order packets and re-transmission packets.
+
+```console
+tcp.analysis.out_of_order
+tcp.analysis.retransmission
+```
+
+TCP guarantees in-order delivery of data to the receiving application, but during transmission, packets can arrive out of order at the receiver's network stack. While we see out-of-order packets in Wireshark, the TCP stack at the receiver reorders the packets before delivering the data to the application layer. TCP uses sequence numbers to determine the correct order and waits for missing segments. Only when all the data is in order does it pass it up to the application.
+
+## Other Related Wireshark Filters
+
+```console
+tcp.analysis.duplicate_ack
+tcp.analysis.fast_retransmission
+```
+
+### Duplicate ACK
+
+A duplicate ACK is an indication that the receiver has received some out-of-order packets but is still missing a segment. The receiver acknowledges the last in-sequence byte it received by sending the same ACK number repeatedly in the hope that the missing packet will be retransmitted.
+
+### Fast Retransmission
+
+TCP uses duplicate ACKs as part of its fast retransmission mechanism. When the sender receives three duplicate ACKs, it interprets that as an indication that a packet has been lost and retransmits the missing packet without waiting for the retransmission timeout.
