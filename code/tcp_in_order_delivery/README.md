@@ -39,5 +39,5 @@ $ sudo iptables -L
 Also, the client does not have to run a script to receive packet, it can just run:
 
 ```console
-telnet server_ip 9090
+$ telnet server_ip 9090
 ```
