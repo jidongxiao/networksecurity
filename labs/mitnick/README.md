@@ -8,17 +8,27 @@ In this lab, we will demonstrate the Kevin Mitnick attack - a special case of th
 
 ### Setup
 
-3 Linux VMs. VM1 as the victim client; VM2 as the victim server; VM3 as the attacker. The 3 VMs reside in the same network - in the original Kevin Mitnick attack, the attacker's machine was not in the same network. Back then TCP sequence numbers were easily predictable, today it is not. To simulate the attack and simplify our task, we assume we still know the sequence numbers - we will, in the lab, obtain the sequence numbers from wireshark. We will then use "netwox 40" to perform packet spoofing. In the remaining part of this README, we assume the victim client's IP address is 172.16.77.128, and the victim server's IP address is 172.16.77.129.
+3 Linux VMs. VM1 as the victim client; VM2 as the victim rsh server; VM3 as the attacker. The 3 VMs reside in the same network. This README uses the following IP addresses.
 
-Background knowledge: In rsh, two TCP connections are needed. One for normal communication, the other for sending error messages. In the first connection, the client port must be 1023, and the server port must be 514. In the second connection, the server port must be 1023, but the client port can be anything - in this lab, we will choose 9090.
+| VM Name | Role                 | IP Address |
+|---------|----------------------|------------|
+| VM1     | victim client        | 10.0.2.4   |
+| VM2     | victim rsh server    | 10.0.2.5   |
+| VM3     | attacker             | 10.0.2.6   |
+
+
+**Note:** in the original Kevin Mitnick attack, the attacker's machine was not in the same network. Back then TCP sequence numbers were easily predictable, today it is not. To simulate the attack and simplify our task, we assume we still know the sequence numbers - we will, in the lab, obtain the sequence numbers from wireshark. 
+
+**Background knowledge**: In rsh, two TCP connections are needed. One for normal communication, the other for sending error messages. In the first connection, the client port must be 1023, and the server port must be 514. In the second connection, the server port must be 1023, but the client port can be anything - in this lab, we will choose 9090.
 
 ### Preparation steps: 
 
 step 1. installing rsh on client, server, and the attacker's machine. Run the following two commands on all 3 VMs:
 
 ```console
-# sudo apt-get install rsh-redone-client
-# sudo apt-get install rsh-redone-server
+$ sudo apt-get update
+$ sudo apt-get install rsh-redone-client
+$ sudo apt-get install rsh-redone-server
 ```
 
 step 2. configure rsh on the victim server machine.
