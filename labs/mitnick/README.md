@@ -109,7 +109,7 @@ This screenshot shows we find the sequence number of this SYN-ACK packet:
 ![alt text](lab-mitnick-syn-ack-wireshark.png "find the sequence number and the ack number of the first SYN-ACK packet")
 
 This screenshot shows we enter the sequence number of this SYN-ACK packet:
-![alt text](lab-mitnick-complete.png "enter the sequence number and the ack number of the first SYN-ACK packet")
+![alt text](lab-mitnick-enter-seq-and-ack-numbers.png "enter the sequence number and the ack number of the first SYN-ACK packet")
 
 step 6.2. Right after we enter the two numbers, the script will now send a TCP ACK packet to the victim server and thus establish the first TCP connection. After the first TCP connection is established, the script will send a TCP Data packet with a payload which contains a command to create a file named **/tmp/xyz** on the server machine. However, based on the rsh protocol, such command would not run until a second TCP connection is established. And this second TCP connection will be initiated by the victim server, meaning that the victim server would send a TCP SYN packet to the victim client, now we need to go to wireshark and find the sequence number of this SYN packet and enter it as the script asks.
 
