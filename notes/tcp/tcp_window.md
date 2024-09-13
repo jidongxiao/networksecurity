@@ -60,7 +60,7 @@ So, any incoming packet with a sequence number between 5000 and 6999 is consider
 
 ## Sequence Number and SYN Packets
 
-When a SYN packet is received:
+If a TCP connection already exists, and you still send a SYN packet using the same (source port, destination port, source ip, destination IP), then, when a SYN packet is received:
 
 - The sequence number in the SYN packet is compared against this valid window.
 - If the SYN packet’s sequence number is within the window and doesn't align with the current state of the connection (i.e., it’s unexpected), it triggers a RST to reset the connection.
