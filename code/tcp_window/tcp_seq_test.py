@@ -3,8 +3,8 @@ from scapy.all import *
 import time
 
 # Server details
-server_ip = "127.0.0.1"  # Use the IP of the server
-server_port = 8080
+server_ip = "10.0.2.5"  # Use the IP of the server
+server_port = 9090
 
 # TCP Sequence number settings
 initial_seq_num = 1000
