@@ -16,7 +16,7 @@ in this lab, you will hijack a telnet session using the ARP cache poisoning atta
 
 ### Attack: 
 
-1. The attacker, mimicking the client to send an ARP reply message to the server, and mimicking the server to send an ARP reply message to the client. You can use this script to send the two packets at once: http://cs.boisestate.edu/~jxiao/cs333/code/arp/arpspoof.py. You need sudo to run the script, and you also need to run "chmod +x arpspoof.py" to change it to an execuable.
+1. The attacker, mimicking the client to send an ARP reply message to the server, and mimicking the server to send an ARP reply message to the client. You can use this script to send the two packets at once: [arpspoof.py](arpspoof.py). You need sudo to run the script, and you also need to run "chmod +x arpspoof.py" to change it to an execuable.
 
 ```console
 # sudo ./arpspoof.py
@@ -88,7 +88,7 @@ or as shown in the screenshot:
 
 ![alt text](lab-arp-ip-forwarding-off.png "turning ip forwarding off")
 
-7: On the attackers' machine, run the sniff-and-spoof script. You can get this program from here: http://cs.boisestate.edu/~jxiao/cs333/code/arp/sniffandspoof.py
+7: On the attackers' machine, run the sniff-and-spoof script. You can get this program from here: [sniffandspoof.py](sniffandspoof.py).
 
 Note: Once again, you need to change the IP addresses and the MAC addresses in the above script, so as to reflect the correct information in your environment. And you need sudo to run the script, you also need to run "chmod +x sniffandspoof.py" to change it to an execuable.
 
