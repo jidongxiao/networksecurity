@@ -69,3 +69,18 @@ $ sudo dhclient -r && sudo dhclient
 ```
 
 The dhclient -r part releases the current DHCP lease, and the dhclient command starts the renewal process. If you already have a lease, sudo dhclient on its own will attempt to renew the current lease, initiating the 2-phase exchange (DHCP Request -> DHCP ACK).
+
+## Commands in Ubuntu Linux to Check Current DHCP Lease:
+
+```console
+$ cat /var/lib/dhcp/dhclient.leases
+```
+
+or 
+
+## Commands in Ubuntu Linux to Monitor DHCP Traffic:
+
+```console
+$ sudo apt install dhcpdump	// this command just installs dhcpdump, do this once and no need to do it again in the future.
+$ sudo dhcpdump -i <interface>  // here we need to specify which network interface to monitor.
+```
