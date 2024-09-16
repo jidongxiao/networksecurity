@@ -40,3 +40,26 @@ The 4-phase exchange happens when the client needs a new IP address.
 The 2-phase exchange happens during renewal or rebinding when the client already has an assigned IP address.
 
 This allows DHCP to adapt to the situation, reducing overhead when renewal is sufficient.
+
+## Commands in Linux to Start the Exchange
+
+4-Phase Exchange: Initiating a New DHCP Lease
+
+Command: 
+
+```console
+$ sudo dhclient -v
+```
+
+- This command initiates a new DHCP lease process, starting from the DHCP Discover phase, when the client doesn't have an IP address.
+- The -v option is for verbose mode, allowing you to see the DHCP Discover, Offer, Request, and ACK phases in the output.
+
+2-Phase Exchange: Renewing an Existing Lease
+
+Command:
+
+```console
+sudo dhclient -r && sudo dhclient
+```
+
+The dhclient -r part releases the current DHCP lease, and the dhclient command starts the renewal process. If you already have a lease, sudo dhclient on its own will attempt to renew the current lease, initiating the 2-phase exchange (DHCP Request -> DHCP ACK).
