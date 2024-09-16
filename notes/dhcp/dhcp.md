@@ -10,6 +10,12 @@
 
 - Static DHCP Leases: DHCP servers can be configured to always assign the same IP address to a device with a specific MAC address. This is known as a static DHCP lease, useful for devices that need consistent IP addresses.
 
+## Ports
+
+- DHCP clients use UDP port 68 to receive responses from the DHCP server.
+
+- DHCP servers use UDP port 67 to send responses to DHCP clients.
+
 ## Packets Exchange
 
 DHCP can involve either a 4-phase or 2-phase exchange, depending on the situation:
