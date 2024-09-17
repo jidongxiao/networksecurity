@@ -14,12 +14,21 @@ in this lab, you will hijack a telnet session using the ARP cache poisoning atta
 | VM2 | 172.16.77.129 | 00:0c:29:74:1a:93 |
 | VM3 | 172.16.77.130 | 00:0c:29:1d:8a:7b |
 
+Also, on the attacker's machine, changing the firewall setting:
+
+```console
+$ sudo iptables -F
+$ sudo iptables -P FORWARD ACCEPT
+```
+
+This setting will delete all firewall settings (if any, here -F means flush), and then allow the attacker's VM to forward packets, which will be important in this lab.
+
 ### Attack: 
 
 1. The attacker, mimicking the client to send an ARP reply message to the server, and mimicking the server to send an ARP reply message to the client. You can use this script to send the two packets at once: [arpspoof.py](arpspoof.py). You need sudo to run the script, and you also need to run "chmod +x arpspoof.py" to change it to an execuable.
 
 ```console
-# sudo ./arpspoof.py
+$ sudo ./arpspoof.py
 ```
 
 Note: You have to change the IP addresses and the MAC addresses in the above script, so as to reflect the correct information in your environment. The following are example screenshots, in total you need to change 6 lines:
@@ -37,7 +46,7 @@ Explanation: what this script does is: sends out a spoofed arp message to the se
 2. From the client machine and from the server machine, run arp and ping commands to confirm the cache poisoning is successful.
 
 ```console
-# arp
+$ arp
 ```
 
 this screenshot shows that the poison is successful - from the server's perspective, the client's IP address (172.16.77.128) is mapped to the attacker's MAC address (00:0c:29:1d:8a:7b); from the client's perspective, the server's IP address (172.16.77.129) is also mapped to the attacker's MAC address (00:0c:29:1d:8a:7b).
@@ -45,7 +54,7 @@ this screenshot shows that the poison is successful - from the server's perspect
 ![alt text](lab-arp-poison-success.png "poison is successful")
 
 ```console
-# ping client_ip (from the server) or ping server_ip (from the client) // ping command will fail here.
+$ ping client_ip (from the server) or ping server_ip (from the client) // ping command will fail here.
 ```
 
 the screenshot shows that:
@@ -56,7 +65,7 @@ as can be seen from this screenshot, we get a 100% packet loss when running the 
 3: The attacker, turns on ip forwarding:
 
 ```console
-# sudo sysctl net.ipv4.ip_forward=1
+$ sudo sysctl net.ipv4.ip_forward=1
 ```
 
 or as shown in the screenshot:
@@ -66,7 +75,7 @@ or as shown in the screenshot:
 4: After turning on ip forwarding, from the client machine and the server machine, ping again to confirm the forwarding is working.
 
 ```console
-# ping client_ip (from the server) or ping server_ip (from the client) // ping command will succeed here.
+$ ping client_ip (from the server) or ping server_ip (from the client) // ping command will succeed here.
 ```
 
 the screenshot shows that:
@@ -75,13 +84,13 @@ the screenshot shows that:
 5: On the client machine, telnet to the server:
 
 ```console
-# telnet server_ip
+$ telnet server_ip
 ```
 
 6: On the attacker's machine, turn off ip forwarding:
 
 ```console
-# sudo sysctl net.ipv4.ip_forward=0
+$ sudo sysctl net.ipv4.ip_forward=0
 ```
 
 or as shown in the screenshot:
@@ -93,7 +102,7 @@ or as shown in the screenshot:
 Note: Once again, you need to change the IP addresses and the MAC addresses in the above script, so as to reflect the correct information in your environment. And you need sudo to run the script, you also need to run "chmod +x sniffandspoof.py" to change it to an execuable.
 
 ```console
-# sudo ./sniffandspoof.py
+$ sudo ./sniffandspoof.py
 ```
 
 **Explanation**: what this script does is, sniffs the network, and captures every tcp packet exchanged between the client and the server: 1. for every packet goes from the client to the server, if its data contains letters, replaces each letter with a letter A; 2. for every packet goes from the server to the client, just forwards this packet to the client.
