@@ -31,14 +31,7 @@ ARP cache poisoning attacks can be challenging to detect, but there are several 
 
 - Log Analysis: Reviewing network logs for unusual ARP-related activity or changes in ARP table entries.
 
-### 6. Manually Checking ARP Tables
-- ARP Table Inspection: Manually inspecting the ARP tables on network devices and routers for inconsistencies or unexpected entries can help identify poisoning.
-
-### 7. Communication Issues
+### 6. Communication Issues
 - Inability to Communicate: Devices may be unable to communicate with each other or with external resources due to misrouting caused by poisoned ARP caches.
-
-### 8. Network Scanning Tools
-
-- Network Scanning Tools: Tools like arp-scan can be used to detect ARP spoofing by scanning for discrepancies in MAC-to-IP mappings.
 
 By monitoring these symptoms and using network analysis tools, you can identify potential ARP cache poisoning attacks and take steps to mitigate them.
