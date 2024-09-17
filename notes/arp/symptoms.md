@@ -19,19 +19,15 @@ ARP cache poisoning attacks can be challenging to detect, but there are several 
 - Inconsistent MAC Address Mappings: If the ARP tables of devices show MAC addresses that do not match the expected IP-to-MAC mappings, it could indicate that ARP cache poisoning is happening.
 
 - Duplicate IP Address Entries: Multiple devices with the same IP address in the ARP cache can signal an attack.
+
 ### 4. Suspicious Network Device Behavior
 
 - Man-in-the-Middle (MITM) Attacks: If a device or server is behaving like a MITM, intercepting or altering communications between other devices, it may be due to ARP cache poisoning.
 
 - Unusual Network Device Responses: Devices responding with unexpected MAC addresses or showing discrepancies in their responses can indicate ARP spoofing.
 
-### 5. Security Alerts and Logs
+### 5. Communication Issues
 
-- Intrusion Detection System (IDS) or Intrusion Prevention System (IPS) Alerts: Security systems may flag unusual ARP activity or detected anomalies in ARP traffic.
-
-- Log Analysis: Reviewing network logs for unusual ARP-related activity or changes in ARP table entries.
-
-### 6. Communication Issues
 - Inability to Communicate: Devices may be unable to communicate with each other or with external resources due to misrouting caused by poisoned ARP caches.
 
 By monitoring these symptoms and using network analysis tools, you can identify potential ARP cache poisoning attacks and take steps to mitigate them.
