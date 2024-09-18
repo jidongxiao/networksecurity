@@ -62,6 +62,8 @@ the screenshot shows that:
 
 as can be seen from this screenshot, we get a 100% packet loss when running the ping command.
 
+**Troubleshooting tip**: If arp doesn't show the poisoned mapping, run arp again after running ping.
+
 3: The attacker, turns on ip forwarding:
 
 ```console
