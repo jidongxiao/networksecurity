@@ -145,3 +145,18 @@ step 7. now that the attack is complete, we just need to verify that it is succe
 ![alt text](lab-mitnick-success.png "lab success")
 
 The above screenshot shows the file **/tmp/xyz** is now existing - this indicates that the attack is successful, and this concludes the lab.
+
+**Troubleshooting tip**:
+
+1. When the server sends out a SYN, it expects to get the SYN-ACK soon, and if not, it will re-send the SYN 6 more times, if after 6 re-tries, it still does not get the SYN-ACK, it will terminate the connection.
+
+2. When the server sends out a SYN-ACK, it expects to get the ACK soon, and if not, it will re-send the SYN-ACK 5 more times, if after 5 re-tries, it still does not get the ACK, it will terminate the connection.
+
+The above two rules mean that you have to enter the numbers fast when doing the attacking steps, otherwise, your packets may not be accepted. If you can not do it fast, run the following command on the server side:
+
+```console
+$ sudo sysctl -w net.ipv4.tcp_syn_retries=100
+$ sudo sysctl -w net.ipv4.tcp_synack_retries=100
+```
+
+These two commands will increase the server's number of retries to 100, and thus give you much more time to find and enter the numbers.
