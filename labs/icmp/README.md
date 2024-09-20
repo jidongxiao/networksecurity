@@ -115,9 +115,9 @@ this time it should fail, thus it proves the attack is successful:
 the next two steps attempt a new attack which disrupts the victim's video streaming service:
 -->
 
-1: victim, open firefox, watch some youtube video.
+1: victim, opens firefox, watches some youtube video.
 
-2: attacker, impersonates the default gateway, keep sending ICMP redirect packets to the victim which instruct the victim to use a different gateway (the attacker's machine) for reaching its destination.  You can use this script to send the icmp redirect packets: [icmp_redirect](icmp_redirect.py), before you can run the script, change the following 4 lines to match with your settings.
+2: attacker, impersonates the default gateway, keeps sending ICMP redirect packets to the victim which instruct the victim to use a different gateway (the attacker's machine) for reaching its destination.  You can use this script to send the icmp redirect packets: [icmp_redirect](icmp_redirect.py), before you can run the script, change the following 4 lines to match with your settings.
 
 ```console
 victim_ip = "10.0.2.4"
@@ -126,7 +126,7 @@ attacker_ip = "10.0.2.6"
 iface = "enp0s3"  # replace with your network interface name
 ```
 
-**Note**: how to find the default gateway ip address in the victim VM? Run this command:
+**Note**: how to find the default gateway ip address in the victim VM? Run this command in the victim VM:
 
 ```console
 $ ip route
@@ -138,7 +138,7 @@ default via 10.0.2.1 dev enp0s3 proto dhcp metric 100
 
 In the above output, the ip address after the "default via" is the default gateway; here in this example, it is 10.0.2.1.
 
-3. run the script:
+3. run the script in the attacker VM:
 
 ```console
 $ sudo python3 icmp_redirect.py
