@@ -19,6 +19,15 @@ In this lab, you will disrupt a victim machine's connection to a video streaming
 
 ### Preparation steps:
 
+On the victim VM, enable ICMP redirect feature:
+
+```console
+sudo sysctl net.ipv4.conf.all.accept_redirects=1
+sudo sysctl net.ipv4.conf.default.accept_redirects=1
+```
+
+Setting these two flags to 1 means that the victim client accepts ICMP redirects packets, which sometimes can provide performance benefits - although in this lab, such a feature is taken advantage by the attacker.
+ 
 <!--
 
 This attack only requires one netwox command, let's prepare the command first. This command is: sudo netwox 86 --device "ens33" --filter "src host victim_ip_address" --gw "attacker_ip_address" --src-ip "trusted_gateway_ip_address" --code 1
@@ -115,9 +124,9 @@ this time it should fail, thus it proves the attack is successful:
 the next two steps attempt a new attack which disrupts the victim's video streaming service:
 -->
 
-1: victim, opens firefox, watches some youtube video.
+1. victim, opens firefox, watches some youtube video.
 
-2: attacker, impersonates the default gateway, keeps sending ICMP redirect packets to the victim which instruct the victim to use a different gateway (the attacker's machine) for reaching its destination.  You can use this script to send the icmp redirect packets: [icmp_redirect](icmp_redirect.py), before you can run the script, change the following 4 lines to match with your settings.
+2. attacker, impersonates the default gateway, keeps sending ICMP redirect packets to the victim which instruct the victim to use a different gateway (the attacker's machine) for reaching its destination.  You can use this script to send the icmp redirect packets: [icmp_redirect](icmp_redirect.py), before you can run the script, change the following 4 lines to match with your settings.
 
 ```console
 victim_ip = "10.0.2.4"
@@ -126,7 +135,7 @@ attacker_ip = "10.0.2.6"
 iface = "enp0s3"  # replace with your network interface name
 ```
 
-**Note**: how to find the default gateway ip address in the victim VM? Run this command in the victim VM:
+**Note**: how to find the default gateway ip address in the victim VM and how to find the network interface name? Run this command in the victim VM:
 
 ```console
 $ ip route
@@ -136,7 +145,7 @@ default via 10.0.2.1 dev enp0s3 proto dhcp metric 100
 172.17.0.0/16 dev docker0 proto kernel scope link src 172.17.0.1 linkdown 
 ```
 
-In the above output, the ip address after the "default via" is the default gateway; here in this example, it is 10.0.2.1.
+In the above output, the ip address after the "default via" is the default gateway; here in this example, it is 10.0.2.1; and the string after the "dev" is the network interface name, in this example, it is "enp0s3".
 
 3. run the script in the attacker VM:
 
