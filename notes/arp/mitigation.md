@@ -1,6 +1,6 @@
 ## Countermeasures and Mitigation Strategies
 
-To protect against ARP cache poisoning attacks, you can implement several effective countermeasures and mitigation strategies:
+To protect against ARP cache poisoning attacks, we can implement several effective countermeasures and mitigation strategies:
 
 ## 1. Static ARP Entries
 
@@ -39,4 +39,4 @@ Educate Network Users: Raise awareness among network users and administrators ab
 
 - Keep Systems Updated: Ensure that network devices and security software are regularly updated with the latest patches and updates to address known vulnerabilities.
 
-By implementing these countermeasures, we can enhance the security of your network and reduce the risk of ARP cache poisoning attacks.
+By implementing these countermeasures, we can enhance the security of our network and reduce the risk of ARP cache poisoning attacks.

@@ -17,7 +17,7 @@ These commands prevent both IPv4 and IPv6 ICMP redirect messages from being acce
 
 ### Use Static Routes:
 
-By configuring static routes for critical network traffic, you can prevent the system from relying on dynamic routing updates, which reduces the risk of ICMP redirect attacks.
+By configuring static routes for critical network traffic, we can prevent the system from relying on dynamic routing updates, which reduces the risk of ICMP redirect attacks.
 
 ### Firewall Rules:
 
@@ -42,3 +42,5 @@ Continuously monitor and log ICMP traffic on the network. Intrusion detection sy
 ### Use Strong Authentication Protocols:
 
 Ensure that sensitive traffic is encrypted using protocols like HTTPS, SSL/TLS, or VPNs to prevent data interception, even if an ICMP redirect attack succeeds.
+
+By applying these measures, we can significantly reduce the risk of a successful ICMP redirect attack.
