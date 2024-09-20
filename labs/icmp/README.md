@@ -2,7 +2,7 @@
 
 ### Background
 
-ICMP Redirects serve many performance benefits. Read [here](../../notes/icmp/icmp_redirect.md) for the benefits.
+ICMP Redirects serve many performance benefits. Read the notes [here](../../notes/icmp/icmp_redirect.md) to learn the benefits.
 
 But it can also be exploited in attacks, and that is known as the ICMP redirect attack. An ICMP redirect attack involves sending ICMP redirect messages to a victim machine. These messages instruct the victim to use a different gateway (the attacker's machine) for reaching a particular destination.
 
