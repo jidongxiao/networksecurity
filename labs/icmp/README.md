@@ -2,7 +2,9 @@
 
 ### Background
 
-An ICMP redirect attack involves sending ICMP redirect messages to a victim machine. These messages instruct the victim to use a different gateway (the attacker's machine) for reaching a particular destination.
+ICMP Redirects serve many performance benefits. Read [here](../../notes/icmp/icmp_redirect.md) for the benefits.
+
+But it can also be exploited in attacks, and that is known as the ICMP redirect attack. An ICMP redirect attack involves sending ICMP redirect messages to a victim machine. These messages instruct the victim to use a different gateway (the attacker's machine) for reaching a particular destination.
 
 ### Requirement
 
@@ -26,7 +28,7 @@ sudo sysctl net.ipv4.conf.all.accept_redirects=1
 sudo sysctl net.ipv4.conf.default.accept_redirects=1
 ```
 
-Setting these two flags to 1 means that the victim client accepts ICMP redirects packets, which sometimes can provide performance benefits - although in this lab, such a feature is taken advantage by the attacker.
+Setting these two flags to 1 means that the victim client accepts ICMP redirects packets, which oftentimes can provide performance benefits - although in this lab, such a feature is taken advantage by the attacker.
  
 <!--
 
