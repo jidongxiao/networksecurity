@@ -2,13 +2,13 @@
 
 ### Background
 
-ICMP Redirects serve many performance benefits. Read the notes [here](../../notes/icmp/icmp_redirect.md) to learn the benefits.
+ICMP Redirects serve many performance benefits. Read the notes [here](../../notes/icmp/icmp_redirect_benefits.md) to learn the benefits.
 
 But it can also be exploited in attacks, and that is known as the ICMP redirect attack. An ICMP redirect attack involves sending ICMP redirect messages to a victim machine. These messages instruct the victim to use a different gateway (the attacker's machine) for reaching a particular destination.
 
 ### Requirement
 
-In this lab, you will disrupt a victim machine's connection to a video streaming service.
+In this lab, you will use the ICMP redirect attack to disrupt a victim machine's connection to a video streaming service.
 
 ### Setup
 
@@ -24,8 +24,8 @@ In this lab, you will disrupt a victim machine's connection to a video streaming
 On the victim VM, enable ICMP redirect feature:
 
 ```console
-sudo sysctl net.ipv4.conf.all.accept_redirects=1
-sudo sysctl net.ipv4.conf.default.accept_redirects=1
+$ sudo sysctl net.ipv4.conf.all.accept_redirects=1
+$ sudo sysctl net.ipv4.conf.default.accept_redirects=1
 ```
 
 Setting these two flags to 1 means that the victim client accepts ICMP redirects packets, which oftentimes can provide performance benefits - although in this lab, such a feature is taken advantage by the attacker.
