@@ -9,8 +9,8 @@ Most operating systems allow disabling the acceptance of ICMP redirect messages.
 On Linux, this can be achieved using the following commands:
 
 ```console
-sudo sysctl -w net.ipv4.conf.all.accept_redirects=0
-sudo sysctl -w net.ipv6.conf.all.accept_redirects=0
+$ sudo sysctl -w net.ipv4.conf.all.accept_redirects=0
+$ sudo sysctl -w net.ipv6.conf.all.accept_redirects=0
 ```
 
 These commands prevent both IPv4 and IPv6 ICMP redirect messages from being accepted.
@@ -23,7 +23,7 @@ Firewall Rules:
 ### Implement firewall rules to block incoming ICMP redirect messages. This can be done on both the host and network firewalls. For example, in iptables:
 
 ```console
-sudo iptables -A INPUT -p icmp --icmp-type redirect -j DROP
+$ sudo iptables -A INPUT -p icmp --icmp-type redirect -j DROP
 ```
 
 ### Use Secure Router Configurations:
