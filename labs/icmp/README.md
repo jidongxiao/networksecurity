@@ -21,14 +21,14 @@ In this lab, you will use the ICMP redirect attack to disrupt a victim machine's
 
 ### Preparation steps:
 
-On the victim VM, enable ICMP redirect feature:
+On the victim VM, run these 2 commands to enable the ICMP redirect feature:
 
 ```console
 $ sudo sysctl net.ipv4.conf.all.accept_redirects=1
 $ sudo sysctl net.ipv4.conf.default.accept_redirects=1
 ```
 
-Setting these two flags to 1 means that the victim client accepts ICMP redirects packets, which oftentimes can provide performance benefits - although in this lab, such a feature is taken advantage by the attacker.
+Setting these two flags to 1 means that the victim VM accepts ICMP redirects packets, which oftentimes can provide performance benefits - although in this lab, such a feature is taken advantage by the attacker.
  
 <!--
 
