@@ -18,9 +18,10 @@ These commands prevent both IPv4 and IPv6 ICMP redirect messages from being acce
 ### Use Static Routes:
 
 By configuring static routes for critical network traffic, you can prevent the system from relying on dynamic routing updates, which reduces the risk of ICMP redirect attacks.
-Firewall Rules:
 
-### Implement firewall rules to block incoming ICMP redirect messages. This can be done on both the host and network firewalls. For example, in iptables:
+### Firewall Rules:
+
+Implement firewall rules to block incoming ICMP redirect messages. This can be done on both the host and network firewalls. For example, in iptables:
 
 ```console
 $ sudo iptables -A INPUT -p icmp --icmp-type redirect -j DROP
