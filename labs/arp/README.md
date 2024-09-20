@@ -74,6 +74,8 @@ or as shown in the screenshot:
 
 ![alt text](lab-arp-ip-forwarding-on.png "turning ip forwarding on")
 
+**Note**: If prior to step 3, your net.ipv4.ip\_forward flag (in attacker's VM) is already 1, then that ping command in step 2 would succeed. You can just switch this flag between 1 and 0 a couple of times and see how it affects the ping command; what you should observe is, when this flag is 1, ping should succeed; and when this flag is 0, ping should fail.
+
 4: After turning on ip forwarding, from the client machine and the server machine, ping again to confirm the forwarding is working.
 
 ```console
