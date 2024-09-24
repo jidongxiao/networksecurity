@@ -36,13 +36,25 @@ These firewall settings tell the kernel to leave HTTP packets alone, and do not 
 
 1. The victim, opens firefox, accesses the web page: [http://ns.cs.rpi.edu/test.html](http://ns.cs.rpi.edu/test.html). As of now, it shows:
 
-![alt text](lab-mitm-the-original-page.png "the original page")
+![alt text](lab-mitm-original-page.png "the original page")
 
 2. The victim, set up the victim client so that it uses the attacker's machine as its gateway - so as to simulate the situation when the victim is connected to a public wifi where the owner can be a malicious actor.
 
 ```console
 $ sudo ip route add default via 10.0.2.6 // here, change 10.0.2.6 to your attacker's IP
 ```
+
+This screenshot shows the moment right before executing this command, 
+
+![alt text](lab-mitm-add-route-before-enter.png "before entering")
+
+This screenshot shows the moment right after executing this command, 
+
+![alt text](lab-mitm-add-route-after-enter.png "after entering")
+
+This screenshot shows the effect of this command as shown in the routing table - a default gateway is added.
+
+![alt text](lab-mitm-routing-table.png "the routing table")
 
 3. The attacker, runs the attack script: [http\_attack.py](http_attack.py). You need sudo to run the script:
 
@@ -57,6 +69,8 @@ CLIENT_IP = '10.0.2.4'   # The IP of your client
 ATTACKER_IP = '10.0.2.6'  # The IP of the attacker
 IFACE = "enp0s3"         # The Network interface to capture packets
 ```
+
+![alt text](lab-mitm-launch-attack.png "launch attack")
 
 Explanation: what this script does is: keep sniffing packets going between the victim client and the web server, when a packet which goes from the client to the web server is captured, just forward it to the server, when a packet which goes from the web server to the client is captured, modify its content so as to show the message "this site is hacked".
 

