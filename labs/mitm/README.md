@@ -25,8 +25,10 @@ Also, on the attacker's machine, changing the firewall setting:
 
 ```console
 $ sudo iptables -F
-$ sudo iptables -A INPUT -p tcp --sport 80 -j DROP
+$ sudo iptables -P FORWARD ACCEPT
 $ sudo iptables -A FORWARD -p tcp --sport 80 -j DROP
+$ sudo iptables -A FORWARD -p tcp --dport 80 -j DROP
+$ sudo iptables -A INPUT -p tcp --sport 80 -j DROP
 $ sudo iptables -A OUTPUT -p tcp --dport 80 -j DROP
 ```
 
