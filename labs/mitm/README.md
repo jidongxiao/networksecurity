@@ -79,4 +79,8 @@ Explanation: what this script does is: keep sniffing packets going between the v
 
 ![alt text](lab-mitm-final-success.png "lab is successful!")
 
-**Troubleshooting tips**: if refreshing the web page does not change the content, remember to delete the browser cache, you can find the button (to delete the cache) in **Preferences** in firefox.
+**Troubleshooting tips**: if refreshing the web page does not change the content, remember to delete the browser cache, you can find the button (to delete the cache) in **Preferences** in firefox, as shown in these screenshots, just press "Clear Data".
+
+![alt text](lab-mitm-clear-cache1.png "clear cache data 1")
+![alt text](lab-mitm-clear-cache2.png "clear cache data 2")
+
