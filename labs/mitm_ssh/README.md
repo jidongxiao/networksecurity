@@ -84,7 +84,7 @@ Explanation: what this script does is: keep sniffing packets going between the v
 
 ![alt text](lab-mitm-ssh-victim-ssh-p1.png "victim ssh connects")
 
-Victim enters "yes".
+Victim enters "yes" and types the password.
 ![alt text](lab-mitm-ssh-victim-ssh-p2.png "victim ssh connects")
 
 After typing the password, the connection will be closed.
