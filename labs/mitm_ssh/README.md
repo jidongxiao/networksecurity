@@ -4,7 +4,7 @@
 
 This lab will once again demonstate what a coffee shop employee can do. Assume a coffee shop employee has physical access to the store's wifi router. In this lab, you will be acting like this employee. Since store customers will be connecting to this wifi router, this wifi router naturally will serve as the gateway machine, and as the gateway machine it naturally can be used to perform man-in-the-middle attack.
 
-In this lab, the attacker will capture the user's SSH username and password, even though people have all told you that SSH uses encryption.
+In this lab, the attacker will pose as the legitimate SSH server, and capture the user's SSH username and password, even though people have all told you that SSH uses encryption.
 
 ### Assumption
 
@@ -93,3 +93,13 @@ After typing the password, the connection will be closed.
 4. The attacker, now should see the user's user name and password on the terminal which runs the attacking script, as shown in this screenshot:
 
 ![alt text](lab-mitm-ssh-final-success.png "lab is successful!")
+
+This screenshot shows the attack is successful and this concludes this lab.
+
+### Limitation
+
+There are two limitations here:
+
+1. After capturing the victim's credentials, this current attacking script would close the connection; an improvement can be made such that the connection will stay and the attacker simply forwards the traffic between the victim client and the victim server. This will make the attack more stealthy.
+
+2. This attack mainly targets situations when the victim connects to an SSH server for the first time. When it is not the first time, the victim client will get a warning message, produced by the SSH client program. And such a warning can raise a red flag and expose the attacker.
