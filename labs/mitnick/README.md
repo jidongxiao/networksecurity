@@ -148,9 +148,9 @@ The above screenshot shows the file **/tmp/xyz** is now existing - this indicate
 
 **Troubleshooting tip**:
 
-1. When the server sends out a SYN, it expects to get the SYN-ACK soon, and if not, it will re-send the SYN 6 more times, if after 6 re-tries, it still does not get the SYN-ACK, it will terminate the connection.
+1. When the server sends out a SYN, it expects to get the SYN-ACK soon, and if not, it will re-send the SYN 6 more times, if after 6 re-tries, it still does not get the SYN-ACK, it will send out RST packets to terminate the connection.
 
-2. When the server sends out a SYN-ACK, it expects to get the ACK soon, and if not, it will re-send the SYN-ACK 5 more times, if after 5 re-tries, it still does not get the ACK, it will terminate the connection.
+2. When the server sends out a SYN-ACK, it expects to get the ACK soon, and if not, it will re-send the SYN-ACK 5 more times, if after 5 re-tries, it still does not get the ACK, it will send out RST packets to terminate the connection.
 
 The above two rules mean that you have to enter the numbers fast when doing the attacking steps, otherwise, your packets may not be accepted. If you can not do it fast, run the following command on the server side:
 
