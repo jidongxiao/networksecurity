@@ -96,6 +96,23 @@ After typing the password, the connection will be closed.
 
 This screenshot shows the attack is successful and this concludes this lab.
 
+### Clean Up
+
+There are still some clean up work for you to do so as to restore the VM to a clean state.
+
+1. On the victim client, remove the newly added routing rule (so that it does not affect your future labs):
+
+```console
+$ sudo ip route detele 10.0.2.5 via 10.0.2.6 // here, change 10.0.2.5 to your server's IP and change 10.0.2.6 to your attacker's IP
+```
+
+2. On the attacker machine, remove the newly added firewall rules (so that they do not affect your future labs):
+
+```console
+$ sudo iptables -F
+$ sudo iptables -t nat -F
+```
+
 ### Limitation
 
 There are two limitations here:
