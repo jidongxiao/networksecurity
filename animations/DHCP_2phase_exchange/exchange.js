@@ -26,7 +26,7 @@ var clientRect = new Konva.Rect({
 layer.add(clientRect);
 
 var clientText = new Konva.Text({
-    x: 150,
+    x: 130,
     y: 180,
     text: 'DHCP Client\nUDP Port 67',
     fontSize: 24,
@@ -48,7 +48,7 @@ var serverRect = new Konva.Rect({
 layer.add(serverRect);
 
 var serverText = new Konva.Text({
-    x: 650,
+    x: 630,
     y: 180,
     text: 'DHCP Server\nUDP Port 68',
     fontSize: 24,
@@ -99,10 +99,10 @@ var dhcpRequestText = new Konva.Text({
 layer.add(dhcpRequestText);
 
 var dhcpRequestClientText = new Konva.Text({
-    x: 0,
+    x: 10,
     y: 300,
     text: '"I need an IP address."\n The client, \nbefore its lease expires,\nsends a DHCP Request to\nthe server, asking to\nrenew or extend the\ncurrent IP lease',
-    fontSize: 15,
+    fontSize: 12,
     fill: 'black',
     visible: false,
     id: 'dhcp_request_client_text'
@@ -121,10 +121,10 @@ var dhcpAckText = new Konva.Text({
 layer.add(dhcpAckText);
 
 var dhcpAckServerText = new Konva.Text({
-    x: 702,
+    x: 710,
     y: 375,
-    text: '"You can continue using the IP address."\nThe DHCP Server responds with an acknowledgment\n, extending the client’s lease\nand allowing it to continue\nusing the same IP address\n for a longer period.',
-    fontSize: 15,
+    text: '"You can continue using the IP address."\nThe DHCP Server responds with an acknowledgment,\n extending the client’s lease\nand allowing it to continue\nusing the same IP address\n for a longer period.',
+    fontSize: 12,
     fill: 'black',
     visible: false,
     id: 'dhcp_ack_server_text'

@@ -26,7 +26,7 @@ var clientRect = new Konva.Rect({
 layer.add(clientRect);
 
 var clientText = new Konva.Text({
-    x: 150,
+    x: 130,
     y: 180,
     text: 'DHCP Client\nUDP Port 67',
     fontSize: 24,
@@ -48,7 +48,7 @@ var serverRect = new Konva.Rect({
 layer.add(serverRect);
 
 var serverText = new Konva.Text({
-    x: 650,
+    x: 630,
     y: 180,
     text: 'DHCP Server\nUDP Port 68',
     fontSize: 24,
@@ -99,10 +99,10 @@ var dhcpDiscoverText = new Konva.Text({
 layer.add(dhcpDiscoverText);
 
 var dhcpDiscoverClientText = new Konva.Text({
-    x: 0,
+    x: 10,
     y: 300,
     text: '"I need an IP address."\nDHCP Client broadcasts\na request to find available\nDHCP Servers in the network',
-    fontSize: 15,
+    fontSize: 12,
     fill: 'black',
     visible: false,
     id: 'dhcp_discover_client_text'
@@ -121,10 +121,10 @@ var dhcpOfferText = new Konva.Text({
 layer.add(dhcpOfferText);
 
 var dhcpOfferServerText = new Konva.Text({
-    x: 702,
+    x: 710,
     y: 375,
     text: '"Here’s an available IP address."\n(IP address and other network configuration options,\nsuch as subnet mask, gateway, etc.)',
-    fontSize: 15,
+    fontSize: 12,
     fill: 'black',
     visible: false,
     id: 'dhcp_offer_server_text'
@@ -143,10 +143,10 @@ var dhcpRequestText = new Konva.Text({
 layer.add(dhcpRequestText);
 
 var dhcpRequestClientText = new Konva.Text({
-    x: 0,
+    x: 10,
     y: 450,
-    text: '"I’d like to use that IP address."\nthe client responds by\nformally requesting to \nuse the IP address and\nnetwork configuration\nthat was offered.',
-    fontSize: 15,
+    text: '"I’d like to use that IP address."\nThe client responds by\nformally requesting to\nuse the IP address and\nnetwork configuration\nthat was offered.',
+    fontSize: 12,
     fill: 'black',
     visible: false,
     id: 'dhcp_request_client_text'
@@ -165,10 +165,10 @@ var dhcpAckText = new Konva.Text({
 layer.add(dhcpAckText);
 
 var dhcpAckServerText = new Konva.Text({
-    x: 702,
+    x: 710,
     y: 525,
-    text: '"You can use the IP address now."\n The DHCP Server acknowledges the client’s\nrequest and finalizes the lease, allowing the client\nto officially use the assigned IP address\nand network settings.',
-    fontSize: 15,
+    text: '"You can use the IP address now."\nThe DHCP Server acknowledges the client’s\nrequest and finalizes the lease, allowing the client\nto officially use the assigned IP address\nand network settings.',
+    fontSize: 12,
     fill: 'black',
     visible: false,
     id: 'dhcp_ack_server_text'
