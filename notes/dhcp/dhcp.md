@@ -60,6 +60,10 @@ $ sudo dhclient -v
 - This command initiates a new DHCP lease process, starting from the DHCP Discover phase, when the client doesn't have an IP address.
 - The -v option is for verbose mode, allowing you to see the DHCP Discover, Offer, Request, and ACK phases in the output.
 
+View the animation here for this 4-phase exchange.
+
+[animation](https://github.com/jidongxiao/networksecurity/blob/main/animations/DHCP_4phase_exchange/index.html)
+
 2-Phase Exchange: Renewing an Existing Lease
 
 Command:
@@ -69,6 +73,10 @@ $ sudo dhclient -r && sudo dhclient
 ```
 
 The dhclient -r part releases the current DHCP lease, and the dhclient command starts the renewal process. If you already have a lease, sudo dhclient on its own will attempt to renew the current lease, initiating the 2-phase exchange (DHCP Request -> DHCP ACK).
+
+View the animation here for this 2-phase exchange.
+
+[animation](https://github.com/jidongxiao/networksecurity/blob/main/animations/DHCP_2phase_exchange/index.html)
 
 ## Commands in Ubuntu Linux to Check Current DHCP Lease:
 
