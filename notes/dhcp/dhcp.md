@@ -31,6 +31,8 @@ This is the standard process that occurs when a client does not have a valid IP 
 
 This 4-phase process ensures proper negotiation and allocation of network resources.
 
+View the [animation](https:///jidongxiao.github.io/networksecurity/animations/DHCP_4phase_exchange/index.html) here for this 4-phase exchange.
+
 2. 2-Phase DHCP Exchange (Renewal or Rebinding Process):
 
 If a client already has a valid IP address and is simply renewing or extending its lease, only two phases are necessary:
@@ -39,6 +41,8 @@ If a client already has a valid IP address and is simply renewing or extending i
 - DHCP ACK: The server acknowledges and extends the lease, providing updated lease time and possibly refreshed network parameters.
 
 This 2-phase process happens during normal lease renewal (usually when the lease is about to expire).
+
+View the [animation](https://jidongxiao.github.io/networksecurity/animations/DHCP_2phase_exchange/index.html) here for this 2-phase exchange.
 
 ### Key Differences:
 
