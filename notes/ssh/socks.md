@@ -1,7 +1,5 @@
 ## Why Socks
 
-When configuring ssh dynamic port forwarding, why do we choose socks protocol instead of HTTP, or HTTPS (aka SSL)?
-
 When configuring SSH dynamic port forwarding, the SOCKS protocol is chosen over HTTP or HTTPS for several reasons, including flexibility, versatility, and the nature of how the protocols work. Here's a breakdown of why SOCKS is preferred in this context:
 
 1. SOCKS Works at a Lower Level
