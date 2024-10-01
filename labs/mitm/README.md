@@ -8,7 +8,7 @@ In this lab, the attacker will intercept a victim's HTTP traffic and modify the 
 
 ### A Provided Web Server
 
-A web server is provided for this lab, and one specific web page will used for this lab, which is hosted on [http://ns.cs.rpi.edu/test.html](http://ns.cs.rpi.edu/test.html).
+A web server is provided for this lab, and one specific web page will used for this lab, which is hosted on [http://ns.cs.rpi.edu/test.html](http://ns.cs.rpi.edu/test.html). This site is on RPI's network and you can only access it if you are on RPI's network; if you are off campus, use VPN to connect to RPI's network first.
 
 You do not need to set up your own web server.
 
