@@ -91,7 +91,7 @@ var dhcpRequestText = new Konva.Text({
     x: 550,
     y: 300,
     text: 'DHCP Request',
-    fontSize: 20,
+    fontSize: 24,
     fill: 'black',
     visible: false,
     id: 'dhcp_request_text'
@@ -102,7 +102,7 @@ var dhcpRequestClientText = new Konva.Text({
     x: 110,
     y: 300,
     text: '"I need an IP address."\nThe client,\nbefore its lease expires,\nsends a DHCP Request to\nthe server, asking to\nrenew or extend the\ncurrent IP lease',
-    fontSize: 20,
+    fontSize: 24,
     fill: 'black',
     visible: false,
     id: 'dhcp_request_client_text'
@@ -113,7 +113,7 @@ var dhcpAckText = new Konva.Text({
     x: 550,
     y: 375,
     text: 'DHCP Ack',
-    fontSize: 20,
+    fontSize: 24,
     fill: 'black',
     visible: false,
     id: 'dhcp_ack_text'
@@ -124,7 +124,7 @@ var dhcpAckServerText = new Konva.Text({
     x: 910,
     y: 375,
     text: '"You can continue using the IP address."\nThe DHCP Server responds with an acknowledgment,\n extending the client’s lease\nand allowing it to continue\nusing the same IP address\n for a longer period.',
-    fontSize: 20,
+    fontSize: 24,
     fill: 'black',
     visible: false,
     id: 'dhcp_ack_server_text'
