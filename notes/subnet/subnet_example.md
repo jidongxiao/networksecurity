@@ -108,9 +108,11 @@ If the company grows and decides to add another department (e.g., Marketing), th
 
 - Marketing Department:
 
-Subnet: 192.168.0.96/27 (provides 30 IP addresses, same size as HR)
-Network range: 192.168.0.96 to 192.168.0.127
-Usable IPs: 192.168.0.97 to 192.168.0.126
+  - Subnet: 192.168.0.96/27 (provides 30 IP addresses, same size as HR)
+
+  - Network range: 192.168.0.96 to 192.168.0.127
+
+  - Usable IPs: 192.168.0.97 to 192.168.0.126
 
 The network can continue to grow by adding more subnets, and the IP allocation can be dynamically adjusted based on department needs.
 
