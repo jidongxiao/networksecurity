@@ -4,8 +4,8 @@ var step = 0;
 // Create a stage
 var stage = new Konva.Stage({
     container: 'container', // ID of container <div>
-    width: 1000,
-    height: 600
+    width: 2000,
+    height: 1000
 });
 
 // Create a layer
@@ -14,7 +14,7 @@ stage.add(layer);
 
 // Draw client node
 var clientRect = new Konva.Rect({
-    x: 100,
+    x: 300,
     y: 150,
     width: 200,
     height: 100,
@@ -26,7 +26,7 @@ var clientRect = new Konva.Rect({
 layer.add(clientRect);
 
 var clientText = new Konva.Text({
-    x: 130,
+    x: 330,
     y: 180,
     text: 'DHCP Client\nUDP Port 67',
     fontSize: 24,
@@ -36,7 +36,7 @@ layer.add(clientText);
 
 // Draw server node
 var serverRect = new Konva.Rect({
-    x: 600,
+    x: 800,
     y: 150,
     width: 200,
     height: 100,
@@ -48,7 +48,7 @@ var serverRect = new Konva.Rect({
 layer.add(serverRect);
 
 var serverText = new Konva.Text({
-    x: 630,
+    x: 830,
     y: 180,
     text: 'DHCP Server\nUDP Port 68',
     fontSize: 24,
@@ -58,7 +58,7 @@ layer.add(serverText);
 
 // Vertical line below client
 var clientLine = new Konva.Line({
-    points: [200, 250, 200, 600], // Start at center bottom of clientRect (x = 200, y = 250) and go down (y = 350)
+    points: [400, 250, 400, 700], // Start at center bottom of clientRect (x = 200, y = 250) and go down (y = 350)
     stroke: 'black',
     strokeWidth: 3,
 });
@@ -66,7 +66,7 @@ layer.add(clientLine);
 
 // Vertical line below server
 var serverLine = new Konva.Line({
-    points: [700, 250, 700, 600], // Start at center bottom of serverRect (x = 700, y = 250) and go down (y = 350)
+    points: [900, 250, 900, 700], // Start at center bottom of serverRect (x = 700, y = 250) and go down (y = 350)
     stroke: 'black',
     strokeWidth: 3,
 });
@@ -88,7 +88,7 @@ function drawArrow(fromX, fromY, toX, toY, id, color) {
 
 // Message texts
 var dhcpDiscoverText = new Konva.Text({
-    x: 350,
+    x: 550,
     y: 300,
     text: 'DHCP Discover',
     fontSize: 20,
@@ -99,10 +99,10 @@ var dhcpDiscoverText = new Konva.Text({
 layer.add(dhcpDiscoverText);
 
 var dhcpDiscoverClientText = new Konva.Text({
-    x: 10,
+    x: 110,
     y: 300,
     text: '"I need an IP address."\nDHCP Client broadcasts\na request to find available\nDHCP Servers in the network',
-    fontSize: 12,
+    fontSize: 20,
     fill: 'black',
     visible: false,
     id: 'dhcp_discover_client_text'
@@ -110,7 +110,7 @@ var dhcpDiscoverClientText = new Konva.Text({
 layer.add(dhcpDiscoverClientText);
 
 var dhcpOfferText = new Konva.Text({
-    x: 350,
+    x: 550,
     y: 375,
     text: 'DHCP Offer',
     fontSize: 20,
@@ -121,10 +121,10 @@ var dhcpOfferText = new Konva.Text({
 layer.add(dhcpOfferText);
 
 var dhcpOfferServerText = new Konva.Text({
-    x: 710,
+    x: 910,
     y: 375,
     text: '"Here’s an available IP address."\n(IP address and other network configuration options,\nsuch as subnet mask, gateway, etc.)',
-    fontSize: 12,
+    fontSize: 20,
     fill: 'black',
     visible: false,
     id: 'dhcp_offer_server_text'
@@ -132,7 +132,7 @@ var dhcpOfferServerText = new Konva.Text({
 layer.add(dhcpOfferServerText);
 
 var dhcpRequestText = new Konva.Text({
-    x: 350,
+    x: 550,
     y: 450,
     text: 'DHCP Request',
     fontSize: 20,
@@ -143,10 +143,10 @@ var dhcpRequestText = new Konva.Text({
 layer.add(dhcpRequestText);
 
 var dhcpRequestClientText = new Konva.Text({
-    x: 10,
+    x: 110,
     y: 450,
     text: '"I’d like to use that IP address."\nThe client responds by\nformally requesting to\nuse the IP address and\nnetwork configuration\nthat was offered.',
-    fontSize: 12,
+    fontSize: 20,
     fill: 'black',
     visible: false,
     id: 'dhcp_request_client_text'
@@ -154,7 +154,7 @@ var dhcpRequestClientText = new Konva.Text({
 layer.add(dhcpRequestClientText);
 
 var dhcpAckText = new Konva.Text({
-    x: 350,
+    x: 550,
     y: 525,
     text: 'DHCP Ack',
     fontSize: 20,
@@ -165,10 +165,10 @@ var dhcpAckText = new Konva.Text({
 layer.add(dhcpAckText);
 
 var dhcpAckServerText = new Konva.Text({
-    x: 710,
+    x: 910,
     y: 525,
     text: '"You can use the IP address now."\nThe DHCP Server acknowledges the client’s\nrequest and finalizes the lease, allowing the client\nto officially use the assigned IP address\nand network settings.',
-    fontSize: 12,
+    fontSize: 20,
     fill: 'black',
     visible: false,
     id: 'dhcp_ack_server_text'
@@ -176,10 +176,10 @@ var dhcpAckServerText = new Konva.Text({
 layer.add(dhcpAckServerText);
 
 // Draw the arrows (SYN, SYN-ACK, ACK)
-var dhcpDiscoverArrow = drawArrow(200, 300, 700, 375, 'dhcp_discover_arrow', 'green');
-var dhcpOfferArrow = drawArrow(700, 375, 200, 450, 'dhcp_offer_arrow', 'blue');
-var dhcpRequestArrow = drawArrow(200, 450, 700, 525, 'dhcp_request_arrow', 'red');
-var dhcpAckArrow = drawArrow(700, 525, 200, 600, 'dhcp_ack_arrow', 'black');
+var dhcpDiscoverArrow = drawArrow(400, 300, 900, 375, 'dhcp_discover_arrow', 'green');
+var dhcpOfferArrow = drawArrow(900, 375, 400, 450, 'dhcp_offer_arrow', 'blue');
+var dhcpRequestArrow = drawArrow(400, 450, 900, 525, 'dhcp_request_arrow', 'red');
+var dhcpAckArrow = drawArrow(900, 525, 400, 600, 'dhcp_ack_arrow', 'black');
 
 // Initially hide arrows and add them to the layer
 layer.add(dhcpDiscoverArrow);
