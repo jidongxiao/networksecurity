@@ -41,21 +41,27 @@ Now, we can assign specific subnet ranges to each department by dividing the 192
 
 - Finance Department (50 IPs)
 
-Subnet: 192.168.0.0/26 (subnet mask 255.255.255.192)
-Network range: 192.168.0.0 to 192.168.0.63
-Usable IPs: 192.168.0.1 to 192.168.0.62 (network and broadcast addresses 192.168.0.0 and 192.168.0.63 cannot be used).
+  - Subnet: 192.168.0.0/26 (subnet mask 255.255.255.192)
+
+  - Network range: 192.168.0.0 to 192.168.0.63
+
+  - Usable IPs: 192.168.0.1 to 192.168.0.62 (network and broadcast addresses 192.168.0.0 and 192.168.0.63 cannot be used).
 
 - HR Department (30 IPs)
 
-Subnet: 192.168.0.64/27 (subnet mask 255.255.255.224)
-Network range: 192.168.0.64 to 192.168.0.95
-Usable IPs: 192.168.0.65 to 192.168.0.94 (network and broadcast addresses 192.168.0.64 and 192.168.0.95 cannot be used).
+  - Subnet: 192.168.0.64/27 (subnet mask 255.255.255.224)
+
+  - Network range: 192.168.0.64 to 192.168.0.95
+
+  - Usable IPs: 192.168.0.65 to 192.168.0.94 (network and broadcast addresses 192.168.0.64 and 192.168.0.95 cannot be used).
 
 - Development Department (100 IPs)
 
-Subnet: 192.168.0.128/25 (subnet mask 255.255.255.128)
-Network range: 192.168.0.128 to 192.168.0.255
-Usable IPs: 192.168.0.129 to 192.168.0.254 (network and broadcast addresses 192.168.0.128 and 192.168.0.255 cannot be used).
+  - Subnet: 192.168.0.128/25 (subnet mask 255.255.255.128)
+
+  - Network range: 192.168.0.128 to 192.168.0.255
+
+  - Usable IPs: 192.168.0.129 to 192.168.0.254 (network and broadcast addresses 192.168.0.128 and 192.168.0.255 cannot be used).
 
 ### Step 3: Visualizing the Subnets
 
@@ -72,19 +78,19 @@ Here’s how the subnets will be organized:
 
 - Improved Network Performance:
 
- - Dividing the network into smaller subnets reduces broadcast traffic, which improves performance.
+  - Dividing the network into smaller subnets reduces broadcast traffic, which improves performance.
 
 - Enhanced Security:
 
- - By subnetting the network, we can use firewalls or access control lists (ACLs) to control traffic between departments, restricting access between subnets for sensitive data (e.g., preventing HR from accessing Finance’s subnet).
+  - By subnetting the network, we can use firewalls or access control lists (ACLs) to control traffic between departments, restricting access between subnets for sensitive data (e.g., preventing HR from accessing Finance’s subnet).
 
 - Better Management:
 
- - Each department has a clearly defined IP range, making network management (e.g., assigning IP addresses and troubleshooting) easier.
+  - Each department has a clearly defined IP range, making network management (e.g., assigning IP addresses and troubleshooting) easier.
 
 - Scalability:
 
- - The company can easily add new subnets for other departments by adjusting the subnet plan or expanding to other IP blocks.
+  - The company can easily add new subnets for other departments by adjusting the subnet plan or expanding to other IP blocks.
 
 ### Step 5: Example Network Devices and Routing
 
