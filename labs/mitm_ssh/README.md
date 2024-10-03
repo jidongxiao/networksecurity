@@ -140,7 +140,7 @@ And if you (as the ssh client) do get this message, then just run:
 ```console
 $ rm -f ~/.ssh/known_hosts
 ```
-to delete the this file *~/.ssh/known_hosts*:
+to delete the file *~/.ssh/known_hosts*.
 
 ![alt text](lab-mitm-ssh-fix-warning.png "fix the warning message!")
 
