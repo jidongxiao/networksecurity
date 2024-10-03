@@ -82,7 +82,8 @@ SERVER_IP = '10.0.2.5'
 ```
 
 This screenshot shows the moment right before the attacker launches the attack.
-![alt text](lab-mitm-ssh-launch-attack.png "launch attack")
+![alt text](lab-mitm-ssh-launch-attack-p1.png "launch attack, before enter")
+![alt text](lab-mitm-ssh-launch-attack-p2.png "launch attack, after enter")
 
 Explanation: what this script does is: starts a fake ssh server and waits for the victim client to connect; when the victim client connects and types credentials, the script then use the received credentials to connect to the real ssh server, after that, the script just forwards packets between the victim client and the real ssh server.
 
@@ -92,9 +93,13 @@ Explanation: what this script does is: starts a fake ssh server and waits for th
 
 Victim enters "yes" and types the password.
 ![alt text](lab-mitm-ssh-victim-ssh-p2.png "victim ssh connects")
+![alt text](lab-mitm-ssh-victim-ssh-p3.png "victim ssh connects")
 
 After typing the password, the victim will connect to the real SSH server and can then run SSH commands as normal.
-![alt text](lab-mitm-ssh-victim-ssh-p3.png "victim ssh connects")
+![alt text](lab-mitm-ssh-victim-ssh-p4.png "victim ssh connects")
+
+As an example, the victim runs the command "ifconfig" to confirm that the IP address of this machine is indeed the IP address of the real SSH server.
+![alt text](lab-mitm-ssh-victim-ssh-p5.png "victim ssh connects")
 
 4. The attacker, now should see the user's user name and password on the terminal which runs the attacking script, as shown in this screenshot:
 
