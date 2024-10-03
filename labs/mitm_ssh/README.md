@@ -89,7 +89,7 @@ This screenshot shows the moment right after the attacker launches the attack.
 
 Explanation: what this script does is: starts a fake ssh server and waits for the victim client to connect; when the victim client connects and types credentials, the script then uses the received credentials to connect to the real ssh server, after that, the script just forwards packets between the victim client and the real ssh server.
 
-3. The victim client, ssh to the server using the test account, type password to login:
+3. The victim client, ssh to the server using the test account:
 
 ![alt text](lab-mitm-ssh-victim-ssh-p1.png "victim ssh connects")
 
@@ -99,9 +99,10 @@ Victim enters "yes" and types the password.
 
 After typing the password, the victim will connect to the real SSH server and can then run SSH commands as normal.
 ![alt text](lab-mitm-ssh-victim-ssh-p4.png "victim ssh connects")
+![alt text](lab-mitm-ssh-victim-ssh-p5.png "victim ssh connects")
 
 As an example, the victim runs the command "ifconfig" to confirm that the IP address of this machine is indeed the IP address of the real SSH server.
-![alt text](lab-mitm-ssh-victim-ssh-p5.png "victim ssh connects")
+![alt text](lab-mitm-ssh-victim-ssh-ifoncifg.png "victim ssh connected")
 
 4. The attacker, now should see the user's user name and password on the terminal which runs the attacking script, as shown in this screenshot:
 
@@ -129,3 +130,17 @@ $ sudo iptables -t nat -F
 ### Limitation
 
 There is one limitation here: This attack mainly targets situations when the victim connects to an SSH server for the first time. When it is not the first time, the victim client will get a warning message, produced by the SSH client program. And such a warning can raise a red flag and therefore a cautious user may decide not to use SSH at this moment.
+
+**Troubleshooting tips**: the warning message mentioned above looks like this: 
+![alt text](lab-mitm-ssh-warning.png "the warning message!")
+
+And if you (as the ssh client) do get this message, then just run:
+
+```console
+$ rm -f ~/.ssh/known_hosts
+```
+to delete the this file *~/.ssh/known_hosts*:
+
+![alt text](lab-mitm-ssh-fix-warning.png "fix the warning message!")
+
+After deleting the file, you can re-try the ssh command to connect again.
