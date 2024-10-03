@@ -54,14 +54,14 @@ ping should fail here because of the above firewall setting:
 
 ![alt text](lab-vpn-web-fails.png "access www.google.com fails")
 
-5. On VM2, download the vpnserver program (http://cs.boisestate.edu/~jxiao/cs333/code/vpn/vpnserver.c), compile the vpnserver program and run it.
+5. On VM2, download this [vpn server program](vpnserver.c), compile the vpn server program and run it.
 
 ```console
 # gcc vpnserver.c -o vpnserver
 # sudo ./vpnserver
 ```
 
-6. on VM1: download the vpnclient program (http://cs.boisestate.edu/~jxiao/cs333/code/vpn/vpnclient.c), compile the vpnclient program and run it.
+6. on VM1: download the [vpn client program](vpnclient.c), compile the vpn client program and run it.
 
 ```console
 # gcc vpnclient.c -o vpnclient
