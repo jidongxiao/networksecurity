@@ -80,7 +80,7 @@ $ sudo python3 ssh_attack.py
 This screenshot shows the moment right before the attacker launches the attack.
 ![alt text](lab-mitm-ssh-launch-attack.png "launch attack")
 
-Explanation: what this script does is: keep sniffing packets going between the victim client and the web server, when a packet which goes from the client to the web server is captured, just forward it to the server, when a packet which goes from the web server to the client is captured, modify its content so as to show the message "this site is hacked".
+Explanation: what this script does is: starts a fake ssh server and waits for the victim client to connect; when the victim client connects and types credentials, the script then use the received credentials to connect to the real ssh server, after that, the script just forwards packets between the victim client and the real ssh server.
 
 3. The victim client, ssh to the server using the test account, type password to login:
 
