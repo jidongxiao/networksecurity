@@ -83,6 +83,8 @@ SERVER_IP = '10.0.2.5'
 
 This screenshot shows the moment right before the attacker launches the attack.
 ![alt text](lab-mitm-ssh-launch-attack-p1.png "launch attack, before enter")
+
+This screenshot shows the moment right after the attacker launches the attack.
 ![alt text](lab-mitm-ssh-launch-attack-p2.png "launch attack, after enter")
 
 Explanation: what this script does is: starts a fake ssh server and waits for the victim client to connect; when the victim client connects and types credentials, the script then use the received credentials to connect to the real ssh server, after that, the script just forwards packets between the victim client and the real ssh server.
