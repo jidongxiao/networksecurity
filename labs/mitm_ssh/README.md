@@ -102,6 +102,7 @@ After typing the password, the victim will connect to the real SSH server and ca
 ![alt text](lab-mitm-ssh-victim-ssh-p5.png "victim ssh connects")
 
 As an example, the victim runs the command "ifconfig" to confirm that the IP address of this machine is indeed the IP address of the real SSH server.
+
 ![alt text](lab-mitm-ssh-victim-ifconfig.png "victim ssh connected")
 
 4. The attacker, now should see the user's user name and password on the terminal which runs the attacking script, as shown in this screenshot:
