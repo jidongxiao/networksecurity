@@ -75,7 +75,11 @@ This screenshot shows the effect of this command as shown in the routing table -
 $ sudo python3 ssh_attack.py
 ```
 
-**Note**: You do not need to change any lines of this script.
+**Note**: You need to change this line in the script, specify the IP of address of the VM which runs the real SSH server.
+
+```console
+SERVER_IP = '10.0.2.5'
+```
 
 This screenshot shows the moment right before the attacker launches the attack.
 ![alt text](lab-mitm-ssh-launch-attack.png "launch attack")
@@ -89,7 +93,7 @@ Explanation: what this script does is: starts a fake ssh server and waits for th
 Victim enters "yes" and types the password.
 ![alt text](lab-mitm-ssh-victim-ssh-p2.png "victim ssh connects")
 
-After typing the password, the connection will be closed.
+After typing the password, the victim will connect to the real SSH server and can then run SSH commands as normal.
 ![alt text](lab-mitm-ssh-victim-ssh-p3.png "victim ssh connects")
 
 4. The attacker, now should see the user's user name and password on the terminal which runs the attacking script, as shown in this screenshot:
@@ -117,8 +121,4 @@ $ sudo iptables -t nat -F
 
 ### Limitation
 
-There are two limitations here:
-
-1. After capturing the victim's credentials, this current attacking script would close the connection; an improvement can be made such that the connection will stay and the attacker simply forwards the traffic between the victim client and the victim server. This will make the attack more stealthy.
-
-2. This attack mainly targets situations when the victim connects to an SSH server for the first time. When it is not the first time, the victim client will get a warning message, produced by the SSH client program. And such a warning can raise a red flag and expose the attacker.
+There is one limitation here: This attack mainly targets situations when the victim connects to an SSH server for the first time. When it is not the first time, the victim client will get a warning message, produced by the SSH client program. And such a warning can raise a red flag and therefore a cautious user may decide not to use SSH at this moment.
