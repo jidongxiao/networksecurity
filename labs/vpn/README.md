@@ -15,11 +15,16 @@ In this lab, you will bypass a firewall that has an egress filtering rule, which
 
 ### Steps
 
-1. enable firewall on VM1.
+1. enable firewall on VM1, and let all default policy be ACCEPT.
 
 ```console
 # sudo ufw enable
+# sudo iptables -P INPUT ACCEPT
+# sudo iptables -P FORWARD ACCEPT
+# sudo iptables -P OUTPUT ACCEPT
 ```
+
+**Explanation**: When the default policy is set to ACCEPT, all traffic are allowed unless there are more specific rules blocking certain traffic.
 
 2. setup the firewall on VM1 so that www.google.com is blocked.
 
