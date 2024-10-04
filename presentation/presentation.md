@@ -1,6 +1,6 @@
 ## Presentation Topic
 
-In this task, you will be asked to conduct a study on the following two topics:
+In this task, you will be asked to conduct a study on the following topics:
 
 1. Are you or your family happy about your current Internet Service Provider (ISP)? Do you think your home network is secure?
 2. Do you want to be your own ISP, why or why not? How realistic is it?
