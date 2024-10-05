@@ -171,3 +171,15 @@ on VM2:
 # sudo iptables -t nat -F
 # sudo iptables -t nat -L
 ```
+
+**Troubleshooting tips**:
+
+If the lab worked smoothly for you, you can ignore the following part. If at the end of the lab you just are not able to access Google, one thing you can do is, run these 3 commands on the VPN server side as well:
+
+```console
+# sudo iptables -P INPUT ACCEPT
+# sudo iptables -P FORWARD ACCEPT
+# sudo iptables -P OUTPUT ACCEPT
+```
+
+Technically we should not need to run these 3 commands on the VPN server, since we do not intend to have a firewall on the VPN server for any purpose. However, the provided VM may run the firewall secretly by default, and its default policy may be DROP, and when that is the case, then your packets may be dropped at the VPN server and would not reach its final destination. These commands set the default policy to be ACCEPT, this way even if the firewall on the VPN server VM runs, it won't block any of your packets.
