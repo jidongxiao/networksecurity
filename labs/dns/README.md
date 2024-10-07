@@ -72,19 +72,25 @@ $ sudo resolvconf -u
 DNS_CLIENT_IP = "10.0.2.4"
 ```
 
+this screenshot shows the moment right before the attacker executes the script:
+![alt text](lab-dns-attack-launch-attack-p1.png "ready to launch the attack")
+
+this screenshot shows the moment right after the attacker executes the script:
+![alt text](lab-dns-attack-launch-attack-p2.png "attack launched)
+
 2. on victim client, send a DNS query.
 
 ```console
 # dig www.cnn.com 
 ```
 
-these two screenshots show the attack is successful: www.cnn.com is mapped to 188.126.71.216, which is the IP address of fakenews.com.
+this screenshot shows the attack is successful: www.cnn.com is mapped to 188.126.71.216, which is the IP address of fakenews.com.
 ![alt text](lab-dns-attack-success-p1.png "attack success")
-![alt text](lab-dns-attack-success-p2.png "attack success")
 
 3. on victim client, open firefox, and enters www.cnn.com.
 
 these two screenshots once again show that the attack is successful: the victim who attempts to visit www.cnn.com, and taken to the page of fakenews.com.
+![alt text](lab-dns-attack-success-p2.png "attack success")
 ![alt text](lab-dns-attack-success-p3.png "attack success")
 
 ### Clean up
