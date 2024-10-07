@@ -1,8 +1,8 @@
-## Local DNS Cache Poisoning Attack
+## Local DNS Attack
 
 ### Requirement
 
-In this lab, you will poison the cache of a local DNS server, and thus affect clients who rely on this DNS server. More specifically, we want clients who access www.cnn.com go to fakenews.com.
+In this lab, you will send forged DNS responses to a victim client such that the client who visits www.cnn.com will now go to fakenews.com.
 
 ### Setup
 
@@ -12,69 +12,67 @@ The following is the IP addresses for the VMs used in this README.
 
 | VM  |  IP Address   |        Role         |
 |-----|---------------|---------------------|
-| VM1 | 172.16.77.128 | victim (dns) client |
-| VM2 | 172.16.77.129 | victim (dns) server |
-| VM3 | 172.16.77.130 |   attacker          |
+| VM1 | 10.0.2.4      | victim (dns) client |
+| VM2 | 10.0.2.5      | victim (dns) server |
+| VM3 | 10.0.2.6      |   attacker          |
 
-### Steps
+### Preparation
 
-1. on DNS Server machine: start the DNS Server. We will use BIND software. (BIND: Berkeley Internet Name Domain) 
-
-```console
-# sudo service bind9 start (If it's already running, then # sudo service bind9 restart)
-```
-
-2. on DNS Server: remove existing cache:
+1. on DNS Server machine: run theses commands to install the DNS server software - we will use BIND software. (BIND: Berkeley Internet Name Domain) 
 
 ```console
-# sudo rndc flush
+$ sudo apt update
+$ sudo apt install bind9
 ```
 
-this screenshot shows the commands to start the server and flush the cache.
+these screenshots shows the commands to start the server.
+
+2. on DNS Server machine: run this command to start the DNS service: 
+
+```console
+$ sudo service bind9 start (If it's already running, then # sudo service bind9 restart)
+```
+
+this screenshot shows the commands to start the server.
 
 ![alt text](lab-dns-start-server.png "start server and flush cache")
 
-3. on victim client, configure DNS server information, i.e., let the client know the IP address of the DNS server.
+3. on victim client, configure DNS server information, 
 
-3.1. add this line to the end of file /etc/resolvconf/resolv.conf.d/head (remember to replace DNS_SERVER_IP with your victim DNS server's IP address, plus, you need "sudo" if you edit the file using vi/vim.)
+3.1. run this following command, which adds a line to the end of file /etc/resolvconf/resolv.conf.d/head. The added line will tell the client the IP address of the DNS server, in this README, it is 10.0.2.5, and as you run the command you should change 10.0.2.5 to the IP address of your DNS server.
 
 ```console
-nameserver DNS_SERVER_IP
+$ echo "nameserver 10.0.2.5" | sudo tee -a /etc/resolvconf/resolv.conf.d/head > /dev/null
 ```
 
-this screenshot shows editing the file in *vi*:
-![alt text](lab-dns-edit-file.png "edit the file")
+3.2 after running the above command, we can use *cat* to confirm that line is added to the file /etc/resolvconf/resolv.conf.d/head:
+
+```console
+$ cat /etc/resolvconf/resolv.conf.d/head
+```
 
 this screenshot shows the file is now edited:
 ![alt text](lab-dns-configure-dns.png "configure dns")
 
-3.2. run the following command so the above change will take effect:
+3.3. run the following command so the above change in that file will take effect:
 
 ```console
-# sudo resolvconf -u
+$ sudo resolvconf -u
 ```
 
 ![alt text](lab-dns-resolvconf.png "resolvconf command")
 
-4. on attacker VM, run
+### Attack
+
+1. on attacker VM, run this [dns_attack.py](dns_attack.py) script. What this script does is, it sniffs all DNS packets coming from the victim client, and if client asks questions about the IP address of www.cnn.com, this script responds to the victim with a forged response which says that the IP address of www.cnn.com is 188.126.71.216, which is the IP address of fakenews.com.
+
+**Note**: You need to change this one line in the script, specify the IP of address of victim client.
 
 ```console
-# sudo netwox 105 --hostname "www.cnn.com" --hostnameip FAKENEWS.com_IP --authns "ns1.fastly.net" --authnsip ATTACKER_IP --filter "src host DNS_SERVER_IP" --ttl 19000 --spoofip raw
+DNS_CLIENT_IP = "10.0.2.4"
 ```
 
-FAKENEWS.com IP address (as of today, 05/24/2022): 188.126.71.216 (you can use ping command to confirm it)
-
-**Explanation**: '--spoofip raw' means to spoof at IPv4/IPv6 level, as opposed to spoof at the data link layer. In other words, spoof IP addresses, instead of spoof MAC addresses.
-
-this screenshot shows the actual command:
-
-![alt text](lab-dns-attack-command.png "attack command")
-
-Question: why it's "src host DNS_SERVER_IP", instead of "src host DNS_CLIENT_IP"?
-
-Question: does the ttl here have the same meaning as the ttl in IP headers?
-
-5. on victim client, send a query.
+2. on victim client, send a DNS query.
 
 ```console
 # dig www.cnn.com 
@@ -84,10 +82,11 @@ these two screenshots show the attack is successful: www.cnn.com is mapped to 18
 ![alt text](lab-dns-attack-success-p1.png "attack success")
 ![alt text](lab-dns-attack-success-p2.png "attack success")
 
-6. stop the attack - press control-c on the attacker VM's terminal. On victim client, run the dig command again and confirm that, even after the attack, www.cnn.com is still mapped to the IP address of fakenews.com, which proves that the DNS server's cache is indeed poisoned, and thus the attack has a long-lasting effect:
+3. on victim client, open firefox, and enters www.cnn.com.
 
-![alt text](lab-dns-attack-success-after-ctrl-c-p1.png "attack still success")
-![alt text](lab-dns-attack-success-after-ctrl-c-p2.png "attack still success")
+these two screenshots once again show that the attack is successful: the victim who attempts to visit www.cnn.com, and taken to the page of fakenews.com.
+![alt text](lab-dns-attack-success-p3.png "attack success")
 
+### Clean up
 
-7. you are recommended to remove the line you added in step 3, in this file: /etc/resolvconf/resolv.conf.d/head, so that your future experiments won't be affected.
+You are recommended to remove the line you added in the preparation steps, in this file: /etc/resolvconf/resolv.conf.d/head, so that your future experiments won't be affected.
