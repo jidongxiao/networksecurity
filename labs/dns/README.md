@@ -25,7 +25,12 @@ $ sudo apt update
 $ sudo apt install bind9
 ```
 
-these screenshots shows the commands to start the server.
+these screenshots shows the commands to install the server.
+
+![alt text](lab-dns-attack-update.png "sudo apt update")
+![alt text](lab-dns-attack-install.png "sudo apt install bind9")
+![alt text](lab-dns-attack-install-yes-p1.png "asked yes or no")
+![alt text](lab-dns-attack-install-yes-p2.png "enter yes")
 
 2. on DNS Server machine: run this command to start the DNS service: 
 
@@ -35,7 +40,7 @@ $ sudo service bind9 start (If it's already running, then # sudo service bind9 r
 
 this screenshot shows the commands to start the server.
 
-![alt text](lab-dns-start-server.png "start server and flush cache")
+![alt text](lab-dns-attack-start-server.png "start server")
 
 3. on victim client, configure DNS server information, 
 
