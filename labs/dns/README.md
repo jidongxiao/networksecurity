@@ -35,7 +35,7 @@ these screenshots shows the commands to install the server.
 2. on DNS Server machine: run this command to start the DNS service: 
 
 ```console
-$ sudo service bind9 start (If it's already running, then # sudo service bind9 restart)
+$ sudo service bind9 start
 ```
 
 this screenshot shows the commands to start the server.
@@ -74,7 +74,7 @@ $ sudo resolvconf -u
 
 1. on attacker VM, run this [dns_attack.py](dns_attack.py) script. What this script does is, it sniffs all DNS packets coming from the victim client, and if client asks questions about the IP address of www.cnn.com, this script responds to the victim with a forged response which says that the IP address of www.cnn.com is 188.126.71.216, which is the IP address of fakenews.com.
 
-**Note**: You need to change this one line in the script, specify the IP of address of victim client.
+**Note**: You need to change this one line in the script, specifying the IP of address of victim client.
 
 ```console
 DNS_CLIENT_IP = "10.0.2.4"
@@ -95,12 +95,20 @@ this screenshot shows the moment right after the attacker executes the script:
 this screenshot shows the attack is successful: www.cnn.com is mapped to 188.126.71.216, which is the IP address of fakenews.com.
 ![alt text](lab-dns-attack-success-p1.png "attack success")
 
-3. on victim client, open firefox, and enters www.cnn.com.
+3. on victim client, open firefox, and enter www.cnn.com.
 
-these two screenshots once again show that the attack is successful: the victim who attempts to visit www.cnn.com, and taken to the page of fakenews.com.
+these two screenshots once again show that the attack is successful: the victim who attempts to visit www.cnn.com, is now taken to the page of fakenews.com.
 ![alt text](lab-dns-attack-success-p2.png "attack success")
 ![alt text](lab-dns-attack-success-p3.png "attack success")
+
+Both step 2 and step 3 here proves that the attack is successful, and this concludes the lab.
 
 ### Clean up
 
 You are recommended to remove the line you added in the preparation steps, in this file: /etc/resolvconf/resolv.conf.d/head, so that your future experiments won't be affected.
+
+You will need *sudo* to edit the file. If you are not comfortable of using a command-line editor, you can use this command, which removes the last line of the file, and the line we added in that file indeed is the last line.
+
+```console
+sudo sed -i '$d' /etc/resolvconf/resolv.conf.d/head
+```
