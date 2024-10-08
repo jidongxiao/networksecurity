@@ -6,14 +6,14 @@ In this lab, you will send forged DNS responses to a victim client such that the
 
 ### Setup
 
-3 Linux VMs: Victim (DNS) Client, Victim (DNS) Server, Attacker. All 3 VMs are located in the same network.
+3 Linux VMs: Victim (DNS) Client, DNS Server, Attacker. All 3 VMs are located in the same network.
 
 The following is the IP addresses for the VMs used in this README.
 
 | VM  |  IP Address   |        Role         |
 |-----|---------------|---------------------|
 | VM1 | 10.0.2.4      | victim (dns) client |
-| VM2 | 10.0.2.5      | victim (dns) server |
+| VM2 | 10.0.2.5      |   dns server        |
 | VM3 | 10.0.2.6      |   attacker          |
 
 ### Preparation
