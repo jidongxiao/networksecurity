@@ -50,6 +50,9 @@ this screenshot shows the commands to start the server.
 $ echo "nameserver 10.0.2.5" | sudo tee -a /etc/resolvconf/resolv.conf.d/head > /dev/null
 ```
 
+this screenshot shows the command:
+![alt text](lab-dns-attack-configure-dns.png "configure dns")
+
 3.2 after running the above command, we can use *cat* to confirm that line is added to the file /etc/resolvconf/resolv.conf.d/head:
 
 ```console
@@ -57,7 +60,7 @@ $ cat /etc/resolvconf/resolv.conf.d/head
 ```
 
 this screenshot shows the file is now edited:
-![alt text](lab-dns-configure-dns.png "configure dns")
+![alt text](lab-dns-attack-file-edited.png "dns conf file edited")
 
 3.3. run the following command so the above change in that file will take effect:
 
@@ -65,7 +68,7 @@ this screenshot shows the file is now edited:
 $ sudo resolvconf -u
 ```
 
-![alt text](lab-dns-resolvconf.png "resolvconf command")
+![alt text](lab-dns-attack-resolvconf.png "resolvconf command")
 
 ### Attack
 
@@ -81,7 +84,7 @@ this screenshot shows the moment right before the attacker executes the script:
 ![alt text](lab-dns-attack-launch-attack-p1.png "ready to launch the attack")
 
 this screenshot shows the moment right after the attacker executes the script:
-![alt text](lab-dns-attack-launch-attack-p2.png "attack launched)
+![alt text](lab-dns-attack-launch-attack-p2.png "attack launched")
 
 2. on victim client, send a DNS query.
 
