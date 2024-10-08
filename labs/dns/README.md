@@ -59,7 +59,7 @@ this screenshot shows the command:
 $ cat /etc/resolvconf/resolv.conf.d/head
 ```
 
-this screenshot shows the file is now edited:
+this screenshot shows that the line is indeed added to the end of the file:
 ![alt text](lab-dns-attack-file-edited.png "dns conf file edited")
 
 3.3. run the following command so the above change in that file will take effect:
