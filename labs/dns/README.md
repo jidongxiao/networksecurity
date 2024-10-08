@@ -89,7 +89,7 @@ this screenshot shows the moment right after the attacker executes the script:
 2. on victim client, send a DNS query.
 
 ```console
-# dig www.cnn.com 
+$ dig www.cnn.com 
 ```
 
 this screenshot shows the attack is successful: www.cnn.com is mapped to 188.126.71.216, which is the IP address of fakenews.com.
@@ -110,5 +110,5 @@ You are recommended to remove the line you added in the preparation steps, in th
 You will need *sudo* to edit the file. If you are not comfortable of using a command-line editor, you can use this command, which removes the last line of the file, and the line we added in that file indeed is the last line.
 
 ```console
-sudo sed -i '$d' /etc/resolvconf/resolv.conf.d/head
+$ sudo sed -i '$d' /etc/resolvconf/resolv.conf.d/head
 ```
