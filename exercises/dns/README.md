@@ -15,3 +15,7 @@ The provided VM, just one VM.
 128.113.126.70  www.chase.com
 
 2. Open firefox and type www.chase.com, it should take you to ns.cs.rpi.edu.
+
+### Takeaway
+
+Lock your screen when you leave your computer.
