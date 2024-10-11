@@ -1,7 +1,7 @@
 # Wireshark Sample Questions:
 
 ## Capture 1:
-Given following wireshark capture:
+Given the following wireshark capture:
 
 ```console
 1   0.000000 192.168.1.5 -> 192.168.1.1  ICMP  Echo (ping) request  id=0x0001, seq=1
@@ -38,7 +38,7 @@ Given following wireshark capture:
    - D) Neither device
 
 ## Capture 2:
-Given following wireshark capture:
+Given the following wireshark capture:
 
 ```console
 No.     Time        Source          Destination     Protocol Length Info
@@ -89,4 +89,56 @@ No.     Time        Source          Destination     Protocol Length Info
    - B) Increasing the number of open ports
    - C) Disabling TCP connections
    - D) Ignoring all SYN packets
+
+## Capture 3:
+Given the following wireshark capture:
+
+```console
+No.     Time        Source          Destination     Protocol Length Info
+1       0.000000    192.168.1.100   192.168.1.1     ARP      42     Who has 192.168.1.1? Tell 192.168.1.100
+2       0.000001    192.168.1.1     192.168.1.100   ARP      42     192.168.1.1 is at 00:11:22:33:44:55
+3       0.000002    192.168.1.100   192.168.1.1     ARP      42     Who has 192.168.1.1? Tell 192.168.1.100
+4       0.000003    192.168.1.1     192.168.1.100   ARP      42     192.168.1.1 is at 00:11:22:33:44:55
+5       0.000004    192.168.1.200   192.168.1.1     ARP      42     Who has 192.168.1.1? Tell 192.168.1.200
+6       0.000005    192.168.1.1     192.168.1.200   ARP      42     192.168.1.1 is at 00:11:22:33:44:55
+7       0.000006    192.168.1.200   192.168.1.100   ARP      42     192.168.1.1 is at 66:77:88:99:AA:BB
+8       0.000007    192.168.1.1     192.168.1.200   ARP      42     192.168.1.1 is at 00:11:22:33:44:55
+9       0.000008    192.168.1.100   192.168.1.1     ARP      42     Who has 192.168.1.1? Tell 192.168.1.100
+10      0.000009    192.168.1.1     192.168.1.100   ARP      42     192.168.1.1 is at 00:11:22:33:44:55
+11      0.000010    192.168.1.200   192.168.1.1     ARP      42     Who has 192.168.1.1? Tell 192.168.1.200
+12      0.000011    192.168.1.1     192.168.1.200   ARP      42     192.168.1.1 is at 00:11:22:33:44:55
+13      0.000012    192.168.1.200   192.168.1.100   ARP      42     192.168.1.1 is at 66:77:88:99:AA:BB
+14      0.000013    192.168.1.100   192.168.1.1     ARP      42     Who has 192.168.1.1? Tell 192.168.1.100
+15      0.000014    192.168.1.1     192.168.1.100   ARP      42     192.168.1.1 is at 00:11:22:33:44:55
+```
+
+1. **What does the ARP packet from 192.168.1.200 claiming the MAC address 66:77:88:99:AA:BB suggest?**
+   - A) A legitimate ARP reply
+   - B) An ARP cache poisoning attack
+   - C) A normal network operation
+   - D) A routing issue
+
+2. **In the capture, how can you identify which ARP replies may indicate ARP cache poisoning?**
+   - A) By comparing the IP and MAC addresses
+   - B) By checking the timestamps
+   - C) By looking for duplicate ARP requests
+   - D) By examining the packet lengths
+
+3. **If the ARP cache is poisoned, what potential risk does this pose to the network?**
+   - A) Reduced bandwidth
+   - B) Unintentional data interception
+   - C) Increased latency
+   - D) Complete network failure
+
+4. **What action can be taken to mitigate ARP cache poisoning?**
+   - A) Ignoring ARP requests
+   - B) Using static ARP entries
+   - C) Disabling ARP altogether
+   - D) Increasing the MTU size
+
+5. **What is the typical method for an attacker to perform an ARP cache poisoning attack?**
+   - A) Sending spoofed ARP replies to the network
+   - B) Capturing packets and replaying them
+   - C) Performing a denial-of-service attack
+   - D) Scanning the network for open ports
 
