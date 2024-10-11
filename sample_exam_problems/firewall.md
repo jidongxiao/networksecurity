@@ -1,6 +1,6 @@
 When running "iptables -L", the following output is printed:
 
-```console
+```plaintext
 Chain INPUT (policy ACCEPT)
 target     prot opt source               destination         
 ACCEPT     tcp  --  192.168.1.0/24      0.0.0.0/0           tcp dpt:22
