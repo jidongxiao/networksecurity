@@ -8,7 +8,7 @@ Read the notes [here](https://github.com/jidongxiao/networksecurity/tree/main/no
 
 ### Requirement
 
-In this lab, we will study the vulnerability of subdomain takeover and its consequence. At the end of the lab, the victim client who visits us.cnn.com will now go to fakenews.com.
+In this lab, we will study the vulnerability of subdomain takeover and its consequence. At the end of the lab, the victim client who visits [us.cnn.com](us.cnn.com) will now go to fakenews.com.
 
 ### Setup
 
@@ -228,15 +228,15 @@ $ sudo rndc flush
 3. on victim client, send a DNS query.
 
 ```console
-$ dig www.cnn.com 
+$ dig us.cnn.com 
 ```
 
-this screenshot shows the attack is successful: www.cnn.com is mapped to 188.126.71.216, which is the IP address of fakenews.com.
+this screenshot shows the attack is successful: us.cnn.com is mapped to 188.126.71.216, which is the IP address of fakenews.com.
 ![alt text](lab-dns-attack-success-p1.png "attack success")
 
 4. on victim client, open firefox, and enter http://us.cnn.com.
 
-these two screenshots once again show that the attack is successful: the victim who attempts to visit www.cnn.com, is now taken to the page of fakenews.com.
+these two screenshots once again show that the attack is successful: the victim who attempts to visit us.cnn.com, is now taken to the page of fakenews.com.
 ![alt text](lab-dns-attack-success-p2.png "attack success")
 ![alt text](lab-dns-attack-success-p3.png "attack success")
 
@@ -251,3 +251,8 @@ You will need *sudo* to edit the file. If you are not comfortable of using a com
 ```console
 $ sudo sed -i '$d' /etc/resolvconf/resolv.conf.d/head
 ```
+
+**Questions**
+
+Q: Why we don't use www.cnn.com for this lab, but instead, we use us.cnn.com? 
+A: Because this lab is about subdomain takeover, and it is extremely unlikely that CNN would give up the subdomain of www.
