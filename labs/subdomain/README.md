@@ -20,7 +20,7 @@ The following is the IP addresses for the VMs used in this README.
 |-----|---------------|-----------------------------------------------------------------------|
 | VM1 | 10.0.2.4      |   victim client                                                       |
 | VM2 | 10.0.2.5      |   dns server 1: serve as the authoritative name server of cnn.com     |
-| VM3 | 10.0.2.6      |   dns server 2: serve as the authoritative name server of fastly.com  |
+| VM3 | 10.0.2.6      |   dns server 2: serve as the authoritative name server of fastly.net  |
 
 ### Preparation
 
@@ -218,6 +218,8 @@ cnn-tls.map IN    A     151.101.3.5
 ```
 
 uncomment the first line and comment the second line. Note that in these DNS configuration files, we can comment a line by using a semicolon (;). Anything after the semicolon on the same line will be ignored by the BIND DNS server.
+
+**Note**: Among all the steps you do in this lab, this one single step is the most important step which reflects the idea of subdomain takeover. More specifically, this step is to simulate the scenario where CNN abandons the subdomain us.cnn.com, but they forget to remove the CNAME record (from their own DNS server) which maps us.cnn.com. to cnn-tls.map.fastly.net., and now the attacker legally acquires this cnn-tls.map.fastly.net. subdomain from the company fastly, and legally maps this newly acquired domain cnn-tls.map.fastly.net. to an IP address of the attacker's choice, which in this example, is 188.126.71.126, which is the IP address of fakenews.com.
 
 2. on VM3, run this command to restart the DNS server so that the above change will take effect.
 
