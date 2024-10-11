@@ -219,13 +219,19 @@ cnn-tls.map IN    A     151.101.3.5
 
 uncomment the first line and comment the second line. Note that in these DNS configuration files, we can comment a line by using a semicolon (;). Anything after the semicolon on the same line will be ignored by the BIND DNS server.
 
-2. on VM2, run this command flush DNS cache - so that we don't use the old mapping, which maps us.cnn.com to its real IP address, which is 151.101.3.5.
+2. on VM3, run this command to restart the DNS server so that the above change will take effect.
+
+```console
+$ sudo service bind9 restart
+```
+
+3. on VM2, run this command to flush DNS cache - so that we don't use the old mapping, which maps us.cnn.com to its real IP address, which is 151.101.3.5.
 
 ```console
 $ sudo rndc flush
 ```
 
-3. on victim client, send a DNS query.
+4. on victim client, send a DNS query.
 
 ```console
 $ dig us.cnn.com 
@@ -234,13 +240,13 @@ $ dig us.cnn.com
 this screenshot shows the attack is successful: us.cnn.com is mapped to 188.126.71.216, which is the IP address of fakenews.com.
 ![alt text](lab-dns-attack-success-p1.png "attack success")
 
-4. on victim client, open firefox, and enter http://us.cnn.com.
+5. on victim client, open firefox, and enter http://us.cnn.com.
 
 these two screenshots once again show that the attack is successful: the victim who attempts to visit us.cnn.com, is now taken to the page of fakenews.com.
 ![alt text](lab-dns-attack-success-p2.png "attack success")
 ![alt text](lab-dns-attack-success-p3.png "attack success")
 
-Both step 3 and step 4 here proves that the attack is successful, and this concludes the lab.
+Both step 4 and step 5 here proves that the attack is successful, and this concludes the lab.
 
 ### Clean up
 
