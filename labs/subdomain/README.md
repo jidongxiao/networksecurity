@@ -4,6 +4,8 @@
 
 Subdomain takeover is a security vulnerability that occurs when an attacker gains control of a subdomain that is still pointing to an external service (e.g., cloud hosting platforms like AWS, Azure, GitHub Pages) that has been deprovisioned but the DNS record is still configured. This allows the attacker to host content on the subdomain, potentially leading to malicious activities, such as phishing or spreading malware.
 
+Read the notes [here](https://github.com/jidongxiao/networksecurity/tree/main/notes/subdomain_takeover) to have a better understanding of the attack.
+
 ### Requirement
 
 In this lab, we will study the vulnerability of subdomain takeover and its consequence. At the end of the lab, the victim client who visits www.cnn.com will now go to fakenews.com.
@@ -14,11 +16,11 @@ In this lab, we will study the vulnerability of subdomain takeover and its conse
 
 The following is the IP addresses for the VMs used in this README.
 
-| VM  |  IP Address   |        Role         |
-|-----|---------------|---------------------|
-| VM1 | 10.0.2.4      |   victim client     |
-| VM2 | 10.0.2.5      |   dns server 1      |
-| VM3 | 10.0.2.6      |   dns server 2      |
+| VM  |  IP Address   |        Role                                                           |
+|-----|---------------|-----------------------------------------------------------------------|
+| VM1 | 10.0.2.4      |   victim client                                                       |
+| VM2 | 10.0.2.5      |   dns server 1: serve as the authoritative name server of cnn.com     |
+| VM3 | 10.0.2.6      |   dns server 2: serve as the authoritative name server of fastly.com  |
 
 ### Preparation
 
