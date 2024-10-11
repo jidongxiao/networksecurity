@@ -8,5 +8,5 @@ $TTL 86400
 
 @           IN    NS    ns.fastly.net.
 ns          IN    A     10.0.2.6
-cnn-tls.map IN    A     188.126.71.216
-;cnn-tls.map IN    A     151.101.3.5
+;cnn-tls.map IN    A     188.126.71.216
+cnn-tls.map IN    A     151.101.3.5
