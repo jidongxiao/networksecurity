@@ -103,7 +103,6 @@ A) It enhances security by allowing only necessary traffic.
 B) It makes the system vulnerable to attacks from any source.  
 C) It has no impact on security.  
 D) It improves network performance.  
-**Correct Answer:** B) It makes the system vulnerable to attacks from any source.  
 
 ---
 
