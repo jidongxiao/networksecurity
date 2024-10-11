@@ -139,7 +139,7 @@ cnn-tls.map.fastly.net.	86400	IN	A	151.101.3.5
 ;; MSG SIZE  rcvd: 95
 ```
 
-Your result should show (in the ANSWER SECTION) that cnn-tls.map.fastly.net. is mapped to the IP address of 151.101.3.5, this is the correct IP address of us.cnn.com. This result will confirm that your VM3 configuration is correct. DO NOT proceed if your VM3 configuration is not correct.
+Your result should show (in the ANSWER SECTION) that cnn-tls.map.fastly.net. is mapped to the IP address of 151.101.3.5, which is the correct IP address of us.cnn.com. This result confirms that your VM3 configuration is correct. DO NOT proceed if your VM3 configuration is not correct.
 
 2. now on VM2, run this:
 
@@ -173,7 +173,7 @@ Your result should show (in the ANSWER SECTION) that:
 
 - First, us.cnn.com. has a CNAME record which points to cnn-tls.map.fastly.net.
 
-- Second, cnn-tls.map.fastly.net. is mapped to the IP address of 151.101.3.5, this is the correct IP address of us.cnn.com. This result will confirm that your VM2 configuration is correct. DO NOT proceed if your VM2 configuration is not correct.
+- Second, cnn-tls.map.fastly.net. is mapped to the IP address of 151.101.3.5, which is the correct IP address of us.cnn.com. This result confirms that your VM2 configuration is correct. DO NOT proceed if your VM2 configuration is not correct.
 
 3. on VM1, run this:
 
@@ -206,7 +206,7 @@ Your result should show (in the ANSWER SECTION) that:
 
 - First, us.cnn.com. has a CNAME record which points to cnn-tls.map.fastly.net.
 
-- Second, cnn-tls.map.fastly.net. is mapped to the IP address of 151.101.3.5, this is the correct IP address of us.cnn.com. This result will confirm that your VM1 has been successfully configured to use VM2 as its DNS server. DO NOT proceed if your VM1 configuration is not correct.
+- Second, cnn-tls.map.fastly.net. is mapped to the IP address of 151.101.3.5, which is the correct IP address of us.cnn.com. This result confirms that your VM1 has been successfully configured to use VM2 as its DNS server. DO NOT proceed if your VM1 configuration is not correct.
 
 ### Attack
 
@@ -240,7 +240,7 @@ these two screenshots once again show that the attack is successful: the victim 
 ![alt text](lab-dns-attack-success-p2.png "attack success")
 ![alt text](lab-dns-attack-success-p3.png "attack success")
 
-Both step 2 and step 3 here proves that the attack is successful, and this concludes the lab.
+Both step 3 and step 4 here proves that the attack is successful, and this concludes the lab.
 
 ### Clean up
 
