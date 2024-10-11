@@ -1,3 +1,5 @@
+# Firewall Rules Sample Questions
+
 When running "iptables -L", the following output is printed:
 
 ```plaintext
@@ -22,8 +24,6 @@ DROP       udp  --  0.0.0.0/0           0.0.0.0/0           udp dpt:53
 ```
 
 **Note**: Rule Processing Order: In iptables, rules are processed in the order they are defined. This means that once a packet matches a rule, the action specified by that rule is taken, and the subsequent rules are not evaluated.
-
-# Sample Questions Based on iptables Output
 
 ## Question 1
 **Which services are allowed for incoming traffic from the 192.168.1.0/24 subnet?**  
