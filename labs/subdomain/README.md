@@ -8,7 +8,7 @@ Read the notes [here](https://github.com/jidongxiao/networksecurity/tree/main/no
 
 ### Requirement
 
-In this lab, we will study the vulnerability of subdomain takeover and its consequence. At the end of the lab, the victim client who visits www.cnn.com will now go to fakenews.com.
+In this lab, we will study the vulnerability of subdomain takeover and its consequence. At the end of the lab, the victim client who visits us.cnn.com will now go to fakenews.com.
 
 ### Setup
 
