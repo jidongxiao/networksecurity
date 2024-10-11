@@ -50,7 +50,7 @@ cnn-tls.map.fastly.net.	60	IN	A	151.101.3.5
 
 ```
 
-1. **CNAME Setup**: CNN sets up a subdomain, `us.cnn.com`, with a CNAME record pointing to `cnn-tls.map.fastly.net`.
+1. **CNAME Setup**: CNN sets up a subdomain, `us.cnn.com`, with a CNAME record pointing to `cnn-tls.map.fastly.net`. Here, fastly.net is a domain associated with Fastly, a cloud computing services provider that specializes in content delivery network (CDN) services, edge cloud platform, and other performance-enhancing solutions for websites and applications.
   
 2. **Service Removal**: If one day, CNN decides to stop using us.cnn.com and discontinue their subscription with the hosting service on fastly.net, but CNN forget to remove the CNAME record.
 
