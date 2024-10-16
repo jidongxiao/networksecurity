@@ -66,5 +66,6 @@ Date: Tue, 15 Oct 2024 10:35:46 +0000
 Message-ID: unique-id@mail.example.com  
 Received: from mail.example.com (mail.example.com [192.0.2.1]) by receiver.com with ESMTP id 123ABC  
 DKIM-Signature: v=1; a=rsa-sha256; d=example.com; s=selector; h=from:to;  
-Received-SPF: pass (google.com: domain of sender@example.com designates 192.0.2.1 as permitted sender) Authentication-Results: spf=pass smtp.mailfrom=example.com  
+Received-SPF: pass (google.com: domain of sender@example.com designates 192.0.2.1 as permitted sender)  
+Authentication-Results: spf=pass smtp.mailfrom=example.com  
 DMARC-Filter: OpenDMARC Filter v1.4.0 mail.receiver.com 123ABC
