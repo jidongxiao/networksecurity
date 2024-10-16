@@ -25,7 +25,7 @@ Email headers provide detailed information about the path and handling of an ema
    Example: `Message-ID: <unique-id@mail.example.com>`
 
 6. **Received**  
-   Shows the route the email took from the sender to the receiver. Each `Received` field documents one "hop" in the journey.  
+   Shows the route the email took from the sender to the receiver. Each `Received` field documents one "hop" in the journey. [Why multiple hops](hops.md)
    Example:  `Received: from mail.example.com (mail.example.com [192.0.2.1]) by receiver.com with ESMTP id 123ABC`
 
 7. **Return-Path**  
