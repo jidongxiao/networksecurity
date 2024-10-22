@@ -260,7 +260,7 @@ You will need *sudo* to edit the file. If you are not comfortable of using a com
 $ sudo sed -i '$d' /etc/resolvconf/resolv.conf.d/head
 ```
 
-**Important**: Remove these lines from /etc/bind/named.local.
+**Important**: Remove these lines from /etc/bind/named.conf.local.
 
 ```console
 zone "cnn.com" {
