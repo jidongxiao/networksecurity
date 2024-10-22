@@ -127,10 +127,10 @@ the goal of this attack is, when the victim DNS client runs either of the above 
 [05/29/22]seed@VM:~/.../remotedns$ sudo rndc flush
 ```
 
-6. Launch the attack: on the attacker's VM, run the attacking program, which is developed based on the famous Dan Kaminsky attack.
+6. Launch the attack: on the attacker's VM, compile and run the attacking program, which is developed based on the famous Dan Kaminsky attack.
 
 ```console
-$ sudo apt-get install libnet1-dev
+$ sudo apt-get install libnet1-dev // this command installs a library which the attacking program needs.
 $ gcc -o attack attack.c
 $ sudo ./attack 10.0.2.6 10.0.2.5
 ```
