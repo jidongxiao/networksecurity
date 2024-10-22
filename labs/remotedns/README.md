@@ -52,7 +52,7 @@ nameserver DNS_SERVER_IP
 1.2. run the following command so the above change will take effect:
 
 ```console
-[05/29/22]seed@VM1:~$ sudo resolvconf -u
+$ sudo resolvconf -u
 ```
 
 ![alt text](lab-remote-dns-resolvconf.png "resolvconf command")
@@ -137,7 +137,7 @@ the goal of this attack is, when the victim DNS client runs either of the above 
 5. Right before we start the attack, let's clear the victim DNS server's cache. On the victim DNS server, run:
 
 ```console
-[05/29/22]seed@VM:~/.../remotedns$ sudo rndc flush
+$ sudo rndc flush
 ```
 
 6. Launch the attack: on the attacker's VM, compile and run the [attacking program](attack.c), which is developed based on the famous Dan Kaminsky attack.
@@ -168,7 +168,7 @@ as long as we see this *NS* record which associates cnn.com. to ns.attacker32.co
 7. We can then verify the result from the victim DNS client. On the victim DNS client VM, **wait for about 2 minutes and run**:
 
 ```console
-[05/29/22]seed@VM:~$ dig www.cnn.com 
+$ dig www.cnn.com 
 ```
 
 if the attack is successful, then this dig should show us that www.cnn.com is mapped to 188.126.71.216, which as of 10/21/2024, is the IP address of fakenews.com.
