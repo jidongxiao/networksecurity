@@ -176,7 +176,7 @@ if the attack is successful, then this dig should show us that www.cnn.com is ma
 The following screenshots show that the attack is successful:
 ![alt text](lab-remote-dns-success.png "dig cnn")
 
-**Note**: Why wait for 2 minutes? Because this is a brute force attack and it takes a couple of minutes to successfully posion the victim server. If you didn't wait and ran the command before the cache was poisoned, the attack may fail no matter how many times you run "dig www.cnn.com" - because the victim server may now store the legitimate A record for www.cnn.com, and your subsequent *dig www.cnn.com* commands would not trigger the victim server to send a query to the attacker's name server anymore. And a remedy for this (i.e., the action of did not wait for 2 minutes) is to run the above *sudo rndc flush* command on VM2 to clear the cache.
+**Note**: Why wait for 2 minutes? Because this is a brute force attack and it takes a couple of minutes to successfully poison the victim server. If you didn't wait and ran the command before the cache was poisoned, the attack may fail no matter how many times you run "dig www.cnn.com" - because the victim server may now store the legitimate A record for www.cnn.com, and your subsequent *dig www.cnn.com* commands would not trigger the victim server to send a query to the attacker's name server anymore. And a remedy for this (i.e., the action of did not wait for 2 minutes) is to run the above *sudo rndc flush* command on VM2 to clear the cache.
 
 ### Clean Up
 
