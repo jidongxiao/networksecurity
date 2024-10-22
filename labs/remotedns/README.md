@@ -176,4 +176,4 @@ The following screenshots show that the attack is successful:
 
 ### Question
 
-Among all the labs you do in this course, this lab is the most powerful as it allows the attacker to perform the attack from outside of the victim's network. This attack is very creative and sophisticated, do you truly understand the techniques Dan Kaminsky used?
+Among all the labs you do in this course, this lab presents the most powerful attack as it allows the attacker to perform the attack from outside of the victim's network. This attack is very creative and sophisticated, do you truly understand the techniques Dan Kaminsky used?
