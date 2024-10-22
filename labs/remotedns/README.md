@@ -66,7 +66,7 @@ This screenshot shows the commands to copy all 5 files:
 2.2. restart DNS server so the above changes will take effect:
 
 ```console
-[05/29/22]seed@VM:~/.../remotedns$ sudo service bind9 restart
+$ sudo service bind9 restart
 ```
 
 <!--**Warning**: in your report, don't claim that the attack presented in this lab is not realistic because we need to make these changes on the victim DNS server. Such changes are unnecessary in a real life attacking scenario. The lab is designed in such a way, just to save you - the student, some money - so you don't need to purchase a domain, and to save you - the student, some time, we hardcoded 1.2.3.4 in the configuration file of the victim DNS server and also in the attacking program, otherwise you will need to manually to find out the IP address of authoritative name server for cnn.com.-->
@@ -92,7 +92,7 @@ This screenshot shows the commands to copy all 3 files:
 3.2. restart attacker's DNS server so the above changes will take effect:
 
 ```console
-[05/29/22]seed@VM:~/.../remotedns$ sudo service bind9 restart
+$ sudo service bind9 restart
 ```
 
 #### Test right before the Attack
@@ -100,11 +100,11 @@ This screenshot shows the commands to copy all 3 files:
 4. on victim DNS client, send two queries.
 
 ```console
-[05/29/22]seed@VM:~$ dig www.cnn.com 
+$ dig www.cnn.com 
 ```
 
 ```console
-[05/29/22]seed@VM:~$ dig @10.0.2.6 www.cnn.com
+$ dig @10.0.2.6 www.cnn.com
 ```
 
 **Note**: replace 10.0.2.6 with the IP address of your attacker's VM.
