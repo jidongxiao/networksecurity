@@ -8,7 +8,7 @@ $TTL 10000
 
 @       IN      NS    ns.attacker32.com.
 
-@       IN      A     172.16.77.130
-www     IN      A     172.16.77.130
-ns      IN      A     172.16.77.130
-*       IN      A     172.16.77.130
+@       IN      A     10.0.2.6
+www     IN      A     10.0.2.6
+ns      IN      A     10.0.2.6
+*       IN      A     10.0.2.6
