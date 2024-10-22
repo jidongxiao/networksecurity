@@ -127,7 +127,7 @@ the goal of this attack is, when the victim DNS client runs either of the above 
 [05/29/22]seed@VM:~/.../remotedns$ sudo rndc flush
 ```
 
-6. Launch the attack: on the attacker's VM, compile and run the attacking program, which is developed based on the famous Dan Kaminsky attack.
+6. Launch the attack: on the attacker's VM, compile and run the [attacking program](attack.c), which is developed based on the famous Dan Kaminsky attack.
 
 ```console
 $ sudo apt-get install libnet1-dev // this command installs a library which the attacking program needs.
@@ -173,3 +173,7 @@ The following screenshots show that the attack is successful:
 [05/29/22]seed@VM:~/.../remotedns$ sudo cp named.conf.options.orig /etc/bind/
 [05/29/22]seed@VM:~/.../remotedns$ sudo cp named.conf.default-zones.orig /etc/bind/
 ```-->
+
+### Question
+
+Among all the labs you do in this course, this lab is the most powerful as it allows the attacker to perform the attack from outside of the victim's network. This attack is very creative and sophisticated, do you truly understand the techniques Dan Kaminsky used?
