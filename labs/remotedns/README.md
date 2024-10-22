@@ -1,5 +1,18 @@
 ## Remote DNS Cache Poisoning Attack (aka, the Dan Kaminsky Attack)
 
+**Note**: If you completed [Lab 11 Subdomain Takeover](https://github.com/jidongxiao/networksecurity/tree/main/labs/subdomain), you need to do the following clean up work on VM2 before start this lab.
+
+1.  delete /etc/bind/db.cnn.com
+
+2. remove these lines from /etc/bind/named.conf.local:
+
+```console
+zone "cnn.com" {
+    type master;
+    file "/etc/bind/db.cnn.com";
+};
+```
+
 ### Requirement
 
 In this lab, you will poison the cache of a remote DNS server, and thus affect clients who rely on this DNS server. More specifically, we want clients who access www.cnn.com go to fakenews.com.
@@ -152,7 +165,7 @@ as long as we see this *NS* record which associates cnn.com. to ns.attacker32.co
 
 ### Verify the Results
 
-7. We can then verify the result from the victim DNS client. On the victim DNS client VM, run:
+7. We can then verify the result from the victim DNS client. On the victim DNS client VM, **wait for about 2 minutes and run**:
 
 ```console
 [05/29/22]seed@VM:~$ dig www.cnn.com 
@@ -162,6 +175,8 @@ if the attack is successful, then this dig should show us that www.cnn.com is ma
 
 The following screenshots show that the attack is successful:
 ![alt text](lab-remote-dns-success.png "dig cnn")
+
+**Note**: Why wait for 2 minutes? Because this is a brute force attack and it takes a couple of minutes to successfully posion the victim server. If you didn't wait and ran the command before the cache was poisoned, the attack may fail no matter how many times you run "dig www.cnn.com" - because the victim server may now store the legitimate A record for www.cnn.com, and your subsequent *dig www.cnn.com* commands would not trigger the victim server to send a query to the attacker's name server anymore. And a remedy for this (i.e., the action of did not wait for 2 minutes) is to run the above *sudo rndc flush* command on VM2 to clear the cache.
 
 ### Clean Up
 
