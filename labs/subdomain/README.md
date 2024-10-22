@@ -260,6 +260,17 @@ You will need *sudo* to edit the file. If you are not comfortable of using a com
 $ sudo sed -i '$d' /etc/resolvconf/resolv.conf.d/head
 ```
 
+**Important**: Remove these lines from /etc/bind/named.local.
+
+```console
+zone "cnn.com" {
+    type master;
+    file "/etc/bind/db.cnn.com";
+};
+```
+
+Not removing these lines will affect your future lab, such as the [Remote DNS Cache Poisoning Attack Lab](https://github.com/jidongxiao/networksecurity/tree/main/labs/remotedns).
+
 **Questions**
 
 Q: Why we don't use www.cnn.com for this lab, but instead, we use us.cnn.com? 
