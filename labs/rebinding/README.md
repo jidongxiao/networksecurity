@@ -38,7 +38,7 @@ The following is the IP addresses for the VMs used in this README.
 192.168.60.80   www.seedIoT32.com
 ```
 
-change 192.168.60.80 to the Client VM's IP address
+change 192.168.60.80 to the Client VM's IP address.
 
 this screenshot shows the file before editing:
 ![alt text](images/lab-rebinding-change-hosts.png "change /etc/hosts")
@@ -48,14 +48,11 @@ this screenshot shows the file is now edited:
 
 1.3. configure DNS server information, i.e., let the client know the IP address of the DNS server.
 
-1.3.1. add this line to the end of file /etc/resolvconf/resolv.conf.d/head
-nameserver DNS_SERVER_IP (change DNS_SERVER_IP to the local DNS server's IP address)
+1.3.1. add this line to the end of file /etc/resolvconf/resolv.conf.d/head (remember to replace DNS_SERVER_IP with your victim DNS server's IP address, plus, you need "sudo" if you edit the file using vi/vim.)
 
-this screenshot shows editing the file in *vi*:
-![alt text](images/lab-rebinding-edit-file.png "edit the file")
-
-this screenshot shows the file is now edited:
-![alt text](images/lab-rebinding-configure-dns.png "configure dns")
+```console
+nameserver DNS_SERVER_IP
+```
 
 *Note*: you did this same step in previous 2 labs.
 
