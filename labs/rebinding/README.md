@@ -71,10 +71,10 @@ $ sudo pip3 install Flask==1.1.1
 ![alt text](images/lab-rebinding-victim-web-server.png "command to install Flask")
 ![alt text](images/lab-rebinding-victim-web-server-installing.png "command to install Flask")
 
-2.2. download the IoT server code: http://cs.boisestate.edu/~jxiao/cs333/code/rebinding/user_vm.zip
+2.2. download the IoT server code from this linke: [http://ns.cs.rpi.edu/labs/rebinding/user_vm.zip](http://ns.cs.rpi.edu/labs/rebinding/user_vm.zip): 
 
 ```console
-$ wget http://cs.boisestate.edu/~jxiao/cs333/code/rebinding/user_vm.zip
+$ wget http://ns.cs.rpi.edu/labs/rebinding/user_vm.zip 
 ```
 
 2.3. then start the IoT server:
@@ -105,10 +105,10 @@ http://www.seediot32.com:8080 (access this from the firefox browser)
 $ sudo pip3 install Flask==1.1.1
 ```
 
-3.2. download the attacker web server code: http://cs.boisestate.edu/~jxiao/cs333/code/rebinding/attacker_vm.zip
+3.2. download the attacker web server code from this link:[http://ns.cs.rpi.edu/labs/rebinding/attacker_vm.zip](http://ns.cs.rpi.edu/labs/rebinding/attacker_vm.zip): 
 
 ```console
-$ wget http://cs.boisestate.edu/~jxiao/cs333/code/rebinding/attacker_vm.zip
+$ wget http://ns.cs.rpi.edu/labs/rebinding/attacker_vm.zip
 ```
 
 3.3. then start the attacker web server.
