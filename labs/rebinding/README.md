@@ -6,7 +6,7 @@ In this lab, you will demonstrate the DNS rebinding attack. The goal of the atta
 
 ### Setup
 
-3 Linux VMs: Victim Client - acting as 2 roles, a web client, and an IoT server (www.seediot32.com), a Local DNS Server, Attacker - acting as 2 roles, a malicious web server (www.attacker32.com), and a malicious DNS serve (which is responsible for the attacker32.com domain).
+3 Linux VMs: Victim Client - acting as 2 roles, a web client, and an IoT server (www.seediot32.com), a Local DNS Server, Attacker - acting as 2 roles, a malicious web server (www.attacker32.com), and a malicious DNS server (which is responsible for the attacker32.com domain).
 
 The following is the IP addresses for the VMs used in this README.
 
@@ -160,7 +160,7 @@ $ sudo service bind9 restart
 zone "attacker32.com" {
 	type forward;
 	forwarders {
-	    10.0.2.6; // replace 172.16.77.130 with your attacker VM's IP address, do not remove the ";"
+	    10.0.2.6; // replace 10.0.2.6 with your attacker VM's IP address, do not remove the ";"
 	};
 };
 ```
