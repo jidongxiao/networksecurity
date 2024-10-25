@@ -142,16 +142,9 @@ before change:
 after change:
 ![alt text](images/lab-rebinding-attacker-DNS-server-after-change.png "attacker DNS server done")
 
-4.2. add the following into /etc/bind/named.conf (so that the above configuration file will be used):
+4.2. the above attacker_vm folder contains a DNS configuration file called named.conf, copy this file into /etc/bind
 
-```console
-zone "attacker32.com" {
-	type master;
-	file "/etc/bind/attacker32.com.zone";
-};
-```
-
-![alt text](images/lab-rebinding-attacker-adding-zone.png "change zone file")
+![alt text](images/lab-rebinding-attacker-copying-files.png "copy dns file")
 
 4.3. restart DNS server so the above changes will take effect:
 
@@ -167,7 +160,7 @@ $ sudo service bind9 restart
 zone "attacker32.com" {
 	type forward;
 	forwarders {
-	    172.16.77.130; // replace 172.16.77.130 with your attacker VM's IP address, do not remove the ";"
+	    10.0.2.6; // replace 172.16.77.130 with your attacker VM's IP address, do not remove the ";"
 	};
 };
 ```
