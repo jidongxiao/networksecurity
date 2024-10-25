@@ -65,7 +65,7 @@ $ sudo resolvconf -u
 2.1. install a web framework called Flask.
 
 ```console
-$ sudo pip3 install Flask==1.1.1
+$ sudo pip3 install Flask==3.0.3
 ```
 
 ![alt text](images/lab-rebinding-victim-web-server.png "command to install Flask")
