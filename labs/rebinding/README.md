@@ -165,6 +165,8 @@ zone "attacker32.com" {
 };
 ```
 
+**Note**: if you completed the Remote DNS Attack lab, then these lines should already be in your file, and if that is the case, you do not need to change this file.
+
 ![alt text](images/lab-rebinding-setting-local-DNS-server.png "setting local DNS server")
 
 5.2. restart DNS server so the above changes will take effect:
