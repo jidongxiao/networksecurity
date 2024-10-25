@@ -102,7 +102,7 @@ http://www.seediot32.com:8080 (access this from the firefox browser)
 3.1. install a web framework called Flask.
 
 ```console
-$ sudo pip3 install Flask==1.1.1
+$ sudo pip3 install Flask==3.0.3
 ```
 
 3.2. download the attacker web server code from this link:[http://ns.cs.rpi.edu/labs/rebinding/attacker_vm.zip](http://ns.cs.rpi.edu/labs/rebinding/attacker_vm.zip): 
