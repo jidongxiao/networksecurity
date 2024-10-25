@@ -92,7 +92,6 @@ $ sudo ./start_iot.sh
 The above script will start a web server and listen on port 8080.
 
 ![alt text](images/lab-rebinding-start-iot.png "command to start iot web server")
-![alt text](images/lab-rebinding-iot-started.png "iot server is started")
 
 2.4. test the IoT server:
 
