@@ -71,7 +71,7 @@ $ sudo pip3 install Flask==1.1.1
 ![alt text](images/lab-rebinding-victim-web-server.png "command to install Flask")
 ![alt text](images/lab-rebinding-victim-web-server-installing.png "command to install Flask")
 
-2.2. download the IoT server code from this linke: [http://ns.cs.rpi.edu/labs/rebinding/user_vm.zip](http://ns.cs.rpi.edu/labs/rebinding/user_vm.zip): 
+2.2. download the IoT server code from this link: [http://ns.cs.rpi.edu/labs/rebinding/user_vm.zip](http://ns.cs.rpi.edu/labs/rebinding/user_vm.zip): 
 
 ```console
 $ wget http://ns.cs.rpi.edu/labs/rebinding/user_vm.zip 
