@@ -99,7 +99,6 @@ The above script will start a web server and listen on port 8080.
 http://www.seediot32.com:8080 (access this from the firefox browser)
 
 ![alt text](images/lab-rebinding-test-iot-p1.png "test iot server")
-![alt text](images/lab-rebinding-test-iot-p2.png "test iot server success")
 
 3. on the attacker VM, set up the attacker web server:
 
@@ -126,7 +125,6 @@ $ sudo ./start_webserver.sh
 The above script will start a web server and listen on port 8080.
 
 ![alt text](images/lab-rebinding-start-attacker-web-server.png "command to start attacker web server")
-![alt text](images/lab-rebinding-attacker-web-server-started.png "attacker web server is started")
 
 3.4. test the attacker web server:
 
