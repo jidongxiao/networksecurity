@@ -10,11 +10,11 @@ In this lab, you will demonstrate the DNS rebinding attack. The goal of the atta
 
 The following is the IP addresses for the VMs used in this README.
 
-| VM  |  IP Address   |                          Role                                         |
+| VM  |  IP Address   |                          Roles                                        |
 |-----|---------------|-----------------------------------------------------------------------|
-| VM1 | 172.16.77.128 |   victim client, also runs an IoT server                              |
-| VM2 | 172.16.77.129 |   victim server, acts as a local DNS server                           |
-| VM3 | 172.16.77.130 |   attacker, runs a malicious web server, and a malicious DNS server   |
+| VM1 | 10.0.2.4      |   victim client, also runs an IoT server                              |
+| VM2 | 10.0.2.5      |   victim server, acts as a local DNS server                           |
+| VM3 | 10.0.2.6      |   attacker, runs a malicious web server, and a malicious DNS server   |
 
 **Warning**: this is the hardest lab, and if you missed the in-class discussion, you are expected to get lost in this lab; but you may still be able to complete the lab by just following the instructions, you just won't really understand why you are doing each step.
 
@@ -31,11 +31,16 @@ The following is the IP addresses for the VMs used in this README.
 ![alt text](images/lab-rebinding-firefox-setting-p5.png "change cache expiration time")
 ![alt text](images/lab-rebinding-firefox-setting-p6.png "change cache expiration time")
 
-1.2. change /etc/hosts: add the following entry in the file:
+1.2. change /etc/hosts: change this line:
 
-CLIENT_VM_IP	www.seediot32.com (note: change CLIENT_VM_IP to the Client VM's IP address)
+```console
+# For DNS Rebinding Lab
+192.168.60.80   www.seedIoT32.com
+```
 
-this screenshot shows editing the file in *vi*:
+change 192.168.60.80 to the Client VM's IP address
+
+this screenshot shows the file before editing:
 ![alt text](images/lab-rebinding-change-hosts.png "change /etc/hosts")
 
 this screenshot shows the file is now edited:
@@ -51,6 +56,8 @@ this screenshot shows editing the file in *vi*:
 
 this screenshot shows the file is now edited:
 ![alt text](images/lab-rebinding-configure-dns.png "configure dns")
+
+*Note*: you did this same step in previous 2 labs.
 
 1.3.2. run the following command so the above change will take effect:
 
