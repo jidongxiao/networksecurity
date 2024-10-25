@@ -47,7 +47,7 @@ The following is the IP addresses for the VMs used in this README.
 nameserver DNS_SERVER_IP
 ```
 
-*Note*: you did this same step in previous 2 steps.
+*Note*: you did this same step in previous 2 labs.
 
 1.2. run the following command so the above change will take effect:
 
