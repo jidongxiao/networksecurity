@@ -29,7 +29,6 @@ The following is the IP addresses for the VMs used in this README.
 ![alt text](images/lab-rebinding-firefox-setting-p3.png "change cache expiration time")
 ![alt text](images/lab-rebinding-firefox-setting-p4.png "change cache expiration time")
 ![alt text](images/lab-rebinding-firefox-setting-p5.png "change cache expiration time")
-![alt text](images/lab-rebinding-firefox-setting-p6.png "change cache expiration time")
 
 1.2. change /etc/hosts: change this line:
 
