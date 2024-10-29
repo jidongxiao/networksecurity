@@ -10,7 +10,7 @@ Only one VM is sufficient.
 
 ### Steps
 
-1. use wireshark to open the capture file forensics.pcapng. From the capture, we can see there is FTP traffic between Bob's machine 10.142.0.3 and a remote server 104.155.183.43. Locate the first FTP packet, and then right click -> follow -> TCP stream, this shows Bob transferred a file called key.zip. (in FTP, retr command means retrieve a file.)
+1. use wireshark to open the capture file forensics.pcapng. From the capture, we can see there is FTP traffic between Bob's machine 10.142.0.3 and a remote server 104.155.183.43. Locate the first FTP packet (which is packet 4), and then right click -> follow -> TCP stream, this shows Bob transferred a file called key.zip. (in FTP, retr command means retrieve a file.)
 
 ![alt text](lab-tls-ftp.png "Lab tls ftp")
 
@@ -71,6 +71,8 @@ Port: 443<br/>
 Protocol: ftp<br/>
 Key File: server_key.pem (you need to either browse or manually type the full path of this key file.)<br/>
 Password: (empty)<br/>
+
+**Note**: if wireshark shows an error when you type ftp as the protocol, you can just leave the protocol field empty; this occurs on some VMs.
 
 4.4. close wireshark and open wireshark again, and then also open the capture file in wireshark.
 
