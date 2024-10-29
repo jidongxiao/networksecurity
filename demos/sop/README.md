@@ -5,6 +5,7 @@ Steps:
 1. Install the web server.
 
 ```console
+$ cd node
 $ sudo apt install nodejs-legacy
 $ sudo apt install npm
 $ npm config set strict-ssl false
