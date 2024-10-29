@@ -12,6 +12,8 @@ Only one VM is sufficient.
 
 1. use wireshark to open the capture file forensics.pcapng. From the capture, we can see there is FTP traffic between Bob's machine 10.142.0.3 and a remote server 104.155.183.43. Locate the first FTP packet (which is packet 4), and then right click -> follow -> TCP stream, this shows Bob transferred a file called key.zip. (in FTP, retr command means retrieve a file.)
 
+![alt text](lab-tls-first-ftp-p1.png "Lab tls examine the first ftp packet")
+![alt text](lab-tls-first-ftp-p2.png "Lab tls examine the first ftp packet, follow tcp stream")
 ![alt text](lab-tls-ftp.png "Lab tls ftp")
 
 2. go back to the main interface of wireshark, locate the FTP packet (packet 55) that actually transfers this key.zip (After step 1, you need to clear the filter at the top of wireshark, otherwise you won't see the FTP-DATA packet, which is packet 55), and then do the following:
