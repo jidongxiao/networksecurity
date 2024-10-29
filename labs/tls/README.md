@@ -23,7 +23,7 @@ Only one VM is sufficient.
 2.3. save as: key.zip<br/>
 
 ![alt text](lab-tls-save-as-raw.png "Lab tls save as raw")
-![alt text](lab-tls-raw-ftp-stream.png "Lab tls save key.zip")
+![alt text](lab-tls-save-key-zip.png "Lab tls save key.zip")
 
 3. open a terminal and unzip key.zip.
 
