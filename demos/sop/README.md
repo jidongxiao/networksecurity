@@ -34,4 +34,4 @@ $ node server2/server2.js
 res.header('Access-Control-Allow-Origin', 'http://localhost:3000'); // Allow Server 1
 ```
 
-Observe the effects of these changes in the server 1 page. 
+In the server1 web page, click the button "Fetch Data From Server 2" and observe the effects of these changes in the server 1 page. 
