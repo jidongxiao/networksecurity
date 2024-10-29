@@ -121,7 +121,7 @@ The following command allows us the cut the first 221 bytes from file flag.jpg, 
 
 8. we are done, flag2.jpg is the image file we are looking for. You can open this file and view its content - if you can't view its content, then your lab is not successful.
 
-![alt text](lab-tls-flag.png "Lab tls the flag jpg")
+![alt text](lab-tls-flag.jpg "Lab tls the flag jpg")
 
 ### References:
 
