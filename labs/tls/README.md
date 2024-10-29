@@ -58,7 +58,7 @@ vEJTGtlc2+b5ztlsYjzsPFaI49fw8QNawtZj1e3CRc7w
 
 4. now we load this private key into wireshark, so that wireshark can decrypt TLS packets. In wireshark, do the following:
 
-4.1. edit -> preferences -> protocols -> ssl.
+4.1. edit -> preferences -> protocols -> tls.
 
 ![alt text](lab-tls-load-key.png "Lab tls load key")
 
@@ -74,9 +74,9 @@ Password: (empty)<br/>
 
 4.4. close wireshark and open wireshark again, and then also open the capture file in wireshark.
 
-5. now we can examine the TLS packets. Each "Client Hello" represents one TLS conversation. Locate one tls packet, and use "right click->follow->ssl stream", we can see the 1st conversation downloads the file index.html - and this html file contains nothing but a jpg file called flag.jpg; and the 2nd conversation downloads the file flag.jpg. So this flag.jpg file could be something we are interested in. Therefore we locate the first packet of the 2nd TLS conversation, and that is packet 85, which is the 2nd "Client Hello" in this capture. Then do the following:
+5. now we can examine the TLS packets. Each "Client Hello" represents one TLS conversation. Locate one tls packet, and use "right click->follow->tls stream", we can see the 1st conversation downloads the file index.html - and this html file contains nothing but a jpg file called flag.jpg; and the 2nd conversation downloads the file flag.jpg. So this flag.jpg file could be something we are interested in. Therefore we locate the first packet of the 2nd TLS conversation, and that is packet 85, which is the 2nd "Client Hello" in this capture. Then do the following:
 
-5.1. right click->follow->ssl stream,<br/>
+5.1. right click->follow->tls stream,<br/>
 5.2. show and save data as: raw<br/>
 
 ![alt text](lab-tls-raw-ssl-stream.png "Lab tls save as raw ssl")
@@ -107,7 +107,7 @@ Password: (empty)<br/>
 000000e0: e000 104a 4649 4600 0101 0000 0100 0100  ...JFIF.........
 ```
 
-The above output tells us ff d8 ff is at address byte 222. (Each line is 16 bytes. ff d8 ff starts at the 14th line, with an offset of 14. Therefore the address is 13*16+14=222)
+The above output tells us ff d8 ff is at address byte 222. (Each line is 16 bytes. ff d8 ff starts at the 14th line, with an offset of 14. Therefore the address is 13\*16+14=222)
 
 The following command allows us the cut the first 221 bytes from file flag.jpg, and generate a file called flag2.jpg.
 
@@ -120,6 +120,8 @@ The following command allows us the cut the first 221 bytes from file flag.jpg, 
 ```
 
 8. we are done, flag2.jpg is the image file we are looking for. You can open this file and view its content - if you can't view its content, then your lab is not successful.
+
+![alt text](lab-tls-flag.png "Lab tls the flag jpg")
 
 ### References:
 
