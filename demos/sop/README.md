@@ -19,6 +19,8 @@ Open one terminal window and run:
 $ node server1/server1.js
 ```
 
+Meanwhile, open one terminal window and run:
+
 ```console
 $ node server2/server2.js
 ```
