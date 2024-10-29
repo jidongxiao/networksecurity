@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Server 1 - Primary Site</title>
+</head>
+<body>
+    <h1>Welcome to Server 1</h1>
+    <button onclick="fetchData()">Fetch Data from Server 2</button>
+    <pre id="response"></pre>
+    
+    <script>
+        async function fetchData() {
+            try {
+                const response = await fetch('http://localhost:4000/data.json');
+                const data = await response.json();
+                document.getElementById('response').textContent = JSON.stringify(data, null, 2);
+            } catch (error) {
+                console.error('Error:', error);
+                document.getElementById('response').textContent = 'Error fetching data.';
+            }
+        }
+    </script>
+</body>
+</html>
+
