@@ -1,3 +1,5 @@
+## Same Origin Policy and Cross-Origin Resource Sharing
+
 Steps:
 
 1. Install the web server.
