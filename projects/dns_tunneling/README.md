@@ -23,7 +23,7 @@ You are required to use C programming language to implement your client and serv
 To simplify your task, the two programs (the DNS client and the DNS server) only need to exchange 4 messages: 
 
 1. The client first sends a message to server: this message is "hi", 
-2. The server responds with another message "hi client",
+2. The server responds with another message "hey!",
 3. The client then sends a message to server: this message is "hello", 
 4. The server responds with another message "hello client".
 
