@@ -132,5 +132,6 @@ Your submission (via submitty) should include your source code and a README file
  - Client side produces expected output. (3 pts)
  - Server side produces expected output, including the output of the dig command. (3 pts)
  - No suspicious traffic observed in wireshark. (2 pts)
+   - 4 DNS messages must be observed: 2 queries, 2 responses.
  - A completed README file provided. (1 pts)
 
