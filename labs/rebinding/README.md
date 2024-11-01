@@ -6,15 +6,15 @@ In this lab, you will demonstrate the DNS rebinding attack. The goal of the atta
 
 ### Setup
 
-3 Linux VMs: Victim Client - acting as 2 roles, a web client, and an IoT server (www.seediot32.com), a Local DNS Server, Attacker - acting as 2 roles, a malicious web server (www.attacker32.com), and a malicious DNS serve (which is responsible for the attacker32.com domain).
+3 Linux VMs: Victim Client - acting as 2 roles, a web client, and an IoT server (www.seediot32.com), a Local DNS Server, Attacker - acting as 2 roles, a malicious web server (www.attacker32.com), and a malicious DNS server (which is responsible for the attacker32.com domain).
 
 The following is the IP addresses for the VMs used in this README.
 
-| VM  |  IP Address   |                          Role                                         |
+| VM  |  IP Address   |                          Roles                                        |
 |-----|---------------|-----------------------------------------------------------------------|
-| VM1 | 172.16.77.128 |   victim client, also runs an IoT server                              |
-| VM2 | 172.16.77.129 |   victim server, acts as a local DNS server                           |
-| VM3 | 172.16.77.130 |   attacker, runs a malicious web server, and a malicious DNS server   |
+| VM1 | 10.0.2.4      |   victim client, also runs an IoT server                              |
+| VM2 | 10.0.2.5      |   victim server, acts as a local DNS server                           |
+| VM3 | 10.0.2.6      |   attacker, runs a malicious web server, and a malicious DNS server   |
 
 **Warning**: this is the hardest lab, and if you missed the in-class discussion, you are expected to get lost in this lab; but you may still be able to complete the lab by just following the instructions, you just won't really understand why you are doing each step.
 
@@ -29,13 +29,17 @@ The following is the IP addresses for the VMs used in this README.
 ![alt text](images/lab-rebinding-firefox-setting-p3.png "change cache expiration time")
 ![alt text](images/lab-rebinding-firefox-setting-p4.png "change cache expiration time")
 ![alt text](images/lab-rebinding-firefox-setting-p5.png "change cache expiration time")
-![alt text](images/lab-rebinding-firefox-setting-p6.png "change cache expiration time")
 
-1.2. change /etc/hosts: add the following entry in the file:
+1.2. change /etc/hosts: change this line:
 
-CLIENT_VM_IP	www.seediot32.com (note: change CLIENT_VM_IP to the Client VM's IP address)
+```console
+# For DNS Rebinding Lab
+192.168.60.80   www.seedIoT32.com
+```
 
-this screenshot shows editing the file in *vi*:
+change 192.168.60.80 to the Client VM's IP address.
+
+this screenshot shows the file before editing:
 ![alt text](images/lab-rebinding-change-hosts.png "change /etc/hosts")
 
 this screenshot shows the file is now edited:
@@ -43,14 +47,13 @@ this screenshot shows the file is now edited:
 
 1.3. configure DNS server information, i.e., let the client know the IP address of the DNS server.
 
-1.3.1. add this line to the end of file /etc/resolvconf/resolv.conf.d/head
-nameserver DNS_SERVER_IP (change DNS_SERVER_IP to the local DNS server's IP address)
+1.3.1. add this line to the end of file /etc/resolvconf/resolv.conf.d/head (remember to replace DNS_SERVER_IP with your victim DNS server's IP address, plus, you need "sudo" if you edit the file using vi/vim.)
 
-this screenshot shows editing the file in *vi*:
-![alt text](images/lab-rebinding-edit-file.png "edit the file")
+```console
+nameserver DNS_SERVER_IP
+```
 
-this screenshot shows the file is now edited:
-![alt text](images/lab-rebinding-configure-dns.png "configure dns")
+*Note*: you did this same step in previous 2 labs.
 
 1.3.2. run the following command so the above change will take effect:
 
@@ -65,16 +68,16 @@ $ sudo resolvconf -u
 2.1. install a web framework called Flask.
 
 ```console
-$ sudo pip3 install Flask==1.1.1
+$ sudo pip3 install Flask==3.0.3
 ```
 
 ![alt text](images/lab-rebinding-victim-web-server.png "command to install Flask")
 ![alt text](images/lab-rebinding-victim-web-server-installing.png "command to install Flask")
 
-2.2. download the IoT server code: http://cs.boisestate.edu/~jxiao/cs333/code/rebinding/user_vm.zip
+2.2. download the IoT server code from this link: [http://ns.cs.rpi.edu/labs/rebinding/user_vm.zip](http://ns.cs.rpi.edu/labs/rebinding/user_vm.zip): 
 
 ```console
-$ wget http://cs.boisestate.edu/~jxiao/cs333/code/rebinding/user_vm.zip
+$ wget http://ns.cs.rpi.edu/labs/rebinding/user_vm.zip 
 ```
 
 2.3. then start the IoT server:
@@ -88,27 +91,25 @@ $ sudo ./start_iot.sh
 The above script will start a web server and listen on port 8080.
 
 ![alt text](images/lab-rebinding-start-iot.png "command to start iot web server")
-![alt text](images/lab-rebinding-iot-started.png "iot server is started")
 
 2.4. test the IoT server:
 
 http://www.seediot32.com:8080 (access this from the firefox browser)
 
 ![alt text](images/lab-rebinding-test-iot-p1.png "test iot server")
-![alt text](images/lab-rebinding-test-iot-p2.png "test iot server success")
 
 3. on the attacker VM, set up the attacker web server:
 
 3.1. install a web framework called Flask.
 
 ```console
-$ sudo pip3 install Flask==1.1.1
+$ sudo pip3 install Flask==3.0.3
 ```
 
-3.2. download the attacker web server code: http://cs.boisestate.edu/~jxiao/cs333/code/rebinding/attacker_vm.zip
+3.2. download the attacker web server code from this link:[http://ns.cs.rpi.edu/labs/rebinding/attacker_vm.zip](http://ns.cs.rpi.edu/labs/rebinding/attacker_vm.zip): 
 
 ```console
-$ wget http://cs.boisestate.edu/~jxiao/cs333/code/rebinding/attacker_vm.zip
+$ wget http://ns.cs.rpi.edu/labs/rebinding/attacker_vm.zip
 ```
 
 3.3. then start the attacker web server.
@@ -122,7 +123,6 @@ $ sudo ./start_webserver.sh
 The above script will start a web server and listen on port 8080.
 
 ![alt text](images/lab-rebinding-start-attacker-web-server.png "command to start attacker web server")
-![alt text](images/lab-rebinding-attacker-web-server-started.png "attacker web server is started")
 
 3.4. test the attacker web server:
 
@@ -133,7 +133,7 @@ http://localhost:8080 (access this from the firefox browser)
 
 4. open a new terminal window on the attacker VM, and set up the attacker DNS server:
 
-4.1. the above attacker_vm folder contains a DNS configuration file called attacker32.com.zone, copy this file into /etc/bind. In this file, change 10.0.2.8 to the attacker VM's IP address, and change the TTL (which is the first entry in this file) from 10000 to 10, i.e., records in the cache expire in 10 seconds.
+4.1. the above attacker_vm folder contains a DNS configuration file called attacker32.com.zone, copy this file into /etc/bind. In this file, change 10.0.2.6 to the attacker VM's IP address, and change the TTL (which is the first entry in this file) from 10000 to 10, i.e., records in the cache expire in 10 seconds.
 
 before change:
 ![alt text](images/lab-rebinding-attacker-DNS-server-before-change.png "test attacker DNS server")
@@ -141,16 +141,9 @@ before change:
 after change:
 ![alt text](images/lab-rebinding-attacker-DNS-server-after-change.png "attacker DNS server done")
 
-4.2. add the following into /etc/bind/named.conf (so that the above configuration file will be used):
+4.2. the above attacker_vm folder contains a DNS configuration file called named.conf, copy this file into /etc/bind
 
-```console
-zone "attacker32.com" {
-	type master;
-	file "/etc/bind/attacker32.com.zone";
-};
-```
-
-![alt text](images/lab-rebinding-attacker-adding-zone.png "change zone file")
+![alt text](images/lab-rebinding-attacker-copying-files.png "copy dns file")
 
 4.3. restart DNS server so the above changes will take effect:
 
@@ -166,10 +159,12 @@ $ sudo service bind9 restart
 zone "attacker32.com" {
 	type forward;
 	forwarders {
-	    172.16.77.130; // replace 172.16.77.130 with your attacker VM's IP address, do not remove the ";"
+	    10.0.2.6; // replace 10.0.2.6 with your attacker VM's IP address, do not remove the ";"
 	};
 };
 ```
+
+**Note**: if you completed the Remote DNS Attack lab, then these lines should already be in your file, and if that is the case, you do not need to change this file.
 
 ![alt text](images/lab-rebinding-setting-local-DNS-server.png "setting local DNS server")
 

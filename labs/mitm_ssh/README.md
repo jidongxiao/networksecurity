@@ -75,22 +75,35 @@ This screenshot shows the effect of this command as shown in the routing table -
 $ sudo python3 ssh_attack.py
 ```
 
-**Note**: You do not need to change any lines of this script.
+**Note**: You need to change this line in the script, specify the IP of address of the VM which runs the real SSH server.
+
+```console
+SERVER_IP = '10.0.2.5'
+```
 
 This screenshot shows the moment right before the attacker launches the attack.
-![alt text](lab-mitm-ssh-launch-attack.png "launch attack")
+![alt text](lab-mitm-ssh-launch-attack-p1.png "launch attack, before enter")
 
-Explanation: what this script does is: keep sniffing packets going between the victim client and the web server, when a packet which goes from the client to the web server is captured, just forward it to the server, when a packet which goes from the web server to the client is captured, modify its content so as to show the message "this site is hacked".
+This screenshot shows the moment right after the attacker launches the attack.
+![alt text](lab-mitm-ssh-launch-attack-p2.png "launch attack, after enter")
 
-3. The victim client, ssh to the server using the test account, type password to login:
+**Explanation**: what this script does is: it starts a fake ssh server and waits for the victim client to connect; when the victim client connects and types credentials, the script then uses the received credentials to connect to the real ssh server, after that, the script just forwards packets between the victim client and the real ssh server.
+
+3. The victim client, ssh to the server using the test account:
 
 ![alt text](lab-mitm-ssh-victim-ssh-p1.png "victim ssh connects")
 
 Victim enters "yes" and types the password.
 ![alt text](lab-mitm-ssh-victim-ssh-p2.png "victim ssh connects")
-
-After typing the password, the connection will be closed.
 ![alt text](lab-mitm-ssh-victim-ssh-p3.png "victim ssh connects")
+
+After typing the password, the victim will connect to the real SSH server and can then run SSH commands as normal.
+![alt text](lab-mitm-ssh-victim-ssh-p4.png "victim ssh connects")
+![alt text](lab-mitm-ssh-victim-ssh-p5.png "victim ssh connects")
+
+As an example, the victim runs the command "ifconfig" to confirm that the IP address of this machine is indeed the IP address of the real SSH server.
+
+![alt text](lab-mitm-ssh-victim-ifconfig.png "victim ssh connected")
 
 4. The attacker, now should see the user's user name and password on the terminal which runs the attacking script, as shown in this screenshot:
 
@@ -117,8 +130,18 @@ $ sudo iptables -t nat -F
 
 ### Limitation
 
-There are two limitations here:
+There is one limitation here: This attack mainly targets situations when the victim connects to an SSH server for the first time. When it is not the first time, the victim client will get a warning message, produced by the SSH client program. And such a warning can raise a red flag and therefore a cautious user may decide not to use SSH at this moment.
 
-1. After capturing the victim's credentials, this current attacking script would close the connection; an improvement can be made such that the connection will stay and the attacker simply forwards the traffic between the victim client and the victim server. This will make the attack more stealthy.
+**Troubleshooting tips**: the warning message mentioned above looks like this: 
+![alt text](lab-mitm-ssh-warning.png "the warning message!")
 
-2. This attack mainly targets situations when the victim connects to an SSH server for the first time. When it is not the first time, the victim client will get a warning message, produced by the SSH client program. And such a warning can raise a red flag and expose the attacker.
+And if you (as the ssh client) do get this message, then just run:
+
+```console
+$ rm -f ~/.ssh/known_hosts
+```
+to delete the file *~/.ssh/known_hosts*.
+
+![alt text](lab-mitm-ssh-fix-warning.png "fix the warning message!")
+
+After deleting the file, you can re-try the ssh command to connect again.

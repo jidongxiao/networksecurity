@@ -24,6 +24,14 @@ In this lab, you will bypass a firewall that has an egress filtering rule, and t
 | VM2 | 172.16.77.129 |  web client, which also runs an ssh server, through which we create the ssh tunnel  |
 | VM3 | 172.16.77.130 |  not used in task 2                                                                 |
 
+Run the following commands on VM1 to install and start a web server on VM1:
+
+```console
+sudo apt update
+sudo apt install apache2
+sudo systemctl start apache2
+```
+
 ### Task 1
 
 telnet from VM1 to VM3 is blocked, but we still want to do telnet from VM1 to VM3.
@@ -95,7 +103,7 @@ as this screenshot shows, now the ip address is VM3's ip address, which proves t
 
 ### Task 2
 
-a web server is (by default) running on VM1 at port 80, yet incoming traffic to port 80 and port 22 are both blocked by the firewall. Our goal is to evade the firewall so we can access the web server running on VM1 from VM2. For this task, we only need VM1 and VM2: VM1 is the web server, VM2 is the web client.
+After running the 3 commands in the setup stage, now a web server is running on VM1 at port 80, yet incoming traffic to port 80 and port 22 are both blocked by the firewall. Our goal is to evade the firewall so we can access the web server running on VM1 from VM2. For this task, we only need VM1 and VM2: VM1 is the web server, VM2 is the web client.
 
 ### Steps for Task 2
 

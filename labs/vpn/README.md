@@ -15,11 +15,16 @@ In this lab, you will bypass a firewall that has an egress filtering rule, which
 
 ### Steps
 
-1. enable firewall on VM1.
+1. enable firewall on VM1, and let all default policy be ACCEPT.
 
 ```console
 # sudo ufw enable
+# sudo iptables -P INPUT ACCEPT
+# sudo iptables -P FORWARD ACCEPT
+# sudo iptables -P OUTPUT ACCEPT
 ```
+
+**Explanation**: When the default policy is set to ACCEPT, all traffic are allowed unless there are more specific rules blocking certain traffic.
 
 2. setup the firewall on VM1 so that www.google.com is blocked.
 
@@ -54,14 +59,14 @@ ping should fail here because of the above firewall setting:
 
 ![alt text](lab-vpn-web-fails.png "access www.google.com fails")
 
-5. On VM2, download the vpnserver program (http://cs.boisestate.edu/~jxiao/cs333/code/vpn/vpnserver.c), compile the vpnserver program and run it.
+5. On VM2, download this [vpn server program](vpnserver.c), compile the vpn server program and run it.
 
 ```console
 # gcc vpnserver.c -o vpnserver
 # sudo ./vpnserver
 ```
 
-6. on VM1: download the vpnclient program (http://cs.boisestate.edu/~jxiao/cs333/code/vpn/vpnclient.c), compile the vpnclient program and run it.
+6. on VM1: download the [vpn client program](vpnclient.c), compile the vpn client program and run it.
 
 ```console
 # gcc vpnclient.c -o vpnclient
@@ -166,3 +171,15 @@ on VM2:
 # sudo iptables -t nat -F
 # sudo iptables -t nat -L
 ```
+
+**Troubleshooting tips**:
+
+If the lab worked smoothly for you, you can ignore the following part. If at the end of the lab you just are not able to access Google, one thing you can do is, run these 3 commands on the VPN server side as well:
+
+```console
+# sudo iptables -P INPUT ACCEPT
+# sudo iptables -P FORWARD ACCEPT
+# sudo iptables -P OUTPUT ACCEPT
+```
+
+Technically we should not need to run these 3 commands on the VPN server, since we do not intend to have a firewall on the VPN server for any purpose. However, the provided VM may run the firewall secretly by default, and its default policy may be DROP, and when that is the case, then your packets may be dropped at the VPN server and would not reach its final destination. These commands set the default policy to be ACCEPT, this way even if the firewall on the VPN server VM runs, it won't block any of your packets.
