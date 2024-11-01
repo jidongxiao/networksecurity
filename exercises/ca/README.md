@@ -9,9 +9,9 @@ The provided Linux VM.
 - Download these 3 files:
 
 ```console
-# wget http://cs.boisestate.edu/~jxiao/cs333/info/pki/ca.crt
-# wget http://cs.boisestate.edu/~jxiao/cs333/info/pki/ca.key
-# wget http://cs.boisestate.edu/~jxiao/cs333/info/pki/openssl.cnf
+# wget http://ns.cs.rpi.edu/pki/ca.crt
+# wget http://ns.cs.rpi.edu/pki/ca.key
+# wget http://ns.cs.rpi.edu/pki/openssl.cnf
 ```
 
 - Create a folder called demoCA, and then enter into demoCA, and then create 3 empty folders: crl, certs, and newcerts. After that, create an empty file called index.txt. After that create a file called serial, write a number called "1000" into this file.
