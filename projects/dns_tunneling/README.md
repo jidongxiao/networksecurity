@@ -35,12 +35,50 @@ However, given that the goal here is to communicate covertly, these two messages
 
 ## Expected Output
 
+When running the program, you are expected to get the following results:
+
+### Server
+
+```console
+$ sudo ./server
+DNS server listening on port 53...
+Encoded Query Name: aGkA
+Decoded Data: hi
+DNS response sent with message "hey!" encoded in A records.
+Encoded Query Name: aGVsbG8A
+Decoded Data: hello
+DNS response sent with message "hello client" encoded in A records.
+```
+
+### Client
+
+```console
+$ ./client
+Message to send: hi
+Encoded data to send: aGkA
+Decoded message from server: hey!
+Message to send: hello
+Encoded data to send: aGVsbG8A
+Decoded message from server: hello client
+```
+
+## Wireshark Capture
+
+When running the two programs, we should see 4 DNS messages in wireshark, and it is your responsibility to make sure these DNS messages have the correct format. In other words, wireshark should not report any malformed DNS packets. Given that our goal here is the communicate covertly, any malformed DNS packets in wireshark would make the communication suspicious and thus should be avoided.
+
 ## Submission
 
 Due: 23:59pm, Friday, Nov 22nd, 2024.
 
-Your submission should include your source code and a README.
+Your submission should include your source code and a README file.
 
 ## Grading Rubric
 
-To be added later.
+10 pts
+
+ - No compilation warnings or errors. (1 pts)
+ - Client side produces expected output. (3 pts)
+ - Server side produces expected output. (3 pts)
+ - No suspicious traffic observed in wireshark. (2 pts)
+ - A completed README file provided. (1 pts)
+
