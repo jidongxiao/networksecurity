@@ -18,12 +18,22 @@ DNS tunneling is a technique that encodes data within DNS queries and responses,
 
 You are required to use C programming language to implement your client and server. You are allowed to use chatgpt.
 
-To simplify your task, the two programs (DNS client and DNS server) only need to exchange two messages: 
+To simplify your task, the two programs (DNS client and DNS server) only need to exchange 4 messages: 
 
-1. The client first sends a message to server: this message is "hello", 
-2. The server responds with another message "hello client".
+1. The client first sends a message to server: this message is "hi", 
+2. The server responds with another message "hi client",
+3. The client then sends a message to server: this message is "hello", 
+4. The server responds with another message "hello client".
 
-However, given that the goal here is to communicate covertly, these two messages should not be directly visible to whoever is monitoring the network using tools such as wireshark.
+However, given that the goal here is to communicate covertly, these two messages should not be directly visible to whoever is monitoring the network using tools such as wireshark. Instead, 
+
+1. Your client should encode the message in the DNS query. For example, if your encoding mechanism encodes *hello* as *aGVsbG8A*, then in order to send the message "hello", your client can send a query asking for the IP address of aGVsbG8A.google.com.
+
+2. Once your server receives the DNS query, it parses the query so as to retrieve the part *aGVsbG8A*, and then it decodes *aGVsbG8A*, so as to get *hello*. After that, the server encodes the response message into its DNS response, more specifically, it encodes the response message into the IPv4 address. For example, the characters "hell" can be represented as 104.101.108.108, because the ascii code of *h* is 104, the ascii code of *e* is 101, and the ascii code of *l* is 108.
+
+3. Once the client receives the DNS response, it parses the response and decodes the IP address, so as to get the message, after that, the client should print the received message.
+
+## Expected Output
 
 ## Submission
 
