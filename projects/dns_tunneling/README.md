@@ -5,7 +5,7 @@ In this assignment, you will write a DNS server program and a DNS client program
 ## Learning Objectives
 
 - Understanding the DNS protocol.
-- Understanding DNS message format.
+- Understanding the format of DNS messages.
 - Understanding the DNS tunneling technique.
 
 ## Background
@@ -25,7 +25,7 @@ To simplify your task, the two programs (DNS client and DNS server) only need to
 3. The client then sends a message to server: this message is "hello", 
 4. The server responds with another message "hello client".
 
-However, given that the goal here is to communicate covertly, these two messages should not be directly visible to whoever is monitoring the network using tools such as wireshark. Instead, 
+However, given that the goal here is to communicate covertly, these 4 messages should not be directly visible to whoever is monitoring the network using tools such as wireshark. Instead, 
 
 1. Your client should encode the message in the DNS query. For example, if your encoding mechanism encodes *hello* as *aGVsbG8A*, then in order to send the message "hello", your client can send a query asking for the IP address of aGVsbG8A.google.com.
 
