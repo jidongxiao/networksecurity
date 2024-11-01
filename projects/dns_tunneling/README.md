@@ -70,7 +70,7 @@ When running the two programs, we should see 4 DNS messages in wireshark, and it
 
 ## Dig Test
 
-You should also test your server program using the *dig* command like this:
+You should also test your server program using the *dig* command (run twice in a row) like this:
 
 ```console
 $ dig @localhost aGkA.google.com
@@ -79,24 +79,44 @@ $ dig @localhost aGkA.google.com
 ; (1 server found)
 ;; global options: +cmd
 ;; Got answer:
-;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 21221
+;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 59805
+;; flags: qr rd ra; QUERY: 1, ANSWER: 1, AUTHORITY: 0, ADDITIONAL: 0
+
+;; QUESTION SECTION:
+;aGkA.google.com.		IN	A
+
+;; ANSWER SECTION:
+aGkA.google.com.	60	IN	A	104.101.121.33
+
+;; Query time: 0 msec
+;; SERVER: 127.0.0.1#53(127.0.0.1)
+;; WHEN: Fri Nov 01 13:12:04 EDT 2024
+;; MSG SIZE  rcvd: 49
+
+$ dig @localhost aGVsbG8A.google.com
+
+; <<>> DiG 9.16.1-Ubuntu <<>> @localhost aGVsbG8A.google.com
+; (1 server found)
+;; global options: +cmd
+;; Got answer:
+;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 48110
 ;; flags: qr rd ra; QUERY: 1, ANSWER: 3, AUTHORITY: 0, ADDITIONAL: 0
 
 ;; QUESTION SECTION:
-;aGkA.google.com.               IN      A
+;aGVsbG8A.google.com.		IN	A
 
 ;; ANSWER SECTION:
-aGkA.google.com.        60      IN      A       104.101.108.108
-aGkA.google.com.        60      IN      A       111.32.99.108
-aGkA.google.com.        60      IN      A       105.101.110.116
+aGVsbG8A.google.com.	60	IN	A	104.101.108.108
+aGVsbG8A.google.com.	60	IN	A	111.32.99.108
+aGVsbG8A.google.com.	60	IN	A	105.101.110.116
 
-;; Query time: 8 msec
+;; Query time: 16 msec
 ;; SERVER: 127.0.0.1#53(127.0.0.1)
-;; WHEN: Thu Oct 31 23:39:10 EDT 2024
-;; MSG SIZE  rcvd: 81
+;; WHEN: Fri Nov 01 13:14:01 EDT 2024
+;; MSG SIZE  rcvd: 85
 ```
 
-This dig command should not report any error or malformed DNS responses.
+These 2 dig commands should not report any error or malformed DNS responses.
 
 ## Submission
 
