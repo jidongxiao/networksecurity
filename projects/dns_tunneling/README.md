@@ -16,9 +16,9 @@ DNS tunneling is a technique that encodes data within DNS queries and responses,
 
 ## Specification
 
-You are required to use C programming language to implement your client and server. You are allowed (and maybe encouraged) to use chatgpt.
+You are required to use C programming language to implement your client and server. You are allowed (and maybe encouraged) to use chatgpt. When developing and testing your programs, you are highly recommended to use just one VM only, and when running both the client and the server on the same VM, you can let your server use the IP address *127.0.0.1*.
 
-To simplify your task, the two programs (DNS client and DNS server) only need to exchange 4 messages: 
+To simplify your task, the two programs (the DNS client and the DNS server) only need to exchange 4 messages: 
 
 1. The client first sends a message to server: this message is "hi", 
 2. The server responds with another message "hi client",
@@ -35,7 +35,7 @@ However, given that the goal here is to communicate covertly, these 4 messages s
 
 ## Expected Output
 
-When running the program, you are expected to get the following results:
+When running the programs, you are expected to get the following results:
 
 ### Server
 
@@ -66,6 +66,36 @@ Decoded message from server: hello client
 
 When running the two programs, we should see 4 DNS messages in wireshark, and it is your responsibility to make sure these DNS messages have the correct format. In other words, wireshark should not report any malformed DNS packets. Given that our goal here is the communicate covertly, any malformed DNS packets in wireshark would make the communication suspicious and thus should be avoided.
 
+## Dig Test
+
+You should also test your server program using the *dig* command like this:
+
+```console
+$ dig @localhost aGkA.google.com
+
+; <<>> DiG 9.16.1-Ubuntu <<>> @localhost aGkA.google.com
+; (1 server found)
+;; global options: +cmd
+;; Got answer:
+;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 21221
+;; flags: qr rd ra; QUERY: 1, ANSWER: 3, AUTHORITY: 0, ADDITIONAL: 0
+
+;; QUESTION SECTION:
+;aGkA.google.com.               IN      A
+
+;; ANSWER SECTION:
+aGkA.google.com.        60      IN      A       104.101.108.108
+aGkA.google.com.        60      IN      A       111.32.99.108
+aGkA.google.com.        60      IN      A       105.101.110.116
+
+;; Query time: 8 msec
+;; SERVER: 127.0.0.1#53(127.0.0.1)
+;; WHEN: Thu Oct 31 23:39:10 EDT 2024
+;; MSG SIZE  rcvd: 81
+```
+
+This dig command should not report any error or malformed DNS responses.
+
 ## Submission
 
 Due: 23:59pm, Friday, Nov 22nd, 2024.
@@ -78,7 +108,7 @@ Your submission should include your source code and a README file.
 
  - No compilation warnings or errors. (1 pts)
  - Client side produces expected output. (3 pts)
- - Server side produces expected output. (3 pts)
+ - Server side produces expected output, including the output of the dig command. (3 pts)
  - No suspicious traffic observed in wireshark. (2 pts)
  - A completed README file provided. (1 pts)
 
