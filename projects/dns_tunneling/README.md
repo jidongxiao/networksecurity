@@ -16,7 +16,7 @@ DNS tunneling is a technique that encodes data within DNS queries and responses,
 
 ## Specification
 
-You are required to use C programming language to implement your client and server. You are allowed to use chatgpt.
+You are required to use C programming language to implement your client and server. You are allowed (and maybe encouraged) to use chatgpt.
 
 To simplify your task, the two programs (DNS client and DNS server) only need to exchange 4 messages: 
 
@@ -27,7 +27,7 @@ To simplify your task, the two programs (DNS client and DNS server) only need to
 
 However, given that the goal here is to communicate covertly, these 4 messages should not be directly visible to whoever is monitoring the network using tools such as wireshark. Instead, 
 
-1. Your client should encode the message in the DNS query. For example, if your encoding mechanism encodes *hello* as *aGVsbG8A*, then in order to send the message "hello", your client can send a query asking for the IP address of aGVsbG8A.google.com.
+1. Your client should use the [Base64 encoding](base64.md) to encode the message in the DNS query. For example, in Base64 encoding, *hello* is encoded as *aGVsbG8A* (wh? see [here](hello.md), therefore, in order to send the message "hello", your client can send a query asking for the IP address of aGVsbG8A.google.com.
 
 2. Once your server receives the DNS query, it parses the query so as to retrieve the part *aGVsbG8A*, and then it decodes *aGVsbG8A*, so as to get *hello*. After that, the server encodes the response message into its DNS response, more specifically, it encodes the response message into the IPv4 address. For example, the characters "hell" can be represented as 104.101.108.108, because the ascii code of *h* is 104, the ascii code of *e* is 101, and the ascii code of *l* is 108.
 
