@@ -14,7 +14,7 @@ We assume there is a trusted CA called GoMommy. And GoMommy's private key and ce
 
 ### Steps
 
-0. on both the victim VM and the attacker VM: Download GoMommy's certificate ca.crt (from here: http://cs.boisestate.edu/~jxiao/cs333/info/pki/ca.crt), and then load it into the firefox browser:
+0. on both the victim VM and the attacker VM: Download GoMommy's certificate ca.crt (from here: http://ns.cs.rpi.edu/pki/ca.crt), and then load it into the firefox browser:
 
 Edit -> Preferences -> Privacy & Security -> Certificates -> View Certificates -> Import.
 
@@ -28,7 +28,7 @@ Note 2: we import this because we assume GoMommy is a trusted CA, and for truste
 
 #### Attacker Setting Up fakenews.com
 
-1.1. download fakenews.key and fakenews.pem into the home directory - i.e., /home/seed/ directory. (download fakenews.key from http://cs.boisestate.edu/~jxiao/cs333/info/pki/fakenews.key, and download fakenews.pem from http://cs.boisestate.edu/~jxiao/cs333/info/pki/fakenews.pem)
+1.1. download fakenews.key and fakenews.pem into the home directory - i.e., /home/seed/ directory. (download fakenews.key from http://ns.cs.rpi.edu/pki/fakenews.key, and download fakenews.pem from http://ns.cs.rpi.edu/pki/fakenews.pem)
 
 1.2. setup a website called fakenews.com on the attacker's VM. first, we create a folder under /var/www, called *fakenews*.
 
@@ -94,7 +94,7 @@ Note: the attack here will not be successful, and you, as the victim client, are
 
 #### Attacker Stole the CA's Privacy Key
 
-3.1. on the attacker VM, now we assume the attacker has compromised the CA and stole the CA's (i.e., GoMommy) private key ca.key. With this key, we, as an attacker, can sign any certificates in the name of GoMommy. Assume we, as the attacker, have created a private key for www.cnn.com, and have signed a certificate for www.cnn.com. The private key (named cnn.key) and the certificate (named cnn.pem) are here: http://cs.boisestate.edu/~jxiao/cs333/info/pki/cnn.key and http://cs.boisestate.edu/~jxiao/cs333/info/pki/cnn.pem. The attacker downloads these two files to its home directory, i.e., /home/seed.
+3.1. on the attacker VM, now we assume the attacker has compromised the CA and stole the CA's (i.e., GoMommy) private key ca.key. With this key, we, as an attacker, can sign any certificates in the name of GoMommy. Assume we, as the attacker, have created a private key for www.cnn.com, and have signed a certificate for www.cnn.com. The private key (named cnn.key) and the certificate (named cnn.pem) are here: http://ns.cs.rpi.edu/pki/cnn.key and http://ns.cs.rpi.edu/pki/cnn.pem. The attacker downloads these two files to its home directory, i.e., /home/seed.
 
 3.2. Now edit the file we mentioned in Step 1.4, but change the certificate and the key from fakenews to cnn. i.e.:
 
