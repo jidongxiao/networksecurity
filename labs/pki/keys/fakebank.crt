@@ -1,0 +1,81 @@
+Certificate:
+    Data:
+        Version: 3 (0x2)
+        Serial Number: 4096 (0x1000)
+        Signature Algorithm: sha256WithRSAEncryption
+        Issuer: C=US, ST=Idaho, L=Boise, O=GoMommy, OU=GoMommy, CN=GoMommy/emailAddress=test@gomommy.com
+        Validity
+            Not Before: Nov  4 21:19:18 2024 GMT
+            Not After : Nov  2 21:19:18 2034 GMT
+        Subject: C=US, O=FakeBank Inc., CN=www.fakebank.com
+        Subject Public Key Info:
+            Public Key Algorithm: rsaEncryption
+                RSA Public-Key: (2048 bit)
+                Modulus:
+                    00:c2:2e:9b:be:59:08:69:4f:87:7d:86:26:3e:51:
+                    d0:91:04:5e:c1:5d:f9:6f:ac:8e:8c:11:77:4c:7d:
+                    ff:b0:d7:63:33:24:fa:7f:42:21:5b:bd:3c:e1:23:
+                    35:ad:7e:29:74:f7:20:5b:89:29:c6:43:cb:64:93:
+                    2e:79:d4:8b:cc:0b:d8:02:06:97:fe:b9:93:41:88:
+                    14:fa:2d:35:08:d2:8c:43:b9:b7:df:70:09:ac:5c:
+                    34:00:1f:d7:bf:a9:f0:13:d7:23:58:ce:4e:be:79:
+                    76:fd:01:e8:c6:57:63:7e:15:fe:9d:4f:cf:ee:7a:
+                    1f:b1:f9:cc:e7:cb:96:d2:41:53:95:ae:a3:7c:f1:
+                    35:f8:a3:80:d8:5f:4c:0c:53:ae:9f:f1:79:7f:fa:
+                    bd:f6:e3:d9:b4:a9:78:0a:a2:23:3c:a6:d1:bd:ee:
+                    e3:06:f8:ff:97:a3:e9:ed:ae:a6:4d:f7:a9:88:46:
+                    0c:54:2e:98:ba:3b:bd:71:75:46:2d:f7:23:64:7e:
+                    53:88:2d:c4:ab:29:af:5b:aa:3d:f5:2b:2b:4b:dd:
+                    96:85:aa:57:58:54:58:5d:67:2c:bf:eb:9c:81:92:
+                    cf:5c:5c:35:10:d0:d0:03:a9:02:98:4e:89:17:f4:
+                    c1:d9:34:ae:da:5a:7d:07:07:de:6f:6b:fe:b4:c9:
+                    d5:6b
+                Exponent: 65537 (0x10001)
+        X509v3 extensions:
+            X509v3 Basic Constraints: 
+                CA:FALSE
+            Netscape Comment: 
+                OpenSSL Generated Certificate
+            X509v3 Subject Key Identifier: 
+                F0:5E:F4:E6:9C:0D:45:B6:22:F9:6F:6B:A6:62:D7:B6:8B:8C:9E:7E
+            X509v3 Authority Key Identifier: 
+                keyid:E4:EC:24:61:B3:C6:00:8B:76:9A:52:4E:FF:EA:47:58:55:0D:19:F9
+
+    Signature Algorithm: sha256WithRSAEncryption
+         1e:b5:6c:49:f9:fd:a5:ee:15:d6:31:60:d0:94:13:de:4e:1d:
+         8e:02:3a:32:a6:7c:41:1f:59:66:c0:55:75:92:1e:3e:db:56:
+         6e:70:8d:1d:26:05:82:2c:5f:9c:b6:aa:7d:ef:f0:57:8d:49:
+         39:b7:4a:f6:f9:77:e9:48:74:17:7e:17:9e:b8:9c:f1:97:86:
+         91:cf:de:37:72:30:e0:07:f9:ee:54:36:db:1c:3e:7c:32:8f:
+         df:1c:71:fe:20:82:83:22:aa:df:32:e7:78:97:13:35:e3:5f:
+         f4:14:5d:05:10:7d:73:78:6a:15:dc:86:7b:59:01:d7:e5:81:
+         79:1d:3c:52:75:a6:44:93:84:4f:f2:ab:83:db:30:d9:32:1c:
+         f9:f7:fc:0b:12:b8:d9:d1:6c:87:5b:20:d4:59:eb:63:dd:65:
+         ae:60:4f:cf:48:fe:b1:24:75:6c:7c:ab:f2:99:a0:7f:8f:27:
+         0d:ca:f0:1f:0f:a2:cf:f3:a1:6c:3f:90:8b:1d:f0:6e:e0:ba:
+         a7:ec:c7:ef:c4:7f:21:5f:ae:a1:81:48:03:c3:e5:e4:f6:ea:
+         b7:85:3a:64:95:65:d2:bd:35:05:f1:12:93:dd:0c:c8:48:16:
+         6f:e6:93:1f:ff:c4:04:27:f4:90:c2:82:8a:a3:26:b0:7c:17:
+         49:5d:d9:69
+-----BEGIN CERTIFICATE-----
+MIIDvDCCAqSgAwIBAgICEAAwDQYJKoZIhvcNAQELBQAwgYQxCzAJBgNVBAYTAlVT
+MQ4wDAYDVQQIDAVJZGFobzEOMAwGA1UEBwwFQm9pc2UxEDAOBgNVBAoMB0dvTW9t
+bXkxEDAOBgNVBAsMB0dvTW9tbXkxEDAOBgNVBAMMB0dvTW9tbXkxHzAdBgkqhkiG
+9w0BCQEWEHRlc3RAZ29tb21teS5jb20wHhcNMjQxMTA0MjExOTE4WhcNMzQxMTAy
+MjExOTE4WjBAMQswCQYDVQQGEwJVUzEWMBQGA1UECgwNRmFrZUJhbmsgSW5jLjEZ
+MBcGA1UEAwwQd3d3LmZha2ViYW5rLmNvbTCCASIwDQYJKoZIhvcNAQEBBQADggEP
+ADCCAQoCggEBAMIum75ZCGlPh32GJj5R0JEEXsFd+W+sjowRd0x9/7DXYzMk+n9C
+IVu9POEjNa1+KXT3IFuJKcZDy2STLnnUi8wL2AIGl/65k0GIFPotNQjSjEO5t99w
+CaxcNAAf17+p8BPXI1jOTr55dv0B6MZXY34V/p1Pz+56H7H5zOfLltJBU5Wuo3zx
+NfijgNhfTAxTrp/xeX/6vfbj2bSpeAqiIzym0b3u4wb4/5ej6e2upk33qYhGDFQu
+mLo7vXF1Ri33I2R+U4gtxKspr1uqPfUrK0vdloWqV1hUWF1nLL/rnIGSz1xcNRDQ
+0AOpAphOiRf0wdk0rtpafQcH3m9r/rTJ1WsCAwEAAaN7MHkwCQYDVR0TBAIwADAs
+BglghkgBhvhCAQ0EHxYdT3BlblNTTCBHZW5lcmF0ZWQgQ2VydGlmaWNhdGUwHQYD
+VR0OBBYEFPBe9OacDUW2Ivlva6Zi17aLjJ5+MB8GA1UdIwQYMBaAFOTsJGGzxgCL
+dppSTv/qR1hVDRn5MA0GCSqGSIb3DQEBCwUAA4IBAQAetWxJ+f2l7hXWMWDQlBPe
+Th2OAjoypnxBH1lmwFV1kh4+21ZucI0dJgWCLF+ctqp97/BXjUk5t0r2+XfpSHQX
+fheeuJzxl4aRz943cjDgB/nuVDbbHD58Mo/fHHH+IIKDIqrfMud4lxM141/0FF0F
+EH1zeGoV3IZ7WQHX5YF5HTxSdaZEk4RP8quD2zDZMhz59/wLErjZ0WyHWyDUWetj
+3WWuYE/PSP6xJHVsfKvymaB/jycNyvAfD6LP86FsP5CLHfBu4Lqn7MfvxH8hX66h
+gUgDw+Xk9uq3hTpklWXSvTUF8RKT3QzISBZv5pMf/8QEJ/SQwoKKoyawfBdJXdlp
+-----END CERTIFICATE-----

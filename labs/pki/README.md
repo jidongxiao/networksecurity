@@ -18,7 +18,7 @@ The following is the IP addresses for the VMs used in this README.
 
 ### Assumptions
 
-We assume there is a trusted CA called GoMommy. And GoMommy's private key and certificate are both created already (named ca.key and ca.crt). We also assume we have used this CA to certify a website called www.fakebank.com. The private key and certificate for this website are also created and provided (named fakebank.key and fakebank.crt).
+We assume there is a trusted CA called GoMommy. And GoMommy's private key and certificate are both created already (named [ca.key](keys/ca.key) and [ca.crt](ca.crt)). We also assume we have used this CA to certify a website called www.fakebank.com. The private key and certificate for this website are also created and provided (named [fakebank.key](keys/fakebank.key) and [fakebank.crt](keys/fakebank.crt)).
 
 ### Steps
 
@@ -43,7 +43,7 @@ Preferences -> Privacy & Security -> Certificates -> View Certificates -> Import
 
 #### Attacker Setting Up www.fakebank.com
 
-1.1. download fakebank.key and fakebank.crt into the home directory - i.e., /home/seed/ directory. (download fakebank.key from http://ns.cs.rpi.edu/pki/fakebank.key, and download fakebank.crt from http://ns.cs.rpi.edu/pki/fakebank.crt)
+1.1. download [fakebank.key](keys/fakebank.keyy) and [fakebank.crt](fakebank.crt) into the home directory - i.e., /home/seed/ directory. (You can either download fakebank.key from http://ns.cs.rpi.edu/pki/fakebank.key, and download fakebank.crt from http://ns.cs.rpi.edu/pki/fakebank.crt or download them from this github repository.)
 
 1.2. setup a website called www.fakebank.com on the attacker's VM. first, we create a folder under /var/www, called *fakebank*.
 
@@ -111,7 +111,7 @@ Replace ATTACKER_IP with the attacker VM's IP address.
 
 #### Attacker Stole the CA's Privacy Key
 
-3.1. on the attacker VM, now we assume the attacker has compromised the CA and stole the CA's (i.e., GoMommy) private key ca.key. With this key, we, as an attacker, can sign any certificates in the name of GoMommy. Assume we, as the attacker, have created a private key for www.bankofamerica.com, and have signed a certificate for www.bankofamerica.com. The private key (named boa.key) and the certificate (named boa.crt) are here: http://ns.cs.rpi.edu/pki/boa.key and http://ns.cs.rpi.edu/pki/boa.crt. The attacker downloads these two files to its home directory, i.e., /home/seed.
+3.1. on the attacker VM, now we assume the attacker has compromised the CA and stole the CA's (i.e., GoMommy) private key ca.key. With this key, we, as an attacker, can sign any certificates in the name of GoMommy. Assume we, as the attacker, have created a private key for www.bankofamerica.com, and have signed a certificate for www.bankofamerica.com. The private key (named [boa.key](keys/boa.key)) and the certificate (named [boa.crt](keys/boa.crt)) are here: http://ns.cs.rpi.edu/pki/boa.key and http://ns.cs.rpi.edu/pki/boa.crt. The attacker downloads these two files to its home directory, i.e., /home/seed.
 
 3.2. Now edit the file we mentioned in Step 1.4, but change the ServerName to www.bankofamerica.com, and change the certificate and the key from fakebank to boa. i.e.:
 
