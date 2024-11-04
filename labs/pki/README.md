@@ -26,6 +26,8 @@ We assume there is a trusted CA called GoMommy. And GoMommy's private key and ce
 
 Preferences -> Privacy & Security -> Certificates -> View Certificates -> Import.
 
+**Note**: select "Trust this CA to identify websites."
+
 ![alt text](images/lab-pki-import-p1.png "Lab pki import")
 ![alt text](images/lab-pki-import-p2.png "Lab pki import")
 ![alt text](images/lab-pki-import-p3.png "Lab pki import")
@@ -35,11 +37,9 @@ Preferences -> Privacy & Security -> Certificates -> View Certificates -> Import
 ![alt text](images/lab-pki-import-p7.png "Lab pki import")
 ![alt text](images/lab-pki-import-p8.png "Lab pki import")
 
-(if you don't see Import, use the view-\>zoom out option of your browser)
+<!--(if you don't see Import, use the view-\>zoom out option of your browser)-->
 
-Note: select "Trust this CA to identify websites."
-
-Note 2: we import this because we assume GoMommy is a trusted CA, and for trusted CA, its certificate is supposed to be pre-loaded in the browser.
+**Note 2**: we import this because we assume GoMommy is a trusted CA, and for trusted CA, its certificate is supposed to be pre-loaded in the browser.
 
 #### Attacker Setting Up www.fakebank.com
 
