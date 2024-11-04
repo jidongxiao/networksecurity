@@ -47,7 +47,7 @@ $ sudo vi index.html
 </html>
 ```
 
-1.4. we then setup at virtual host so that we host fakenews.com via https. To achieve this, we add the following content at the end of this file: /etc/apache2/sites-available/000-default.conf.
+1.4. we then setup a virtual host so that we host fakenews.com via https. To achieve this, we add the following content at the end of this file: /etc/apache2/sites-available/000-default.conf.
 
 ```console
 <VirtualHost *:443>
