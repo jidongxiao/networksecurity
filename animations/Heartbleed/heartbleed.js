@@ -102,7 +102,7 @@ layer.add(heartbeatRequestText);
 var heartbeatRequestClientText = new Konva.Text({
     x: 110,
     y: 300,
-    text: '“Are you there?\nThe magic word is “giraffe,”\nwhich is 100 characters long.”',
+    text: '“Are you there?\nThe magic word is “giraffe”,\nwhich is 100 characters long.”',
     fontSize: 20,
     fill: 'black',
     visible: false,
