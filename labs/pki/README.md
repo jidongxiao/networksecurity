@@ -43,7 +43,7 @@ Preferences -> Privacy & Security -> Certificates -> View Certificates -> Import
 
 #### Attacker Setting Up www.fakebank.com
 
-1.1. download [fakebank.key](keys/fakebank.keyy) and [fakebank.crt](fakebank.crt) into the home directory - i.e., /home/seed/ directory. (You can either download fakebank.key from http://ns.cs.rpi.edu/pki/fakebank.key, and download fakebank.crt from http://ns.cs.rpi.edu/pki/fakebank.crt or download them from this github repository.)
+1.1. download [fakebank.key](keys/fakebank.key) and [fakebank.crt](fakebank.crt) into the home directory - i.e., /home/seed/ directory. (You can either download fakebank.key from http://ns.cs.rpi.edu/pki/fakebank.key, and download fakebank.crt from http://ns.cs.rpi.edu/pki/fakebank.crt or download them from this github repository.)
 
 1.2. setup a website called www.fakebank.com on the attacker's VM. first, we create a folder under /var/www, called *fakebank*.
 
