@@ -26,7 +26,14 @@ We assume there is a trusted CA called GoMommy. And GoMommy's private key and ce
 
 Preferences -> Privacy & Security -> Certificates -> View Certificates -> Import.
 
-![alt text](lab-pki-import.png "Lab pki import")
+![alt text](images/lab-pki-import-p1.png "Lab pki import")
+![alt text](images/lab-pki-import-p2.png "Lab pki import")
+![alt text](images/lab-pki-import-p3.png "Lab pki import")
+![alt text](images/lab-pki-import-p4.png "Lab pki import")
+![alt text](images/lab-pki-import-p5.png "Lab pki import")
+![alt text](images/lab-pki-import-p6.png "Lab pki import")
+![alt text](images/lab-pki-import-p7.png "Lab pki import")
+![alt text](images/lab-pki-import-p8.png "Lab pki import")
 
 (if you don't see Import, use the view-\>zoom out option of your browser)
 
