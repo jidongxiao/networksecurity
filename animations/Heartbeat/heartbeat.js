@@ -102,7 +102,7 @@ layer.add(heartbeatRequestText);
 var heartbeatRequestClientText = new Konva.Text({
     x: 110,
     y: 300,
-    text: '“Are you there?\nThe magic word is “banana,”\nwhich is 6 characters long.”',
+    text: '“Are you there?\nThe magic word is “banana”\n, which is 6 characters long.”',
     fontSize: 20,
     fill: 'black',
     visible: false,
@@ -124,7 +124,7 @@ layer.add(dataLeakText);
 var dataLeakServerText = new Konva.Text({
     x: 910,
     y: 400,
-    text: '"Yes I’m here. \nYour magic word was \n“banana.”',
+    text: '"Yes I’m here. \nYour magic word was \n“banana”.',
     fontSize: 20,
     fill: 'black',
     visible: false,
