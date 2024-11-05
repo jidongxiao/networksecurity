@@ -43,7 +43,13 @@ Preferences -> Privacy & Security -> Certificates -> View Certificates -> Import
 
 #### Attacker Setting Up www.fakebank.com
 
-1.1. download [fakebank.key](keys/fakebank.key) and [fakebank.crt](fakebank.crt) into the home directory - i.e., /home/seed/ directory. (You can either download fakebank.key from http://ns.cs.rpi.edu/pki/fakebank.key, and download fakebank.crt from http://ns.cs.rpi.edu/pki/fakebank.crt or download them from this github repository.)
+1.1. Download [fakebank.key](keys/fakebank.key) and [fakebank.crt](fakebank.crt) into the home directory - i.e., /home/seed/ directory. (You can either download fakebank.key from http://ns.cs.rpi.edu/pki/fakebank.key, and download fakebank.crt from http://ns.cs.rpi.edu/pki/fakebank.crt or download them from this github repository.)
+
+1.2. Install apache web server program.
+
+```console
+$ sudo apt install apache2
+```
 
 1.2. setup a website called www.fakebank.com on the attacker's VM. first, we create a folder under /var/www, called *fakebank*.
 
@@ -113,7 +119,7 @@ Replace ATTACKER_IP with the attacker VM's IP address.
 
 3.1. on the attacker VM, now we assume the attacker has compromised the CA and stole the CA's (i.e., GoMommy) private key ca.key. With this key, we, as an attacker, can sign any certificates in the name of GoMommy. Assume we, as the attacker, have created a private key for www.bankofamerica.com, and have signed a certificate for www.bankofamerica.com. The private key (named [boa.key](keys/boa.key)) and the certificate (named [boa.crt](keys/boa.crt)) are here: http://ns.cs.rpi.edu/pki/boa.key and http://ns.cs.rpi.edu/pki/boa.crt. The attacker downloads these two files to its home directory, i.e., /home/seed.
 
-3.2. Now edit the file we mentioned in Step 1.4, but change the ServerName to www.bankofamerica.com, and change the certificate and the key from fakebank to boa. i.e.:
+3.2. Now edit the file we mentioned in Step 1.4, which is /etc/apache2/sites-available/000-default.conf, change the ServerName to www.bankofamerica.com, and change the certificate and the key from fakebank to boa. i.e.:
 
 ```console
 <VirtualHost *:443>
@@ -137,6 +143,7 @@ Note: once again the passphrase here is 1234.
 
 #### Victim Visiting Bank of America Again
 
-4. On the victim VM, repeat step 2.1. Now the attack should be successful: the victim who types https://www.bankofamerica.com should be redirected to the attacker's https://www.fakebank.com, even though the browser still shows it is https://www.bankofamerica.com. As can be seen in the picture below.
+4. On the victim VM, refresh the page visiting https://www.bankofamerica.com. Now the attack should be successful: the victim who types https://www.bankofamerica.com should be redirected to the attacker's https://www.fakebank.com, even though the browser still shows it is https://www.bankofamerica.com. As can be seen in the picture below.
 
+![alt text](lab-pki-refresh.png "Lab pki attack refresh page")
 ![alt text](lab-pki-success.png "Lab pki attack success")
