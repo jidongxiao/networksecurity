@@ -41,9 +41,9 @@ Preferences -> Privacy & Security -> Certificates -> View Certificates -> Import
 
 **Note 2**: we import this because we assume GoMommy is a trusted CA, and for trusted CA, its certificate is supposed to be pre-loaded in the browser.
 
-#### Attacker Setting Up www.fakebank.com
+#### Attacker Setting Up www.fakebank.com on Attacker VM
 
-1.1. Download [fakebank.key](keys/fakebank.key) and [fakebank.crt](fakebank.crt) into the home directory - i.e., /home/seed/ directory. (You can either download fakebank.key from http://ns.cs.rpi.edu/pki/fakebank.key, and download fakebank.crt from http://ns.cs.rpi.edu/pki/fakebank.crt or download them from this github repository.)
+1.1. On attacker VM, download [fakebank.key](keys/fakebank.key) and [fakebank.crt](fakebank.crt) into the home directory - i.e., /home/seed/ directory. (You can either download fakebank.key from http://ns.cs.rpi.edu/pki/fakebank.key, and download fakebank.crt from http://ns.cs.rpi.edu/pki/fakebank.crt or download them from this github repository.)
 
 1.2. Install apache web server program.
 
@@ -51,13 +51,13 @@ Preferences -> Privacy & Security -> Certificates -> View Certificates -> Import
 $ sudo apt install apache2
 ```
 
-1.2. setup a website called www.fakebank.com on the attacker's VM. first, we create a folder under /var/www, called *fakebank*.
+1.3. setup a website called www.fakebank.com on the attacker's VM. first, we create a folder under /var/www, called *fakebank*.
 
 ```console
 $ sudo mkdir /var/www/fakebank
 ```
 
-1.3. we then create the home page for fakebank.com. Inside /var/www/fakebank, we create a file called index.html, with the following content:
+1.4. we then create the home page for fakebank.com. Inside /var/www/fakebank, we create a file called index.html, with the following content:
 
 ```console
 $ sudo vi index.html
@@ -68,7 +68,7 @@ $ sudo vi index.html
 </html>
 ```
 
-1.4. we then setup a virtual host so that we host www.fakebank.com via https. To achieve this, we add the following content at the end of this file: /etc/apache2/sites-available/000-default.conf.
+1.5. we then setup a virtual host so that we host www.fakebank.com via https. To achieve this, we add the following content at the end of this file: /etc/apache2/sites-available/000-default.conf.
 
 ```console
 <VirtualHost *:443>
@@ -84,7 +84,7 @@ SSLCertificateKeyFile /home/seed/fakebank.key
 
 **Note**: make sure the two files fakebank.crt and fakebank.key are indeed in the /home/seed/ directory.
 
-1.5. run the following commands to configure and enable SSL.
+1.6. run the following commands to configure and enable SSL.
 
 ```console
 $ sudo a2enmod ssl	// this command enables ssl, a2enmod means "apache2 enable module", the opposite is a2dismod, which means "apache2 disable module".
@@ -105,16 +105,16 @@ And if you get this, that means the CA's certificate (ca.crt) was not loaded int
 
 #### Victim Visiting Bank of America
 
-2.1. on the victim VM, we emulate the result of a DNS cache poisoning attack. So that www.bankofamerica.com points to the attacker's VM. We achieve this by editing /etc/hosts so as to have the following entry:
+2.1. On the victim VM, we emulate the result of a DNS cache poisoning attack. So that www.bankofamerica.com points to the attacker's VM. We achieve this by editing /etc/hosts so as to have the following entry:
 
 ```console
 ATTACKER_IP	www.bankofamerica.com
 ```
 
-Remember to ATTACKER_IP with the attacker VM's IP address, like this:
+Remember to replace ATTACKER_IP with the attacker VM's IP address, like this:
 ![alt text](images/lab-pki-etc-hosts.png "Lab pki insecure")
 
-2.2. we now type https://www.bankofamerica.com in the browser and see if the man-in-the-middle attack is successful - if so, we should be visiting the attacker's www.fakebank.com.
+2.2. We now type https://www.bankofamerica.com in the browser and see if the man-in-the-middle attack is successful - if so, we should be visiting the attacker's www.fakebank.com.
 
 **Note**: the attack here will not be successful, and you, as the victim client, are expected get a warning message saying "Your connection is not secure", as shown below:
 
@@ -123,19 +123,19 @@ Remember to ATTACKER_IP with the attacker VM's IP address, like this:
 
 #### Attacker Stole the CA's Privacy Key
 
-3.1. on the attacker VM, now we assume the attacker has compromised the CA and stole the CA's (i.e., GoMommy) private key ca.key. With this key, we, as an attacker, can sign any certificates in the name of GoMommy. Assume we, as the attacker, have created a private key for www.bankofamerica.com, and have signed a certificate for www.bankofamerica.com. The private key (named [boa.key](keys/boa.key)) and the certificate (named [boa.crt](keys/boa.crt)) are here: http://ns.cs.rpi.edu/pki/boa.key and http://ns.cs.rpi.edu/pki/boa.crt. The attacker downloads these two files to its home directory, i.e., /home/seed.
+3.1. On the attacker VM, now we assume the attacker has compromised the CA and stole the CA's (i.e., GoMommy) private key ca.key. With this key, we, as an attacker, can sign any certificates in the name of GoMommy. Assume we, as the attacker, have created a private key for www.bankofamerica.com, and have signed a certificate for www.bankofamerica.com. The private key (named [boa.key](keys/boa.key)) and the certificate (named [boa.crt](keys/boa.crt)) are here: http://ns.cs.rpi.edu/pki/boa.key and http://ns.cs.rpi.edu/pki/boa.crt. The attacker downloads these two files to its home directory, i.e., /home/seed.
 
-3.2. Now edit the file we mentioned in Step 1.4, which is /etc/apache2/sites-available/000-default.conf, change the ServerName to www.bankofamerica.com, and change the certificate and the key from fakebank to boa. i.e.:
+3.2. Now edit the file /etc/apache2/sites-available/000-default.conf again, change the ServerName to www.bankofamerica.com, and change the certificate and the key from fakebank to boa. i.e.:
 
 ```console
 <VirtualHost *:443>
-ServerName www.bankofamerica.com
+ServerName www.bankofamerica.com	// change this line
 DocumentRoot /var/www/fakebank
 DirectoryIndex index.html
 
 SSLEngine On
-SSLCertificateFile /home/seed/boa.crt
-SSLCertificateKeyFile /home/seed/boa.key
+SSLCertificateFile /home/seed/boa.crt	// change this line
+SSLCertificateKeyFile /home/seed/boa.key	// and change this line
 </VirtualHost>
 ```
 
