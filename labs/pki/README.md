@@ -113,7 +113,7 @@ Replace ATTACKER_IP with the attacker VM's IP address.
 
 **Note**: the attack here will not be successful, and you, as the victim client, are expected get a warning message saying "Your connection is not secure", as shown below:
 
-![alt text](lab-pki-insecure.png "Lab pki insecure")
+![alt text](images/lab-pki-insecure.png "Lab pki insecure")
 
 #### Attacker Stole the CA's Privacy Key
 
@@ -145,5 +145,5 @@ Note: once again the passphrase here is 1234.
 
 4. On the victim VM, refresh the page visiting https://www.bankofamerica.com. Now the attack should be successful: the victim who types https://www.bankofamerica.com should be redirected to the attacker's https://www.fakebank.com, even though the browser still shows it is https://www.bankofamerica.com. As can be seen in the picture below.
 
-![alt text](lab-pki-refresh.png "Lab pki attack refresh page")
-![alt text](lab-pki-success.png "Lab pki attack success")
+![alt text](images/lab-pki-refresh.png "Lab pki attack refresh page")
+![alt text](images/lab-pki-success.png "Lab pki attack success")
