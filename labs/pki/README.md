@@ -97,7 +97,11 @@ Note the passphrase here is 1234.
 
 At this moment, if you, still on the attacker's VM, add "127.0.0.1 www.fakebank.com" in /etc/hosts, and you type https://www.fakebank.com in the browser, you should be able to access the www.fakebank.com we just created.
 
+![alt text](images/lab-pki-fakebank-test.png "Lab pki fake bank test success")
 **Warning**: if you don't see the "Welcome to Bank of America!" page, then your attacking website setup is not successful, don't need to move forward.
+
+And if you get this, that means the CA's certificate (ca.crt) was not loaded into the attacker's browser. Refer to step 0 to load it.
+![alt text](images/lab-pki-fakebank-test-failure.png "Lab pki fake bank test success")
 
 #### Victim Visiting Bank of America
 
@@ -107,13 +111,15 @@ At this moment, if you, still on the attacker's VM, add "127.0.0.1 www.fakebank.
 ATTACKER_IP	www.bankofamerica.com
 ```
 
-Replace ATTACKER_IP with the attacker VM's IP address.
+Remember to ATTACKER_IP with the attacker VM's IP address, like this:
+![alt text](images/lab-pki-etc-hosts.png "Lab pki insecure")
 
 2.2. we now type https://www.bankofamerica.com in the browser and see if the man-in-the-middle attack is successful - if so, we should be visiting the attacker's www.fakebank.com.
 
 **Note**: the attack here will not be successful, and you, as the victim client, are expected get a warning message saying "Your connection is not secure", as shown below:
 
-![alt text](images/lab-pki-insecure.png "Lab pki insecure")
+![alt text](images/lab-pki-no-success-p1.png "Lab pki no success")
+![alt text](images/lab-pki-no-success-p2.png "Lab pki no success")
 
 #### Attacker Stole the CA's Privacy Key
 
@@ -143,7 +149,7 @@ Note: once again the passphrase here is 1234.
 
 #### Victim Visiting Bank of America Again
 
-4. On the victim VM, refresh the page visiting https://www.bankofamerica.com. Now the attack should be successful: the victim who types https://www.bankofamerica.com should be redirected to the attacker's https://www.fakebank.com, even though the browser still shows it is https://www.bankofamerica.com. As can be seen in the picture below.
+4. On the victim VM, refresh the page visiting https://www.bankofamerica.com. Now the attack should be successful: the victim who types https://www.bankofamerica.com should be redirected to the attacker's https://www.fakebank.com, and the browser even shows that it is https://www.bankofamerica.com, as can be seen in the picture below, and this concludes the lab.
 
 ![alt text](images/lab-pki-refresh.png "Lab pki attack refresh page")
 ![alt text](images/lab-pki-success.png "Lab pki attack success")
