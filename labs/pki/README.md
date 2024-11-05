@@ -82,6 +82,9 @@ SSLCertificateKeyFile /home/seed/fakebank.key
 </VirtualHost>
 ```
 
+This screenshot shows where the lines are added.
+![alt text](images/lab-pki-virtual-host-p1.png "Lab pki virtual host setting")
+
 **Note**: make sure the two files fakebank.crt and fakebank.key are indeed in the /home/seed/ directory.
 
 1.6. run the following commands to configure and enable SSL.
@@ -138,6 +141,9 @@ SSLCertificateFile /home/seed/boa.crt	// change this line
 SSLCertificateKeyFile /home/seed/boa.key	// and change this line
 </VirtualHost>
 ```
+
+This screenshot shows the changed file.
+![alt text](images/lab-pki-virtual-host-p2.png "Lab pki virtual host new setting")
 
 3.3. Run the following command to restart the apache web server:
 
