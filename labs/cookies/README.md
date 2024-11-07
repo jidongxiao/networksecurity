@@ -42,8 +42,8 @@ npm WARN seed No license field.
 ```console
 [04/27/22]seed@VM:~$ mkdir web 
 [04/27/22]seed@VM:~$ cd web/
-[04/27/22]seed@VM:~/web$ wget http://cs.boisestate.edu/~jxiao/cs333/info/cookies/index.html.orig
-[04/27/22]seed@VM:~/web$ wget http://cs.boisestate.edu/~jxiao/cs333/info/cookies/server.js
+[04/27/22]seed@VM:~/web$ wget http://ns.cs.rpi.edu/cookies/index.html.orig
+[04/27/22]seed@VM:~/web$ wget http://ns.cs.rpi.edu/cookies/server.js
 ```
 
 3. start the web server:
