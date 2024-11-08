@@ -74,7 +74,7 @@ $ node server.js
 ![alt text](images/lab-cookies-select-username.png "select the cookie 'username'")
 
 6.4. this cookie has several attributes, such as *Name*, *Domain*, *Path*, *Last accessed on*, *Value*. at this moment, as we can see, the *Value* is **alice**.
-![alt text](images/lab-cookies-change-value.png "find the cookie value")
+![alt text](images/lab-cookies-change-value-p1.png "find the cookie value")
 
 6.5. let's change the value to **bob**.
 ![alt text](images/lab-cookies-change-value-p2.png "change the value to bob")
