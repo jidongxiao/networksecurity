@@ -56,7 +56,7 @@ $ node server.js
 
 4. access the website from the browser: type localhost:4000 (replace localhost with your VM's IP address), you should see this:
 
-![alt text](lab-cookies-banking-site.png "online banking site")
+![alt text](images/lab-cookies-banking-site.png "online banking site")
 
 5. login as alice, username: **alice**, password: **password**. after login to the online banking site, alice can see her balance is $500. But can alice see bob's balance? let's try it without knowing bob's password, we can achieve this via modifying the cookies.
 
@@ -65,23 +65,23 @@ $ node server.js
 6. we, as alice, try to modify the cookie "username". we change its value from *alice* to *bob*. the following screenshots show how we change it.
 
 6.1. first, we right click in the firefox window, and select **Inspect Element**.
-![alt text](lab-cookies-modify-p0.png "right click")
+![alt text](images/lab-cookies-modify-p0.png "right click")
 
 6.2. next, we select **Storage**.
-![alt text](lab-cookies-modify-p1.png "select storage")
+![alt text](images/lab-cookies-storage-inspector.png "select storage")
 
 6.3. here, we can see cookies, and there is only one cookie, whose name is *username*. let's choose this cookie.
-![alt text](lab-cookies-modify-p2.png "select the cookie 'username'")
+![alt text](images/lab-cookies-select-username.png "select the cookie 'username'")
 
 6.4. this cookie has several attributes, such as *Name*, *Domain*, *Path*, *Last accessed on*, *Value*. at this moment, as we can see, the *Value* is **alice**.
-![alt text](lab-cookies-modify-p3.png "find the cookie value")
+![alt text](images/lab-cookies-change-value.png "find the cookie value")
 
 6.5. let's change the value to **bob**.
-![alt text](lab-cookies-modify-p4.png "change the value to bob")
+![alt text](images/lab-cookies-change-value-p2.png "change the value to bob")
 
 7. refresh the web page, and we should see bob's account balance, which is $100.
 
-![alt text](lab-cookies-bob-balance.png "bob's balance")
+![alt text](images/lab-cookies-bob-balance.png "bob's balance")
 
 this shows that the attack is successful: alice doesn't know bob's password, but she now still can see bob's bank account balance.
 
