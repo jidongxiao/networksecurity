@@ -65,7 +65,7 @@ $ node server.js
 6. we, as alice, try to modify the cookie "username". we change its value from *alice* to *bob*. the following screenshots show how we change it.
 
 6.1. first, we right click in the firefox window, and select **Inspect Element**.
-![alt text](images/lab-cookies-modify-p0.png "right click")
+![alt text](images/lab-cookies-inspect-element.png "right click")
 
 6.2. next, we select **Storage**.
 ![alt text](images/lab-cookies-storage-inspector.png "select storage")
