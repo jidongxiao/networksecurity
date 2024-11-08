@@ -20,16 +20,19 @@ Only one VM is sufficient. We will run a web server in this VM. The web server r
 1. install *node*:
 
 ```console
-[04/27/22]seed@VM:~$ sudo apt install nodejs-legacy
-[04/27/22]seed@VM:~$ sudo apt install npm
-[04/27/22]seed@VM:~$ npm install express
-[04/27/22]seed@VM:~$ npm install cookie-parser
-[04/27/22]seed@VM:~$ npm install body-parser
+$ sudo apt install nodejs
+$ sudo apt install npm
+$ npm config set strict-ssl false
+$ npm install express
+$ npm install cookie-parser
+$ npm install body-parser
 ```
 
 **Note**: if the above *npm* commands give you the following warnings, ignore them. It's not a problem.
 
 ```console
+npm WARN saveError ENOENT: no such file or directory, open '/home/seed/package.json'
+npm notice created a lockfile as package-lock.json. You should commit this file.
 npm WARN enoent ENOENT: no such file or directory, open '/home/seed/package.json'
 npm WARN seed No description
 npm WARN seed No repository field.
