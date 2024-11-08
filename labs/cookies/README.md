@@ -43,16 +43,15 @@ npm WARN seed No license field.
 2. setup the web server:
 
 ```console
-[04/27/22]seed@VM:~$ mkdir web 
-[04/27/22]seed@VM:~$ cd web/
-[04/27/22]seed@VM:~/web$ wget http://ns.cs.rpi.edu/cookies/index.html.orig
-[04/27/22]seed@VM:~/web$ wget http://ns.cs.rpi.edu/cookies/server.js
+$ mkdir web 
+$ cd web/
+$ wget http://ns.cs.rpi.edu/cookies/index.html
+$ wget http://ns.cs.rpi.edu/cookies/server.js
 ```
 
 3. start the web server:
 ```console
-[04/27/22]seed@VM:~/web$ mv index.html.orig index.html
-[04/27/22]seed@VM:~/web$ node server.js
+$ node server.js
 ```
 
 4. access the website from the browser: type localhost:4000 (replace localhost with your VM's IP address), you should see this:
