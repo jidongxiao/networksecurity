@@ -54,7 +54,7 @@ $ wget http://ns.cs.rpi.edu/cookies/server.js
 $ node server.js
 ```
 
-4. access the website from the browser: type localhost:4000 (replace localhost with your VM's IP address), you should see this:
+4. access the website from the browser: type localhost:4000, you should see this:
 
 ![alt text](images/lab-cookies-banking-site.png "online banking site")
 
