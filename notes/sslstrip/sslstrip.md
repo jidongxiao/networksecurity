@@ -95,6 +95,5 @@ HSTS is effective once a site has been visited securely (over HTTPS). However, i
 ### Additional Resources
 
 - [HSTS Preload Submission Site](https://hstspreload.org/)
-- [OWASP SSLstrip Overview](https://owasp.org/)
 
 By implementing HSTS and HSTS Preloading, website administrators can significantly improve the security of their websites, safeguarding against attacks like SSLstrip.
