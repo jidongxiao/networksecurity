@@ -46,15 +46,15 @@ $ sudo ip route add default via 10.0.2.6 // here, change 10.0.2.6 to your attack
 
 This screenshot shows the moment right before executing this command, 
 
-![alt text](lab-mitm-add-route-before-enter.png "before entering")
+![alt text](images/lab-mitm-add-route-before-enter.png "before entering")
 
 This screenshot shows the moment right after executing this command, 
 
-![alt text](lab-mitm-add-route-after-enter.png "after entering")
+![alt text](images/lab-mitm-add-route-after-enter.png "after entering")
 
 This screenshot shows the effect of this command as shown in the routing table - a default gateway is added.
 
-![alt text](lab-mitm-routing-table.png "the routing table")
+![alt text](images/lab-mitm-routing-table.png "the routing table")
 Also, on the attacker's machine, changing the firewall setting and enable ip forwarding:
 
 ```console
