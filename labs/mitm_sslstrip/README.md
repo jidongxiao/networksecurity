@@ -91,30 +91,31 @@ $ sudo pip3 install bcrypt==3.1.7
 $ mitmdump -s sslstrip.py --ssl-insecure --mode transparent
 ```
 
-This screenshot shows the moment right before the attacker launches the attack.
-![alt text](lab-mitm-sslstrip-launch-attack.png "launch attack")
+These screenshots show the moment right before and right after the attacker launches the attack.
+![alt text](images/lab-mitm-sslstrip-launch-attack-p1.png "launch attack p1")
+![alt text](images/lab-mitm-sslstrip-launch-attack-p2.png "launch attack p2")
 
 2. The victim, opens firefox and types [www.usps.com](http://www.usps.com), 
 
-![alt text](lab-mitm-sslstrip-usps-home.png "the usps home page")
+![alt text](images/lab-mitm-sslstrip-usps-home.png "the usps home page")
 
 and clicks on the button on the top right corner of the page: "Register/Sign in", which will take the victim to this page:
 
-![alt text](lab-mitm-sslstrip-sign-in-page.png "the sign in page")
+![alt text](images/lab-mitm-sslstrip-sign-in-page.png "the sign in page")
 
 3. The victim now enters a username, here, for example, is test1234, and a password, in this README, we will be using 12345678!, but you can type whatever you want to; but DO NOT press the "Sign in" button yet!
 
-![alt text](lab-mitm-sslstrip-sign-in.png "ready to sign in")
+![alt text](images/lab-mitm-sslstrip-sign-in.png "ready to sign in")
 
 4. The attacker opens wireshark, starts monitoring, and enters *http* in the filter bar, since we will only be monitoring http packets.
 
-![alt text](lab-mitm-sslstrip-wireshark-filter.png "set http filter in wireshark")
+![alt text](images/lab-mitm-sslstrip-wireshark-filter.png "set http filter in wireshark")
 
 5. Now the victim presses the "Sign in" button.
 
 6. The attacker should now see an HTTP POST request in wireshark, and let's find the victim's username and password here. Here, the HTTP POST request is packet 201, when packet 201 is selected, we scroll down in the second window of wireshark, and we can see the user's username and password, as shown in this screenshot:
 
-![alt text](lab-mitm-sslstrip-success.png "lab is successful!")
+![alt text](images/lab-mitm-sslstrip-success.png "lab is successful!")
 
 This shows the attack is successful.
 
@@ -124,4 +125,4 @@ What we learned here is that, even if most major websites use HTTPS nowadays, as
 
 7. The victim opens another browser tab, types [https://www.usps.com](https://www.usps.com), and clicks on the button on the top right corner of the page: "Register/Sign in", now in the sign in page, enters the username and password while the attacker keeps monitoring in wireshark. Can the attacker still see the POST request? Not any more, as shown in this next screenshot:
 
-![alt text](lab-mitm-sslstrip-defense.png "protect yourself")
+![alt text](images/lab-mitm-sslstrip-defense.png "protect yourself")
