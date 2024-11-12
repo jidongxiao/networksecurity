@@ -1,16 +1,33 @@
-## Man-in-the-Middle (MITM) Attack Against HTTPS (a.k.a. the sslstrip attack)
+## Man-in-the-Middle (MITM) Attack Against HTTPS (a.k.a. the SSLstrip attack)
 
 ### Background
 
-This lab will demonstate what a coffee shop employee can do. Assume a coffee shop employee has physical access to the store's wifi router. In this lab, you will be acting like this employee. Since store customers will be connecting to this wifi router, this wifi router naturally will serve as the gateway machine, and as the gateway machine it naturally can be used to perform man-in-the-middle attack.
+HTTPS is designed to protect against man-in-the-middle (MitM) attacks by encrypting data transmitted between a client (like a web browser) and a server, making it much more difficult for attackers to intercept or alter the communication. HTTPS, which uses the SSL/TLS protocol, encrypts data before it is sent over the internet. This means that even if an attacker manages to intercept the data, they would only see encrypted content, not readable information like usernames, passwords, or credit card numbers. This encryption is achieved through public and private keys, which are part of a secure key exchange process between the client and server.
 
-In this lab, the attacker will intercept a victim's HTTP traffic and modify the content of a web page presented to the victim client.
+Yet, HTTPS is still not a panacea. In this lab we will learn the SSLStrip attack, which is effective against HTTPS. SSLstrip is a type of cyberattack that exploits vulnerabilities in how HTTPS connections are managed to intercept and monitor data meant to be encrypted. Introduced by security researcher Moxie Marlinspike in 2009, SSLstrip specifically targets the transition between HTTP (unencrypted) and HTTPS (encrypted) communication, making it possible for an attacker to downgrade secure connections to unencrypted ones and thus capture sensitive data such as login credentials and personal information.
 
-### A Provided Web Server
+SSLstrip typically requires the attacker to be in a position to intercept network traffic. This is often achieved through a Man-in-the-Middle attack, where the attacker places themselves between the victim and the legitimate website or server. This can be done using techniques like ARP spoofing or DNS spoofing to redirect the victim’s traffic through the attacker’s machine. But in this lab, to simplify the lab steps, we will just demonstrate that when a victim connects to a coffee shop's wifi, what the coffee shop employee can do. We assume the coffee shop employee has physical access to the store's wireless router. In such a scenario, the wireless router naturally will serve as the gateway machine, and as the gateway machine it naturally can be used to perform man-in-the-middle attack, and SSLstrip works like this:
 
-A web server is provided for this lab, and one specific web page will used for this lab, which is hosted on [http://ns.cs.rpi.edu/test.html](http://ns.cs.rpi.edu/test.html). This site is on RPI's network and you can only access it if you are on RPI's network; if you are off campus, use VPN to connect to RPI's network first.
+1. When a user types a website URL without specifying "https://" (e.g., typing example.com), most websites automatically redirect the user from http://example.com to https://example.com for a secure connection. More specifically, the web server responds with an HTTP 301 or 302 redirect response to upgrade the connection to HTTPS (i.e., redirecting from http://example.com to https://example.com)
+2. The attacker intercepts and modifies this redirect response, stripping out the upgrade to HTTPS and keeping the connection on HTTP. This way, the client never actually connects to the secure HTTPS version and remains on HTTP. As an example, the following is the python code segment, which simply replaces the string "https" in the HTTP response to the string "http".
+```python
+   # Ensure that the response is in HTTP format to send back to the client
+    if flow.response.status_code == 301 or flow.response.status_code == 302:
+        location = flow.response.headers.get("Location")
+        if location and location.startswith("https://"):
+            # Change "https" to "http" in the redirect location
+            flow.response.headers["Location"] = location.replace("https://", "http://", 1)
+```
+3. Meanwhile, the attacker establishes a secure HTTPS connection with the server on behalf of the client. They keep the connection between the server and attacker encrypted. However, the attacker continues to communicate with the client over HTTP, exposing sensitive information like login credentials in plaintext and allowing the attacker to view and modify the data.
+4. As a result, while the attacker connects securely to https://example.com, they relay the page back to the victim over HTTP (unencrypted), thus "stripping" away HTTPS.
 
-You do not need to set up your own web server.
+**Question**: Will step 2 here lead to an infinite loop? Client visits http://example.com, server forces client to go to https://example.com, attacker changes it to http://example.com, and thus client will go to http://example.com, server forces client to go to https://example.com, attacker once again changes it to http://example.com...this will never come to an end and eventually the browser will display a timeout message. How is this addressed in the script we use for this lab?
+
+### Lab Requirement
+
+In this lab, the attacker will use the SSLstrip technique to intercept a victim's HTTP traffic and capture the victim client's login credentials to the site: [www.usps.com](www.usps.com).
+
+**Note**: This website is chosen for this lab mostly because of its relatively simple web interface. Many other popular websites use fancy technologies and do not support the browser our virtual machines use.
 
 ### Setup
 
@@ -21,22 +38,17 @@ You do not need to set up your own web server.
 | VM1 |  10.0.2.4    |
 | VM3 |  10.0.2.6    |
 
-Also, on the attacker's machine, changing the firewall setting:
+Also, on the attacker's machine, changing the firewall setting and enable ip forwarding:
 
 ```console
 $ sudo iptables -F
 $ sudo iptables -P FORWARD ACCEPT
-$ sudo iptables -A FORWARD -p tcp --sport 80 -j DROP
-$ sudo iptables -A FORWARD -p tcp --dport 80 -j DROP
-$ sudo iptables -A INPUT -p tcp --sport 80 -j DROP
-$ sudo iptables -A OUTPUT -p tcp --dport 80 -j DROP
+$ sudo sysctl -w net.ipv4.ip_forward=1
 ```
-
-These firewall settings tell the kernel to leave HTTP packets alone, and do not react to them, because the attacker will run a script to react to these packets.
 
 ### Attack: 
 
-1. The victim, opens firefox, accesses the web page: [http://ns.cs.rpi.edu/test.html](http://ns.cs.rpi.edu/test.html). As of now, it shows:
+1. The victim, opens firefox, accesses the web page: [www.usps.com](http://www.usps.com/). As of now, it shows:
 
 ![alt text](lab-mitm-original-page.png "the original page")
 
