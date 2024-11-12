@@ -99,7 +99,7 @@ These screenshots show the moment right before and right after the attacker laun
 
 ![alt text](images/lab-mitm-sslstrip-usps-home.png "the usps home page")
 
-and clicks on the button on the top right corner of the page: "Register/Sign in", which will take the victim to this page:
+and clicks on the "Register/Sign in" button on the top right corner of the page, which will take the victim to this next page:
 
 ![alt text](images/lab-mitm-sslstrip-sign-in-page.png "the sign in page")
 
@@ -123,6 +123,6 @@ This shows the attack is successful.
 
 What we learned here is that, even if most major websites use HTTPS nowadays, as the user, you can't just type www.usps.com in your address bar (of the browser), you really have to type the full url, i.e., https://www.usps.com. Let's try that here:
 
-7. The victim opens another browser tab, types [https://www.usps.com](https://www.usps.com), and clicks on the button on the top right corner of the page: "Register/Sign in", now in the sign in page, enters the username and password while the attacker keeps monitoring in wireshark. Can the attacker still see the POST request? Not any more, as shown in this next screenshot:
+7. The victim opens another browser tab, types [https://www.usps.com](https://www.usps.com), and clicks on the "Register/Sign in" button on the top right corner of the page, now in the sign in page, enters the username and password while the attacker keeps monitoring in wireshark. Can the attacker still see the POST request? Not any more, as shown in this next screenshot:
 
 ![alt text](images/lab-mitm-sslstrip-defense.png "protect yourself")
