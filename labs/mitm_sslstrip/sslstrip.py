@@ -2,19 +2,23 @@ from mitmproxy import http
 import re
 
 def request(flow: http.HTTPFlow) -> None:
-    # Check if the request is HTTP
+    # Ensure request URL is in absolute format
+    if flow.request.pretty_host and not flow.request.pretty_url.startswith("http"):
+        # Prepend "http://" to the request URL to form an absolute URL
+        flow.request.url = f"http://{flow.request.pretty_host}{flow.request.path}"
+    
+    # Check if the request is HTTP, then upgrade to HTTPS for server communication
     if flow.request.scheme == "http":
-        # Upgrade to HTTPS for server communication
         flow.request.scheme = "https"
-        flow.request.port = 443  # The HTTPS port
+        flow.request.port = 443  # Set port to HTTPS
 
 def response(flow: http.HTTPFlow) -> None:
-    # Remove HSTS header from the response
+    # Remove HSTS header from the response to prevent forced HTTPS on the client
     if "Strict-Transport-Security" in flow.response.headers:
         del flow.response.headers["Strict-Transport-Security"]
-    
-    # Ensure that the response is in HTTP format to send back to the client
-    if flow.response.status_code == 301 or flow.response.status_code == 302:
+
+    # Check if response is a redirect and downgrade to HTTP
+    if flow.response.status_code in (301, 302):
         location = flow.response.headers.get("Location")
         if location and location.startswith("https://"):
             # Change "https" to "http" in the redirect location
