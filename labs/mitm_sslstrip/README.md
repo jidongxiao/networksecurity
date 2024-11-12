@@ -38,7 +38,9 @@ In this lab, the attacker will use the SSLstrip technique to intercept a victim'
 | VM1 |  10.0.2.4    |
 | VM3 |  10.0.2.6    |
 
-on the victim VM, we specify the attacker's machine as the default gateway - so as to simulate the situation when the victim is connected to a public wifi where the owner can be a malicious actor.
+#### Victim VM setup
+
+On the victim VM, we specify the attacker's machine as the default gateway - so as to simulate the situation when the victim is connected to a public wifi where the owner can be a malicious actor.
 
 ```console
 $ sudo ip route add default via 10.0.2.6 // here, change 10.0.2.6 to your attacker's IP
@@ -55,49 +57,71 @@ This screenshot shows the moment right after executing this command,
 This screenshot shows the effect of this command as shown in the routing table - a default gateway is added.
 
 ![alt text](images/lab-mitm-routing-table.png "the routing table")
-Also, on the attacker's machine, changing the firewall setting and enable ip forwarding:
+
+#### Attacker VM setup
+
+On the attacker's machine, change the firewall setting and enable ip forwarding:
 
 ```console
 $ sudo iptables -F
 $ sudo iptables -P FORWARD ACCEPT
 $ sudo sysctl -w net.ipv4.ip_forward=1
+$ sudo iptables -t nat -F
 $ sudo iptables -t nat -A PREROUTING -p tcp --destination-port 80 -j REDIRECT --to-port 8080
 ```
 
-The 4th command here redirects the victim's HTTP traffic to the attacker's port 8080, and we will run a script on the attacker's VM which listens on port 8080, and intercepts the victim's HTTP traffic.
+The 5th command here redirects the victim's HTTP traffic to the attacker's port 8080, and we will run a script on the attacker's VM which listens on port 8080, and intercepts the victim's HTTP traffic.
+
+Also, install the library which will be used by the attacking script.
+
+```console
+$ sudo apt install mitmproxy
+$ sudo pip3 install blinker==1.4
+$ sudo apt remove python3-bcrypt
+$ pip3 uninstall bcrypt		// no sudo here; after this and the above command, the command *pip3 list | grep bcrypt* should show nothing.
+$ sudo pip3 install bcrypt==3.1.7
+```
 
 ### Attack: 
 
-1. The victim, opens firefox, accesses the web page: [www.usps.com](http://www.usps.com/). As of now, it shows:
+1. The attacker, runs the attack script: [sslstrip.py](sslstrip.py).
 
-![alt text](lab-mitm-original-page.png "the original page")
-
-
-3. The attacker, runs the attack script: [http\_attack.py](http_attack.py). You need sudo to run the script:
-
+<!-- $ mitmdump -s sslstrip.py -->
 ```console
-$ sudo python3 http_attack.py
-```
-
-Note: You have to change the IP addresses and the network interface in the above script, so as to reflect the correct information in your environment. In total you need to change 3 lines:
-
-```console
-CLIENT_IP = '10.0.2.4'   # The IP of your client
-ATTACKER_IP = '10.0.2.6'  # The IP of the attacker
-IFACE = "enp0s3"         # The Network interface to capture packets
+$ mitmdump -s sslstrip.py --ssl-insecure --mode transparent
 ```
 
 This screenshot shows the moment right before the attacker launches the attack.
-![alt text](lab-mitm-launch-attack.png "launch attack")
+![alt text](lab-mitm-sslstrip-launch-attack.png "launch attack")
 
-Explanation: what this script does is: keep sniffing packets going between the victim client and the web server, when a packet which goes from the client to the web server is captured, just forward it to the server, when a packet which goes from the web server to the client is captured, modify its content so as to show the message "this site is hacked".
+2. The victim, opens firefox and types [www.usps.com](http://www.usps.com), 
 
-4. the victim, refreshes the web page: [http://ns.cs.rpi.edu/test.html](http://ns.cs.rpi.edu/test.html). This screenshot shows that the web page is changed, which proves that the attack is successful and this concludes this lab.
+![alt text](lab-mitm-sslstrip-usps-home.png "the usps home page")
 
-![alt text](lab-mitm-final-success.png "lab is successful!")
+and clicks on the button on the top right corner of the page: "Register/Sign in", which will take the victim to this page:
 
-**Troubleshooting tips**: if refreshing the web page does not change the content, remember to delete the browser cache, you can find the button (to delete the cache) in **Preferences** in firefox, as shown in these screenshots, just press "Clear Data".
+![alt text](lab-mitm-sslstrip-sign-in-page.png "the sign in page")
 
-![alt text](lab-mitm-clear-cache1.png "clear cache data 1")
-![alt text](lab-mitm-clear-cache2.png "clear cache data 2")
+3. The victim now enters a username, here, for example, is test1234, and a password, in this README, we will be using 12345678!, but you can type whatever you want to; but DO NOT press the "Sign in" button yet!
 
+![alt text](lab-mitm-sslstrip-sign-in.png "ready to sign in")
+
+4. The attacker opens wireshark, starts monitoring, and enters *http* in the filter bar, since we will only be monitoring http packets.
+
+![alt text](lab-mitm-sslstrip-wireshark-filter.png "set http filter in wireshark")
+
+5. Now the victim presses the "Sign in" button.
+
+6. The attacker should now see an HTTP POST request in wireshark, and let's find the victim's username and password here. Here, the HTTP POST request is packet 201, when packet 201 is selected, we scroll down in the second window of wireshark, and we can see the user's username and password, as shown in this screenshot:
+
+![alt text](lab-mitm-sslstrip-success.png "lab is successful!")
+
+This shows the attack is successful.
+
+### Defense:
+
+What we learned here is that, even if most major websites use HTTPS nowadays, as the user, you can't just type www.usps.com in your address bar (of the browser), you really have to type the full url, i.e., https://www.usps.com. Let's try that here:
+
+7. The victim opens another browser tab, types [https://www.usps.com](https://www.usps.com), and clicks on the button on the top right corner of the page: "Register/Sign in", now in the sign in page, enters the username and password while the attacker keeps monitoring in wireshark. Can the attacker still see the POST request? Not any more, as shown in this next screenshot:
+
+![alt text](lab-mitm-sslstrip-defense.png "protect yourself")
