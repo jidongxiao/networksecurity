@@ -38,21 +38,7 @@ In this lab, the attacker will use the SSLstrip technique to intercept a victim'
 | VM1 |  10.0.2.4    |
 | VM3 |  10.0.2.6    |
 
-Also, on the attacker's machine, changing the firewall setting and enable ip forwarding:
-
-```console
-$ sudo iptables -F
-$ sudo iptables -P FORWARD ACCEPT
-$ sudo sysctl -w net.ipv4.ip_forward=1
-```
-
-### Attack: 
-
-1. The victim, opens firefox, accesses the web page: [www.usps.com](http://www.usps.com/). As of now, it shows:
-
-![alt text](lab-mitm-original-page.png "the original page")
-
-2. The victim, specifies the attacker's machine as the gateway - so as to simulate the situation when the victim is connected to a public wifi where the owner can be a malicious actor.
+on the victim VM, we specify the attacker's machine as the default gateway - so as to simulate the situation when the victim is connected to a public wifi where the owner can be a malicious actor.
 
 ```console
 $ sudo ip route add default via 10.0.2.6 // here, change 10.0.2.6 to your attacker's IP
@@ -69,6 +55,23 @@ This screenshot shows the moment right after executing this command,
 This screenshot shows the effect of this command as shown in the routing table - a default gateway is added.
 
 ![alt text](lab-mitm-routing-table.png "the routing table")
+Also, on the attacker's machine, changing the firewall setting and enable ip forwarding:
+
+```console
+$ sudo iptables -F
+$ sudo iptables -P FORWARD ACCEPT
+$ sudo sysctl -w net.ipv4.ip_forward=1
+$ sudo iptables -t nat -A PREROUTING -p tcp --destination-port 80 -j REDIRECT --to-port 8080
+```
+
+The 4th command here redirects the victim's HTTP traffic to the attacker's port 8080, and we will run a script on the attacker's VM which listens on port 8080, and intercepts the victim's HTTP traffic.
+
+### Attack: 
+
+1. The victim, opens firefox, accesses the web page: [www.usps.com](http://www.usps.com/). As of now, it shows:
+
+![alt text](lab-mitm-original-page.png "the original page")
+
 
 3. The attacker, runs the attack script: [http\_attack.py](http_attack.py). You need sudo to run the script:
 
