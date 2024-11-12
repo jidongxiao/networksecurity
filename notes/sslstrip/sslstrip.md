@@ -50,6 +50,12 @@ Strict-Transport-Security: max-age=31536000; includeSubDomains
 - `max-age=31536000`: Specifies the duration (in seconds) for which the browser should enforce HTTPS. In this example, 31,536,000 seconds is equivalent to one year.
 - `includeSubDomains`: Optional directive indicating that HSTS should apply to all subdomains as well.
 
+### Check HSTS Header Using curl
+
+```console
+$ curl -I https://www.usps.com | grep -i strict-transport-security
+```
+
 ### Limitations of HSTS
 
 HSTS is effective once a site has been visited securely (over HTTPS). However, it does not prevent an SSLstrip attack on the **initial connection** if a user first visits the site over HTTP.
