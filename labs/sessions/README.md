@@ -20,7 +20,7 @@ Only one VM is sufficient. We will run a web server in this VM. The web server r
 1. install *node*:
 
 ```console
-$ sudo apt install nodejs-legacy
+$ sudo apt install nodejs
 $ sudo apt install npm
 $ npm config set strict-ssl false
 $ npm install express
