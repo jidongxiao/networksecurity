@@ -108,7 +108,7 @@ The lesson we learn from this lab is when implementing session id(s), we should 
 
 ### Questions
 
-What is the major difference between the attack presented in this lab and the attack presented the Cookies Attack lab? Which one requires the victim to have an active (authenticated) session?
+What is the major difference between the attack presented in this lab and the attack presented in the [Insecure HTTP Cookies](../cookies) lab? Which one requires the victim to have an active (authenticated) session?
 
 ### References
 
