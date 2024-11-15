@@ -43,9 +43,9 @@ npm WARN seed No license field.
 ```console
 $ mkdir web 
 $ cd web/
-$ wget http://ns.cs.rpi.edu/session/index.html
-$ wget http://ns.cs.rpi.edu/session/server-insecure.js
-$ wget http://ns.cs.rpi.edu/session/server-secure.js
+$ wget http://ns.cs.rpi.edu/labs/session/index.html
+$ wget http://ns.cs.rpi.edu/labs/session/server-insecure.js
+$ wget http://ns.cs.rpi.edu/labs/session/server-secure.js
 ```
 
 3. start the web server:
