@@ -1,4 +1,4 @@
-## Session Attack
+## Session Hijacking Attack
 
 ### Requirements 
 
