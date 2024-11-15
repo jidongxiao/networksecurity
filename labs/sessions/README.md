@@ -106,6 +106,10 @@ $ node server-secure.js
 
 The lesson we learn from this lab is when implementing session id(s), we should avoid using predictable numbers, rather they should be randomized and not predictable.
 
+### Questions
+
+What is the major difference between the attack presented in this lab and the attack presented the Cookies Attack lab? Which one requires the victim to have an active (authenticated) session?
+
 ### References
 
 CS253 Web Security – course created and taught by Feross Aboukhadijeh at Stanford University.
