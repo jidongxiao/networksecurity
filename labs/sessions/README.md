@@ -20,11 +20,12 @@ Only one VM is sufficient. We will run a web server in this VM. The web server r
 1. install *node*:
 
 ```console
-[04/27/22]seed@VM:~$ sudo apt install nodejs-legacy
-[04/27/22]seed@VM:~$ sudo apt install npm
-[04/27/22]seed@VM:~$ npm install express
-[04/27/22]seed@VM:~$ npm install cookie-parser
-[04/27/22]seed@VM:~$ npm install body-parser
+$ sudo apt install nodejs-legacy
+$ sudo apt install npm
+$ npm config set strict-ssl false
+$ npm install express
+$ npm install cookie-parser
+$ npm install body-parser
 ```
 
 **Note**: if the above *npm* commands give you the following warnings, ignore them. It's not a problem.
@@ -40,17 +41,16 @@ npm WARN seed No license field.
 2. setup the web server:
 
 ```console
-[04/27/22]seed@VM:~$ mkdir web 
-[04/27/22]seed@VM:~$ cd web/
-[04/27/22]seed@VM:~/web$ wget http://cs.boisestate.edu/~jxiao/cs333/info/cookies/index.html.orig
-[04/27/22]seed@VM:~/web$ wget http://cs.boisestate.edu/~jxiao/cs333/info/cookies/server-insecure.js
-[04/27/22]seed@VM:~/web$ wget http://cs.boisestate.edu/~jxiao/cs333/info/cookies/server-secure.js
+$ mkdir web 
+$ cd web/
+$ wget http://ns.cs.rpi.edu/session/index.html
+$ wget http://ns.cs.rpi.edu/session/server-insecure.js
+$ wget http://ns.cs.rpi.edu/session/server-secure.js
 ```
 
 3. start the web server:
 ```console
-[04/27/22]seed@VM:~/web$ mv index.html.orig index.html
-[04/27/22]seed@VM:~/web$ node server-insecure.js
+$ node server-insecure.js
 ```
 
 4. open two browser tabs: one in normal mode, the other in **private windows** mode. and in both of them, access the web server: type localhost:4000 (replace localhost with your VM's IP address). In one tab, login as alice, in the other tab, login as bob. 
@@ -93,7 +93,7 @@ this shows that the attack is successful: alice doesn't know bob's password, but
 8. press ctrl-c to stop the web server - which we started in step 3. and run the secure version of the server, which produces randomized session id(s).
 
 ```console
-[04/27/22]seed@VM:~/web$ node server-secure.js
+$ node server-secure.js
 ```
 
 9. refresh the two opening tabs (one for alice, one for bob): we will be asked to login again. login as alice and bob.
