@@ -30,14 +30,12 @@ $ wget http://ns.cs.rpi.edu/labs/csrf/banking/index.html
 $ wget http://ns.cs.rpi.edu/labs/csrf/banking/server.js
 ```
 
-<!-- - edit server.js: find the word "localhost" and change "localhost" to your VM's IP address. -->
-
 - start the banking webserver:
 ```console
 $ node server.js
 ```
 
-3. access the website from the browser: type localhost:4000 (replace localhost with your VM's IP address), you should see this:
+3. access the website from the browser: type localhost:4000, you should see this:
 
 ![alt text](images/lab-csrf-banking-site.png "Lab csrf banking")
 
@@ -56,23 +54,18 @@ $ wget http://ns.cs.rpi.edu/labs/csrf/attacker/cat.gif
 $ wget http://ns.cs.rpi.edu/labs/csrf/attacker/attacker-frame.html
 ```
 
-<!-- - edit attacker-frame.html: find the word "localhost" and change "localhost" to your VM's IP address. -->
-
 - start the attacker web server:
 ```console
 $ python3 -m http.server 8000
 ```
 
-6. access the website from the browser: open a new tab (make sure the banking site tab is still open), type localhost:8000 (replace localhost with your VM's IP address), you should see this:
+6. access the website from the browser: open a new tab (make sure the banking site tab is still open), type localhost:8000 and enter, you should see this:
 
 ![alt text](images/lab-csrf-attacker-site.png "Lab csrf attacker")
 
 7. refresh the banking page, if the attack is successful, jessica's account balance should have less money now.
 
 ![alt text](images/lab-csrf-attack-success.png "Lab csrf attack success")
-
-<!-- - if the firefox browser doesn't show the amount change, try a different browser installed in the provided VM.
-- you can also try to use your host machine's browser to access the above two websites, it should also work. -->
 
 As can be seen from the above screenshot, the attack is successful, and this concludes the lab.
 
