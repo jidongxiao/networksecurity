@@ -13,8 +13,9 @@ Only one VM is sufficient.
 1. install node:
 
 ```console
-$ sudo apt install nodejs-legacy
+$ sudo apt install nodejs
 $ sudo apt install npm
+$ npm config set strict-ssl false
 $ npm install express
 $ npm install cookie-parser
 $ npm install body-parser
