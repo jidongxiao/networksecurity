@@ -30,7 +30,7 @@ $ wget http://ns.cs.rpi.edu/labs/csrf/banking/index.html
 $ wget http://ns.cs.rpi.edu/labs/csrf/banking/server.js
 ```
 
-- edit server.js: find the word "localhost" and change "localhost" to your VM's IP address.
+<!-- - edit server.js: find the word "localhost" and change "localhost" to your VM's IP address. -->
 
 - start the banking webserver:
 ```console
@@ -53,11 +53,11 @@ $ wget http://ns.cs.rpi.edu/labs/csrf/attacker/cat.gif
 $ wget http://ns.cs.rpi.edu/labs/csrf/attacker/attacker-frame.html
 ```
 
-- edit attacker-frame.html: find the word "localhost" and change "localhost" to your VM's IP address.
+<!-- - edit attacker-frame.html: find the word "localhost" and change "localhost" to your VM's IP address. -->
 
 - start the attacker web server:
 ```console
-$ python -m SimpleHTTPServer 8000
+$ python3 -m http.server 8000
 ```
 
 6. access the website from the browser: open a new tab (make sure the banking site tab is still open), type localhost:8000 (replace localhost with your VM's IP address), you should see this:
