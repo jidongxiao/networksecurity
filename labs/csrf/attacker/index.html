@@ -1,3 +1,17 @@
-<h1>Cool cat site</h1>
-<img src='cat.gif' />
-<iframe src='attacker-frame.html' style='display: none'></iframe>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Cool Cat Site</title>
+</head>
+<body>
+    <h1>Cool cat site</h1>
+    <img src='cat.gif' />
+    <iframe src='attacker-frame.html' style='display: none'></iframe>
+</body>
+<script>
+  document.querySelector('iframe').addEventListener('load', function () {
+      console.log('iframe loaded');
+  });
+</script>
+</html>
