@@ -13,28 +13,27 @@ Only one VM is sufficient.
 1. install node:
 
 ```console
-[04/27/22]seed@VM:~$ sudo apt install nodejs-legacy
-[04/27/22]seed@VM:~$ sudo apt install npm
-[04/27/22]seed@VM:~$ npm install express
-[04/27/22]seed@VM:~$ npm install cookie-parser
-[04/27/22]seed@VM:~$ npm install body-parser
+$ sudo apt install nodejs-legacy
+$ sudo apt install npm
+$ npm install express
+$ npm install cookie-parser
+$ npm install body-parser
 ```
 
 2. set up the banking directoy:
 
 ```console
-[04/27/22]seed@VM:~$ mkdir banking
-[04/27/22]seed@VM:~$ cd banking/
-[04/27/22]seed@VM:~/banking$ wget http://cs.boisestate.edu/~jxiao/cs333/info/csrf/banking/index.html.orig
-[04/27/22]seed@VM:~/banking$ wget http://cs.boisestate.edu/~jxiao/cs333/info/csrf/banking/server4.js
+$ mkdir banking
+$ cd banking/
+$ wget http://ns.cs.rpi.edu/labs/csrf/banking/index.html
+$ wget http://ns.cs.rpi.edu/labs/csrf/banking/server.js
 ```
 
-- edit server4.js: find the word "localhost" and change "localhost" to your VM's IP address.
+- edit server.js: find the word "localhost" and change "localhost" to your VM's IP address.
 
 - start the banking webserver:
 ```console
-[04/27/22]seed@VM:~/banking$ mv index.html.orig index.html
-[04/27/22]seed@VM:~/banking$ node server4.js
+$ node server.js
 ```
 
 3. access the website from the browser: type localhost:4000 (replace localhost with your VM's IP address), you should see this:
@@ -46,19 +45,18 @@ Only one VM is sufficient.
 5. set up the attacker directory:
 
 ```console
-[04/27/22]seed@VM:~$ mkdir attacker
-[04/27/22]seed@VM:~$ cd attacker/
-[04/27/22]seed@VM:~/attacker$ wget http://cs.boisestate.edu/~jxiao/cs333/info/csrf/attacker/index.html.orig
-[04/27/22]seed@VM:~/attacker$ wget http://cs.boisestate.edu/~jxiao/cs333/info/csrf/attacker/cat.gif
-[04/27/22]seed@VM:~/attacker$ wget http://cs.boisestate.edu/~jxiao/cs333/info/csrf/attacker/attacker-frame.html
+$ mkdir attacker
+$ cd attacker/
+$ wget http://ns.cs.rpi.edu/labs/csrf/attacker/index.html
+$ wget http://ns.cs.rpi.edu/labs/csrf/attacker/cat.gif
+$ wget http://ns.cs.rpi.edu/labs/csrf/attacker/attacker-frame.html
 ```
 
 - edit attacker-frame.html: find the word "localhost" and change "localhost" to your VM's IP address.
 
 - start the attacker web server:
 ```console
-[04/27/22]seed@VM:~/attacker$ mv index.html.orig index.html
-[04/27/22]seed@VM:~/attacker$ python -m SimpleHTTPServer 8000
+$ python -m SimpleHTTPServer 8000
 ```
 
 6. access the website from the browser: open a new tab (make sure the banking site tab is still open), type localhost:8000 (replace localhost with your VM's IP address), you should see this:
