@@ -1,3 +1,11 @@
+# What is DOM?
+
+- **DOM (Document Object Model)** allows JavaScript to interact with HTML elements.
+- It enables updating the content, style, and structure of a webpage dynamically.
+- Changes are based on **user actions** (like clicks, typing) or other triggers.
+- **Fundamental for creating dynamic and interactive web pages**.
+- **JavaScript** is the primary language for manipulating the DOM.
+
 # Understanding DOM-Based XSS and Why It's a Client-Side Vulnerability
 
 ## What is DOM-Based XSS?
