@@ -2,7 +2,7 @@
 
 ### Requirements 
 
-In this lab, we will work on a social network website. An attacker, who is also a user on this website, injects a javascript into its profile, and when a victim visits the attacker's profile page, the injected javascript executes and the attacker gets added to the victim's friend list.
+In this lab, we will work on a social network website. An attacker, who is also a user on this website, injects a javascript into its profile, and when a victim visits the attacker's profile page, the injected javascript executes and the attacker gets added to the victim's friends list.
 
 ### Setup
 
@@ -49,10 +49,11 @@ $ node server.js
 
 3. Open two browser tabs: one in normal mode, the other in **private window** mode. In both of them, access the web server: type localhost:3000. In one tab, login as alice, in the other tab, login as bob.
 
+![alt text](images/lab-xss-login-page.png "Lab xss login page")
 ![alt text](images/lab-xss-alice-profile.png "Lab xss alice profile")
 ![alt text](images/lab-xss-bob-profile.png "Lab xss bob profile")
 
-4. Bob adds this script into his profile:
+4. Bob clicks on the button "Edit Profile" and adds this script into his profile:
 
 ```console
 <script> fetch('/add-friend/2'); </script>
@@ -67,5 +68,5 @@ Please refer to these screenshots to make sure you are adding the right content 
 
 ![alt text](images/lab-xss-view-bob-profile.png "Lab xss view bob's profile")
 
-6. Alice clicks the button to go back to her own profile, and now she sees that Bob is on her friends list. As can be seen from the this screenshot, which proves that the attack is successful, and this concludes the lab.
+6. Alice clicks the button "Go Back to My Profile" to go back to her own profile, and now she sees that Bob is on her friends list. As can be seen from the this screenshot, which proves that the attack is successful, and this concludes the lab.
 ![alt text](images/lab-xss-attack-success.png "Lab xss attack success")
