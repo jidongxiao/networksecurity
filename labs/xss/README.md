@@ -68,9 +68,9 @@ $ python3 -m http.server 8000
 
 Please refer to these screenshots to make sure you are adding the right content into Bob's profile:
 
-![alt text](images/lab-csrf-bob-inject-p1.png "Lab xss attacker injecting script")
-![alt text](images/lab-csrf-bob-inject-p2.png "Lab xss attacker injecting script")
-![alt text](images/lab-csrf-bob-inject-p3.png "Lab xss attacker injecting script")
+![alt text](images/lab-xss-bob-inject-p1.png "Lab xss attacker injecting script")
+![alt text](images/lab-xss-bob-inject-p2.png "Lab xss attacker injecting script")
+![alt text](images/lab-xss-bob-inject-p3.png "Lab xss attacker injecting script")
 
 access the website from the browser: open a new tab (make sure the banking site tab is still open), type localhost:8000 and enter, you should see this:
 
