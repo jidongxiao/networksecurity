@@ -6,7 +6,15 @@ In this lab, we will work on a social network website. An attacker, who is also 
 
 ### Setup
 
-Only one VM is sufficient.
+Only one VM is sufficient. Source code for the social network website is provided and the website contains the following users:
+
+|  Username |  Password   |  Role    |
+|-----------|-------------|----------|
+|  Alice    |  password1  | victim   |
+|  Bob      |  password2  | attacker |
+|  Samy     |  password3  |          |
+|  Charlie  |  password4  |          |
+|  Dana     |  password5  |          |
 
 ### Steps
 
@@ -25,42 +33,26 @@ $ npm install body-parser
 2. set up the social network website:
 
 ```console
-$ mkdir banking
-$ cd banking/
-$ wget http://ns.cs.rpi.edu/labs/csrf/banking/index.html
-$ wget http://ns.cs.rpi.edu/labs/csrf/banking/server.js
+$ mkdir xss
+$ cd xss/
+$ wget http://ns.cs.rpi.edu/labs/xss/server.js
+$ wget http://ns.cs.rpi.edu/labs/xss/index.ejs
+$ wget http://ns.cs.rpi.edu/labs/xss/login.ejs
+$ wget http://ns.cs.rpi.edu/labs/xss/profile.ejs
+$ wget http://ns.cs.rpi.edu/labs/xss/edit-profile.ejs
 ```
 
-- start the banking webserver:
+- start the social network webserver:
 ```console
 $ node server.js
 ```
 
-3. access the website from the browser: type localhost:4000, you should see this:
+3. open two browser tabs: one in normal mode, the other in **private windows** mode. In both of them, access the web server: type localhost:3000. In one tab, login as alice, in the other tab, login as bob.
 
-![alt text](images/lab-csrf-banking-site.png "Lab csrf banking")
+![alt text](images/lab-xss-alice-profile.png "Lab xss alice profile")
+![alt text](images/lab-xss-bob-profile.png "Lab xss bob profile")
 
-4. login as jessica, username: jessica, password: 50505. You should see that Jessica's account balance at this moment is $10,000:
-
-![alt text](images/lab-csrf-banking-login.png "Lab csrf banking login")
-![alt text](images/lab-csrf-banking-balance.png "Lab csrf banking balance")
-
-5. set up the attacker directory:
-
-```console
-$ mkdir attacker
-$ cd attacker/
-$ wget http://ns.cs.rpi.edu/labs/csrf/attacker/index.html
-$ wget http://ns.cs.rpi.edu/labs/csrf/attacker/cat.gif
-$ wget http://ns.cs.rpi.edu/labs/csrf/attacker/attacker-frame.html
-```
-
-- start the attacker web server:
-```console
-$ python3 -m http.server 8000
-```
-
-6. Bob adds this script into his profile:
+4. Bob adds this script into his profile:
 
 ```console
 <script> fetch('/add-friend/2'); </script>
@@ -70,7 +62,6 @@ Please refer to these screenshots to make sure you are adding the right content 
 
 ![alt text](images/lab-xss-bob-inject-p1.png "Lab xss attacker injecting script")
 ![alt text](images/lab-xss-bob-inject-p2.png "Lab xss attacker injecting script")
-![alt text](images/lab-xss-bob-inject-p3.png "Lab xss attacker injecting script")
 
 access the website from the browser: open a new tab (make sure the banking site tab is still open), type localhost:8000 and enter, you should see this:
 
