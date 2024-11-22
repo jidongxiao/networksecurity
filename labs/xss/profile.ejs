@@ -1,0 +1,162 @@
+<!-- If current user is viewing its own profile page -->
+<% if (currentUser.id === otherUser.id) { %>
+<h1>Welcome, <%= currentUser.name %>!</h1>
+<a href="/edit-profile" class="btn">Edit Profile</a>
+
+<h2>About me:</h2>
+<p><%= currentUser.about || '' %></p>
+
+<h2>Friends:</h2>
+<ul>
+  <% currentUser.friends.forEach(friendId => { %>
+    <% const friend = users.find(u => u.id === friendId); %>
+    <% if (friend) { %>
+      <li><a href="/user/<%= friend.id %>"><%= friend.name %></a>
+        <!-- Add a Remove Friend button -->
+        <button onclick="removeFriend(<%= friend.id %>)">Remove Friend</button>
+      </li>
+    <% } else { %>
+      <li>Friend not found: <%= friendId %></li>
+    <% } %>
+  <% }) %>
+</ul>
+
+    <!-- Only show 'Add Friend' button if viewing own profile -->
+    <h2>Add a Friend:</h2>
+    <form id="addFriendForm">
+    <label for="friendName">Enter Friend's Name:</label>
+    <input type="text" id="friendName" name="friendName" required>
+    <button type="submit">Add Friend</button>
+    </form>
+<% } else { %>
+<h1>Welcome to <%= otherUser.name %>'s Profile Page!</h1>
+
+    <!-- If the current user is viewing someone else's profile -->
+    <h2>About me:</h2>
+    <!-- 
+       <%- %>: This renders the raw HTML (allows scripts to execute). 
+       <%= %>: This escapes the HTML (default behavior to prevent XSS).
+       <p><%= otherUser.about %></p>
+    -->
+    <p><%- otherUser.about %></p>
+
+    <h2><%= otherUser.name %>'s Friends:</h2>
+    <ul>
+        <% otherUser.friends.forEach(friendId => { %>
+            <% const friend = users.find(u => u.id === friendId); %>
+            <% if (friend) { %>
+                <li><a href="/user/<%= friend.id %>"><%= friend.name %></a></li>
+            <% } else { %>
+                <li>Friend not found: <%= friendId %></li>
+            <% } %>
+        <% }) %>
+    </ul>
+    <!-- If viewing another user's profile, display the 'Add Friend' button -->
+    <!-- <button onclick="addFriend(<%= currentUser.id %>)">Add as Friend</button> -->
+<% } %>
+
+<!-- Button to go back to the current user's profile -->
+<% if (currentUser.id !== otherUser.id) { %>
+    <a href="/user/<%= currentUser.id %>">
+        <button>Go Back to My Profile</button>
+    </a>
+<% } %>
+
+<!-- Logout Button -->
+<form action="/logout" method="GET" style="margin-top: 20px;">
+    <button type="submit">Logout</button>
+</form>
+
+<!-- JavaScript to handle adding friends -->
+<script>
+document.getElementById('addFriendForm').addEventListener('submit', function(event) {
+    event.preventDefault();
+
+    const friendName = document.getElementById('friendName').value;
+
+    // Make a POST request to the server with the friend's name
+    fetch('/add-friend-by-name', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: new URLSearchParams({
+            friendName: friendName
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            alert('Friend added successfully');
+            // Optionally reload or update the friend list on the page
+            location.reload();
+        } else {
+            alert(data.message);
+        }
+    })
+    .catch(error => console.error('Error adding friend:', error));
+});
+
+function addFriend(friendId) {
+  fetch(`/add-friend?friendId=${friendId}`, {
+    method: 'GET',
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+  })
+  .then(response => {
+    if (!response.ok) {
+      // If the response is not OK, throw an error
+      return Promise.reject('Failed to add friend: ' + response.statusText);
+    }
+    return response.json(); // Parse the JSON response
+  })
+  .then(data => {
+    if (data.message === 'Friend added successfully') {
+      alert("Friend added successfully!");
+
+      // Optionally reload the page to reflect changes
+      location.reload();
+
+      // Or you can dynamically update the friend list like this:
+      updateFriendsList(data.friends); // Call a function to update the UI dynamically
+    }
+  })
+  .catch(error => {
+    console.error("Error adding friend:", error);
+    alert("Error adding friend: " + error);
+  });
+}
+
+// Function to update the friend's list dynamically
+function updateFriendsList(friends) {
+  const friendsList = document.getElementById('friendsList');
+  friendsList.innerHTML = ''; // Clear the current list
+
+  // Populate the friends list with the updated data
+  friends.forEach(friendId => {
+    const listItem = document.createElement('li');
+    const friend = users.find(u => u.id === friendId); // Assume you have the user data in a `users` array
+    listItem.textContent = friend.name; // Or display friend info in other ways
+    friendsList.appendChild(listItem);
+  });
+}
+
+function removeFriend(friendId) {
+    fetch(`/remove-friend?friendId=${friendId}`, {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            alert('Friend removed successfully');
+            location.reload(); // Reload or update the page
+        } else {
+            alert(data.message);
+        }
+    })
+    .catch(error => {
+        console.error("Error removing friend:", error);
+        alert("Error removing friend: " + error);
+    });
+}
+</script>

@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Social Network</title>
+</head>
+<body>
+    <h1>Social Network</h1>
+    <a href="/logout">Logout</a>
+    <ul>
+        <% users.forEach(user => { %>
+            <li><a href="/user/<%= user.id %>"><%= user.name %></a></li>
+        <% }); %>
+    </ul>
+</body>
+</html>
+
