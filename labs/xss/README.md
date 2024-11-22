@@ -26,6 +26,7 @@ $ sudo apt install npm
 $ npm install ejs	// pay attention here, this ejs is a new package which is unique to this lab.
 $ npm config set strict-ssl false
 $ npm install express
+$ npm install express-session  // pay attention here, this express-session is also a new package which is unique to this lab.
 $ npm install cookie-parser
 $ npm install body-parser
 ```
