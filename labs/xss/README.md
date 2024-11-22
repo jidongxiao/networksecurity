@@ -18,7 +18,7 @@ Only one VM is sufficient. Source code for the social network website is provide
 
 ### Steps
 
-1. install node:
+1. Install node:
 
 ```console
 $ sudo apt install nodejs
@@ -30,7 +30,7 @@ $ npm install cookie-parser
 $ npm install body-parser
 ```
 
-2. set up the social network website:
+2. Set up the social network website:
 
 ```console
 $ mkdir xss
@@ -47,7 +47,7 @@ $ wget http://ns.cs.rpi.edu/labs/xss/edit-profile.ejs
 $ node server.js
 ```
 
-3. open two browser tabs: one in normal mode, the other in **private windows** mode. In both of them, access the web server: type localhost:3000. In one tab, login as alice, in the other tab, login as bob.
+3. Open two browser tabs: one in normal mode, the other in **private window** mode. In both of them, access the web server: type localhost:3000. In one tab, login as alice, in the other tab, login as bob.
 
 ![alt text](images/lab-xss-alice-profile.png "Lab xss alice profile")
 ![alt text](images/lab-xss-bob-profile.png "Lab xss bob profile")
@@ -63,16 +63,9 @@ Please refer to these screenshots to make sure you are adding the right content 
 ![alt text](images/lab-xss-bob-inject-p1.png "Lab xss attacker injecting script")
 ![alt text](images/lab-xss-bob-inject-p2.png "Lab xss attacker injecting script")
 
-access the website from the browser: open a new tab (make sure the banking site tab is still open), type localhost:8000 and enter, you should see this:
+5. At this moment, any user who visits Bob's profile page will add Bob as the friend. To test this, let Alice visit Bob's profile page, which is located at [http://localhost:3000/user/2](http://localhost:3000/user/2).
 
-![alt text](images/lab-csrf-attacker-site.png "Lab csrf attacker")
+![alt text](images/lab-xss-view-bob-profile.png "Lab xss view bob's profile")
 
-7. refresh the banking page, if the attack is successful, jessica's account balance should have less money now.
-
-![alt text](images/lab-csrf-attack-success.png "Lab csrf attack success")
-
-As can be seen from the above screenshot, the attack is successful, and this concludes the lab.
-
-### References:
-
-CS253 Web Security – course created and taught by Feross Aboukhadijeh at Stanford University.
+6. Alice clicks the button to go back to her own profile, and now she sees that Bob is on her friends list. As can be seen from the this screenshot, which proves that the attack is successful, and this concludes the lab.
+![alt text](images/lab-xss-attack-success.png "Lab xss attack success")
