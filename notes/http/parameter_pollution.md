@@ -80,9 +80,17 @@ To protect your application against HTTP Parameter Pollution:
 
 ```php
 <?php
-// Vulnerable: Processes all instances of the 'id' parameter
-$id = $_GET['id']; 
-echo "ID is $id";
+// Get the poll_id from the URL
+$poll_id = isset($_GET['poll_id']) ? $_GET['poll_id'] : null;
+
+if ($poll_id) {
+    echo "<h1>Welcome to the Election Poll</h1>";
+    echo "<p>Select your candidate:</p>";
+    echo "<a href='vote.php?candidate=white&poll_id=$poll_id'>Vote for Mr. White</a><br>";
+    echo "<a href='vote.php?candidate=green&poll_id=$poll_id'>Vote for Mrs. Green</a>";
+} else {
+    echo "Poll ID is missing.";
+}
 ?>
 ```
 
@@ -90,11 +98,11 @@ echo "ID is $id";
 
 #### Request
 
-`https://example.com/page?id=123&id=456`
+`https://example.com/election.php?poll_id=4568%26candidate%3Dgreen`
 
 #### Possible Output
 
-`ID is 123,456`
+The user will vote for Green no matter which button the user clicks on.
 
 ---
 
