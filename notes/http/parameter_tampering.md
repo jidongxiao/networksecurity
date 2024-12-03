@@ -34,8 +34,9 @@ Attackers modify these parameters to exploit the application, often with malicio
 ### 4. Logic Manipulation
 - **Triggering Unintended Behavior**: Changing `quantity=1` to `quantity=1000` to exploit order processing.
 
-### 5. SQL Injection
+<!-- ### 5. SQL Injection
 - **Database Exploits**: Injecting malicious input, such as modifying `id=123` to `id=123' OR '1'='1`.
+-->
 
 ---
 
