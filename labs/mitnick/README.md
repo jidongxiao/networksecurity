@@ -106,7 +106,7 @@ source_ip = "10.0.2.4"  # Spoofed IP
 destination_ip = "10.0.2.5"
 ```
 
-The source\_ip must be the victim client's IP address, and the destinaion\_ip must be the victim server's IP address. Once again, do not change any other lines of the script.
+The source\_ip must be the victim client's IP address, and the destination\_ip must be the victim server's IP address. Once again, do not change any other lines of the script.
 
 step 5. Turn on wireshark and start capturing.
 
