@@ -4,7 +4,7 @@ In this course, every student needs to install 3 virtual machines on their own c
 
 You can find the images information [here](https://seedsecuritylabs.org/labsetup.html).
 
-When setting up networks, you are highly recommended to use NatNetwork. Follow the instructions [here](http://ns.cs.rpi.edu/vm_manual.pdf) to create the NatNetwork first.
+When setting up networks, you are highly recommended to use NatNetwork. Follow the instructions [here](https://presentationassistants.com/drive/serve_file.php?file_id=1mIoGVehi9j7ta3oO0tk7PENzl8Nkp0Ye) to create the NatNetwork first.
 
 If the network set up is successful, you should be able to ping and ssh from one VM to another VM.
 
