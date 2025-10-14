@@ -120,7 +120,7 @@ These 2 dig commands should not report any error or malformed DNS responses.
 
 ## Submission
 
-Due: 23:59pm, Friday, Nov 21st, 2025.
+Due: 11:59pm, Friday, Nov 21st, 2025.
 
 Your submission (via submitty) should include your source code and a README file. The README file should describe how to compile and run your program, and you should also include your test results in the README.
 
