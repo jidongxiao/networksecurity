@@ -66,7 +66,7 @@ Decoded message from server: hello client
 
 ## Wireshark Capture
 
-When running the two programs, we should see 4 DNS messages in wireshark, and it is your responsibility to make sure these DNS messages have the correct format. In other words, wireshark should not report any malformed DNS packets. Given that our goal here is the communicate covertly, any malformed DNS packets in wireshark would make the communication suspicious and thus should be avoided.
+When running the two programs, we should see 4 DNS messages in wireshark, and it is your responsibility to make sure these DNS messages have the correct format. In other words, wireshark should not report any malformed DNS packets. Given that our goal here is to communicate covertly, any malformed DNS packets in wireshark would make the communication suspicious and thus should be avoided.
 
 ## Dig Test
 
@@ -120,7 +120,7 @@ These 2 dig commands should not report any error or malformed DNS responses.
 
 ## Submission
 
-Due: 23:59pm, Friday, Nov 22nd, 2024.
+Due: 23:59pm, Friday, Nov 21st, 2025.
 
 Your submission (via submitty) should include your source code and a README file. The README file should describe how to compile and run your program, and you should also include your test results in the README.
 
