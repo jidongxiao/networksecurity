@@ -1,6 +1,6 @@
 ## Remote DNS Cache Poisoning Attack (aka, the Dan Kaminsky Attack)
 
-**Note**: If you completed [Lab 11 Subdomain Takeover](https://github.com/jidongxiao/networksecurity/tree/main/labs/subdomain), you need to do the following clean up work on VM2 before start this lab.
+**Note**: If you completed the [Subdomain Takeover Lab](https://github.com/jidongxiao/networksecurity/tree/main/labs/subdomain), you need to do the following clean up work on VM2 before start this lab.
 
 1.  delete /etc/bind/db.cnn.com
 
@@ -189,6 +189,16 @@ The following screenshots show that the attack is successful:
 [05/29/22]seed@VM:~/.../remotedns$ sudo cp named.conf.default-zones.orig /etc/bind/
 ```-->
 
-### Question
+<!-- ### Question
 
-Among all the labs you do in this course, this lab presents the most powerful attack as it allows the attacker to perform the attack from outside of the victim's network. This attack is very creative and sophisticated, do you truly understand the techniques Dan Kaminsky used?
+Among all the labs you do in this course, this lab presents the most powerful attack as it allows the attacker to perform the attack from outside of the victim's network. This attack is very creative and sophisticated, do you truly understand the techniques Dan Kaminsky used?-->
+
+### Troubleshooting
+
+If for whatever reason your victim client just don't see the fake mapping, run these commands on your DNS resolver to see if the cache is poisoned or not; if cache is poisoned, then you can just take a screenshot of the poisoned cache which says ns.attacker32.com is responsible for cnn.com (i.e., it's an NS record). And this will count as a success attack.
+
+```console
+$ sudo rndc status         # shows DNS cache stats
+$ sudo rndc dumpdb -cache  # dumps the current cache to a file, which by default is at /var/cache/bind/named_dump.db
+$ sudo cat /var/cache/bind/named_dump.db
+```
