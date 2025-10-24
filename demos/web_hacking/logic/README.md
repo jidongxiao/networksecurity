@@ -8,6 +8,7 @@ Steps:
 $ sudo apt update
 $ sudo apt install nodejs npm -y
 $ npm init -y
+$ npm config set strict-ssl false
 $ npm install express
 ```
 
