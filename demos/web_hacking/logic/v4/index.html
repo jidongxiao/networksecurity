@@ -156,7 +156,6 @@ async function checkout() {
       renderCart();
       document.getElementById('balance').innerText = Number(data.balance).toFixed(2);
 
-      // vulnerable lab redirect: server reads session cart, so send only the flag
       window.location.href = '/cart/order-confirmation?order-confirmed=true';
     } else {
       document.getElementById('result').innerHTML = `<p style="color:red;">${data.message}</p>`;
