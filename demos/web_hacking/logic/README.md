@@ -11,6 +11,7 @@ $ sudo apt install nodejs -y
 $ npm init -y
 $ npm config set strict-ssl false
 $ npm install express
+$ npm install express-session
 ```
 
 2. Start the web server: go inside v1, or v2, or v3, and run this:
