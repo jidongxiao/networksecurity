@@ -17,36 +17,25 @@ Only one VM is sufficient. We will run a web server in this VM. The web server r
 
 #### Preparation Steps
 
-1. install *node*:
-
-```console
-$ sudo apt install nodejs
-$ sudo apt install npm
-$ npm config set strict-ssl false
-$ npm install express
-$ npm install cookie-parser
-$ npm install body-parser
-```
-
-**Note**: if the above *npm* commands give you the following warnings, ignore them. It's not a problem.
-
-```console
-npm WARN saveError ENOENT: no such file or directory, open '/home/seed/package.json'
-npm notice created a lockfile as package-lock.json. You should commit this file.
-npm WARN enoent ENOENT: no such file or directory, open '/home/seed/package.json'
-npm WARN seed No description
-npm WARN seed No repository field.
-npm WARN seed No README data
-npm WARN seed No license field.
-```
-
-2. setup the web server:
+1. setup the web server:
 
 ```console
 $ mkdir web 
 $ cd web/
 $ wget http://ns.cs.rpi.edu/cookies/index.html
 $ wget http://ns.cs.rpi.edu/cookies/server.js
+```
+
+2. install *node* inside the web folder:
+
+```console
+$ sudo apt install nodejs
+$ sudo apt install npm
+$ npm init -y
+$ npm config set strict-ssl false
+$ npm install express@4.21.1
+$ npm install cookie-parser
+$ npm install body-parser@1.20.3
 ```
 
 3. start the web server:
