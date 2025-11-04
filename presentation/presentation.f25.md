@@ -2,11 +2,10 @@
 
 You must complete **one practitioner-level lab** on the
 [Web Security Academy](https://portswigger.net/web-security/all-labs).
-Record a video demonstrating the entire process of completing the lab.
 You may choose **any lab from the Practitioner-level** category.
 
 ---
-In the video, you must speak and explain:
+Record a video demonstrating the entire process of completing the lab. In the video, you must speak and explain:
 - each step you take, and
 - the rationale behind each step.
 
