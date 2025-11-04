@@ -1,6 +1,6 @@
-## Presentation Topic
+## Fall 25 Network Security and Defense - Presentation Topic
 
-You must complete **one practitioner-level lab** on the
+In this assignment, you are asked to complete **one practitioner-level lab** on the
 [Web Security Academy](https://portswigger.net/web-security/all-labs).
 You may choose **any lab from the Practitioner-level** category.
 
