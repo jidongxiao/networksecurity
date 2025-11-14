@@ -2,7 +2,7 @@
 
 Steps:
 
-1. Create two requests in Repeater: attack request and normal request.
+1. Create two requests in Repeater: attack request and normal request. In both requests, must select "show non-printable" chars.
 
 The attack request should look like this:
 
@@ -16,7 +16,9 @@ Checklist before you launch the attack:
 
 - In "Request attributes": downgrade both requests to HTTP/1. (instead of the default HTTP/2)
 - For both requests, you must use your own lab ID in the Host header. 
-- Must select "show non-printable" chars.
+- In attack request, deselect "Update Content-Length", because we set the content-length manually, we do not want burp suite to automatically set it.
+
+![alt text](images/deselect_update_cl.png "Deselect Update Content Length")
 
 2. Attacker: launch attack: send the attack request and then immediately send the normal request. The lab should be solved.
 
