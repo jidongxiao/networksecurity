@@ -8,6 +8,44 @@ When setting up networks, you are highly recommended to use NatNetwork. Follow t
 
 If the network set up is successful, you should be able to ping and ssh from one VM to another VM.
 
+# Change Host Names
+
+To make it easier to identify the three virtual machines during the experiments, please change their host names as follows:
+
+| Virtual Machine | Host Name |
+| --------------- | --------- |
+| VM1             | `VM1`     |
+| VM2             | `VM2`     |
+| VM3             | `VM3`     |
+
+On each VM, run the following command to change the host name:
+
+* On **VM1**, run:
+
+  ```bash
+  $ sudo hostnamectl set-hostname VM1
+  ```
+* On **VM2**, run:
+
+  ```bash
+  $ sudo hostnamectl set-hostname VM2
+  ```
+* On **VM3**, run:
+
+  ```bash
+  $ sudo hostnamectl set-hostname VM3
+  ```
+
+After running the command, you can verify the host name with:
+
+```bash
+$ hostname
+```
+
+The command should display `VM1`, `VM2`, or `VM3`, depending on which virtual machine you are using.
+
+You may need to open a new terminal or log out and log back in for the new host name to appear in the terminal prompt.
+
 # SSH No Password Login
 
 Since these 3 VMs will just be used for experiments purpose and we do not intend to store any important data on these VMs, it is helpful to set up the VMs so that we can ssh from one VM to another without typing the password. To achieve this, follow these steps:
