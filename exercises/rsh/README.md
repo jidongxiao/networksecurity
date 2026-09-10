@@ -145,6 +145,10 @@ Use Wireshark to identify the packets associated with the `rsh` communication.
 
 ## Questions
 
-Examine the captured packets and answer the following question: as an attacker who aims to hijack an rsh TCP connection, and inject a command, how many TCP packets does the attacker needs to send? We assume the attacker is in the same network as the victims.
+Examine the captured packets and answer the following question:
+
+**Suppose you are an attacker attempting to hijack an `rsh` TCP connection and inject a command. How many TCP packets does the attacker need to send? Describe the purpose of each packet.**
+
+Assume that the attacker is on the **same network as the victim machines**.
 
 > **Important:** In this exercise, we are observing a normal `rsh` connection. We do **not** manually specify the port used for the second connection. In the later Kevin Mitnick attack exercise, we will construct the packets ourselves and deliberately choose a port (such as `9090`) for the second connection.
