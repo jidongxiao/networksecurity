@@ -15,6 +15,8 @@ You don't get any credits if do not submit a report or you submit the report aft
 - Lab complete - 5pts
 - Lab incomplete but attempted - 3pts
 - No submission - 0pts
+- Late submission penalty - -1pt
+- Doesn't show MAC address as required - -1pt
 
 # Due Date
 
