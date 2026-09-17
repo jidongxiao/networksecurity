@@ -102,6 +102,6 @@ git diff v3.2.3 > patch.diff
 
 12 pts
 
-- Live Demostration: (4pts)
+- Live Demonstration: (4pts)
 - The diff patch: (4pts)
 - README file: (4pts)
