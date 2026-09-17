@@ -69,6 +69,6 @@ The winning team receives **+0.3% extra credit** toward the final course grade.
   - Wireshark plugin that communicates with the detection software
   - Optional: smartwatch or fitness tracker to verify the push-up
 
-- Helpful scenario: Keeps network administrators awake during overnight incident response; increases local coffee shop revenue.
+- Helpful scenario: It forces the user to do more physical activity, which can be beneficial to their health.
 
-- Drawback: Long packet captures become extremely expensive.
+- Drawback: Capturing a large number of packets becomes extremely difficult. A capture of 10,000 packets would require 10,000 push-ups.
