@@ -28,7 +28,50 @@ ip route
 Take a moment to identify the existing routes, including the default route
 if one is present.
 
-## 2. Add the Exercise Routes
+## 2. Create the Exercise Interfaces
+
+Before adding the exercise routes, create six dummy network interfaces.
+
+Create and enable the following interfaces:
+
+```bash
+sudo ip link add dummy1 type dummy
+sudo ip link set dummy1 up
+
+sudo ip link add dummy2 type dummy
+sudo ip link set dummy2 up
+
+sudo ip link add dummy3 type dummy
+sudo ip link set dummy3 up
+
+sudo ip link add dummy4 type dummy
+sudo ip link set dummy4 up
+
+sudo ip link add dummy5 type dummy
+sudo ip link set dummy5 up
+
+sudo ip link add dummy6 type dummy
+sudo ip link set dummy6 up
+```
+
+Verify that all six interfaces have been created:
+
+```bash
+ip link show
+```
+
+You should see:
+
+```bash
+dummy1
+dummy2
+dummy3
+dummy4
+dummy5
+dummy6
+```
+
+## 3. Add the Exercise Routes
 
 Add the following exercise routes to your routing table.
 
@@ -52,7 +95,7 @@ You should see all 7 exercise routes in the routing table.
 
 ---
 
-## 3. Determine Which Route Is Selected
+## 4. Determine Which Route Is Selected
 
 For each of the followng five destination addresses provided, use `ip route get` to determine which route Linux selects.
 
