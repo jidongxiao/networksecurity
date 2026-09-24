@@ -80,6 +80,8 @@ Record the selected prefix for each destination.
 
 ---
 
+For each of your five destinations, explain: Why does Linux select that route?
+
 ## 5. Observe the Default Route
 
 The default route is:
@@ -91,6 +93,10 @@ The default route is:
 It matches every IPv4 destination because it specifies zero network bits.
 
 Use `ip route get` for a destination that does not match any of the exercise prefixes.
+
+```bash
+ip route get 1.2.3.4
+```
 
 Observe that Linux falls back to the default route.
 
@@ -110,7 +116,21 @@ Default route only if nothing more specific matches
 
 When you have finished the exercise, **remove all routes that you added**.
 
+```bash
+sudo ip route del 0.0.0.0/0 dev dummy1
+sudo ip route del 18.0.0.0/8 dev dummy5
+sudo ip route del 171.0.0.0/8 dev dummy2
+sudo ip route del 171.0.0.0/10 dev dummy4
+sudo ip route del 171.0.15.0/24 dev dummy1
+sudo ip route del 55.128.0.0/10 dev dummy6
+sudo ip route del 63.19.5.0/30 dev dummy3
+```
+
 Verify that the exercise routes have been removed.
+
+```bash
+ip route
+```
 
 Make sure that only the original routing configuration remains.
 
