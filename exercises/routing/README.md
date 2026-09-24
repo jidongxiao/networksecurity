@@ -179,6 +179,25 @@ Make sure that only the original routing configuration remains.
 
 > **Important:** Do not delete the VM's original routes or default route.
 
+After confirming that the exercise routes have been removed, delete the six dummy interfaces.
+
+```bash
+sudo ip link delete dummy1
+sudo ip link delete dummy2
+sudo ip link delete dummy3
+sudo ip link delete dummy4
+sudo ip link delete dummy5
+sudo ip link delete dummy6
+```
+
+Verify that the dummy interfaces have been removed.
+
+```bash
+ip link show
+```
+
+Make sure that the original network interfaces remain and that dummy1 through dummy6 are no longer present.
+
 ---
 
 ## Questions
