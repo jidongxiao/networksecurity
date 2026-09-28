@@ -77,7 +77,7 @@ This screenshot shows the moment right before the attacker launches the attack.
 
 Explanation: what this script does is: keep sniffing packets going between the victim client and the web server, when a packet which goes from the client to the web server is captured, just forward it to the server, when a packet which goes from the web server to the client is captured, modify its content so as to show the message "this site is hacked".
 
-4. the victim, refreshes the web page: [http://ns.cs.rpi.edu/test.html](http://ns.cs.rpi.edu/test.html). This screenshot shows that the web page is changed, which proves that the attack is successful and this concludes this lab.
+4. The victim, refreshes the web page: [http://ns.cs.rpi.edu/test.html](http://ns.cs.rpi.edu/test.html). This screenshot shows that the web page is changed, which proves that the attack is successful and this concludes this lab.
 
 ![alt text](lab-mitm-final-success.png "lab is successful!")
 
@@ -86,3 +86,21 @@ Explanation: what this script does is: keep sniffing packets going between the v
 ![alt text](lab-mitm-clear-cache1.png "clear cache data 1")
 ![alt text](lab-mitm-clear-cache2.png "clear cache data 2")
 
+### Additional Instructions
+
+If you can't access the provided web server, you can easily set up one web server on your VM2. The steps are:
+
+1. Create a folder:
+
+```bash
+$ mkdir web
+```
+
+2. Save the [test.html](test.html) file in this web folder. Enter the folder and run this python command which starts Python's built-in HTTP server.
+
+```bash
+$ cd web
+$ sudo python3 -m http.server 80
+```
+
+3. With this web server, the victim can just visit the web server in the browser: [http://10.0.2.5/test.html](http://10.0.2.5/test.html). Make sure to replace 10.0.2.5 with the IP address of your VM2 (the web server). The attacking script should still work, since it does not care about the server's IP address.
