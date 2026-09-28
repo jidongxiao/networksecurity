@@ -33,7 +33,7 @@ After everyone has had time to read the article, we will discuss the terminology
 
 You may be asked to:
 
-1. Name **one security-related term** from the article.
+1. Name **one security-related term or computer network-related term** from the article.
 2. Explain what the term means in their own words.
 
 The goal is to connect the terminology in a real-world security incident to the concepts we have learned in class.
