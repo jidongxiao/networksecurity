@@ -8,9 +8,9 @@ We will use three VMs: VM2 acts as the **router and firewall** between VM3 and V
 
 | VM  | Interface | IP Address    | Network       |
 | --- | --------- | ------------- | ------------- |
-| VM1 | `enp0s3`    | `10.0.2.4/24` | `10.0.2.0/24` |
-| VM2 | `enp0s3`    | `10.0.2.5/24` | `10.0.2.0/24` |
-| VM3 | `enp0s3`    | `10.0.2.6/24` | `10.0.2.0/24` |
+| VM1 | `enp0s3`    | `10.0.2.4` | `10.0.2.0/24` |
+| VM2 | `enp0s3`    | `10.0.2.5` | `10.0.2.0/24` |
+| VM3 | `enp0s3`    | `10.0.2.6` | `10.0.2.0/24` |
 
 VM3 uses VM2 as its default gateway:
 
