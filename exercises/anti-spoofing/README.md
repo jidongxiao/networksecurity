@@ -56,6 +56,12 @@ Verify:
 ip route
 ```
 
+Later (after this whole exercise is completed), we can remove it like this:
+
+```bash
+sudo ip route del default via 10.0.2.5
+```
+
 ---
 
 ## 3. Test Normal Connectivity
