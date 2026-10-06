@@ -48,7 +48,20 @@ ping should fail here because of the above firewall setting:
 
 ![alt text](lab-vpn-ping-fails.png "ping VM2 fails")
 
-4. open the firefox browser on VM1 and try to access VM2 (http://10.0.2.5) - you should fail - because of the above firewall setting:
+4.1. start a web server on VM2.
+
+```
+# mkdir web
+# cd web
+# echo "this is my web server" > index.html
+# sudo python3 -m http.server 80
+``` 
+
+this screenshot shows setting up the web server on VM2.
+
+![alt text](lab-vpn-web-server.png "setting up web server on VM2")
+
+4.2. open the firefox browser on VM1 and try to access VM2 (http://10.0.2.5) - you should fail - because of the above firewall setting:
 
 ![alt text](lab-vpn-web-fails.png "access VM2 fails")
 
