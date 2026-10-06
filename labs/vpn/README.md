@@ -61,6 +61,10 @@ this screenshot shows setting up the web server on VM2.
 
 ![alt text](lab-vpn-web-server.png "setting up web server on VM2")
 
+and you should be able to access the web server from VM2 using the browser:
+
+![alt text](lab-vpn-web-from-vm2-success.png "access VM2 web server from VM2 succeeds")
+
 4.2. open the firefox browser on VM1 and try to access VM2 (http://10.0.2.5) - you should fail - because of the above firewall setting:
 
 ![alt text](lab-vpn-web-fails.png "access VM2 fails")
