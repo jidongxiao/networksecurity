@@ -10,7 +10,7 @@ In this lab, you will bypass a firewall that has an egress filtering rule, which
 
 | VM  |  IP Address   |                Role               | Default Network Interface Card |
 |-----|---------------|-----------------------------------|--------------------------------|
-| VM1 | 10.0.2.4 |  VPN client, also runs firewall   |            enp0s3               |
+| VM1 | 10.0.2.4 |  VPN client, Web client, also runs firewall   |            enp0s3               |
 | VM2 | 10.0.2.5 |  Web server                       |            enp0s3               |
 | VM3 | 10.0.2.6 |  VPN server                       |            enp0s3               |
 
@@ -27,7 +27,7 @@ In this lab, you will bypass a firewall that has an egress filtering rule, which
 
 **Explanation**: When the default policy is set to ACCEPT, all traffic are allowed unless there are more specific rules blocking certain traffic.
 
-2. setup the firewall on VM1 so that VM2 is blocked.
+2. setup the firewall on VM1 so that VM2 (the web server) is blocked.
 
 ```console
 # sudo ufw deny out on enp0s3 to 10.0.2.5
