@@ -106,6 +106,8 @@ this screenshot shows when the client and server are connected, a hello message 
 
 **Explanation**: this command adds a routing rule to the system saying that any traffic goes to 192.168.53.0/24 should go through the network interface tun0; without this routing rule, such traffic will go through the default network interface card.
 
+![alt text](lab-vpn-setup-tun0-server.png "setup tun0 network on server")
+
 9. on VM1, open a new terminal and configure the tun interface.
 
 ```console
@@ -123,7 +125,9 @@ this screenshot shows when the client and server are connected, a hello message 
 
 this screenshot shows all of the above ifconfig, and route commands:
 
-![alt text](lab-vpn-setup-tun0.png "setup tun0 network")
+![alt text](lab-vpn-setup-tun0-client.png "setup tun0 network on client")
+
+Remember to replace 10.0.2.5 with the IP address of your VM2 (the web server).
 
 11. now, at this moment, if on VM1, you ping VM2 (10.0.2.5), you ping packets will go to VM2, but you won't be able to get the responses. in order to see the responses, we need to setup NAT on the VPN server, i.e., VM3.
 
