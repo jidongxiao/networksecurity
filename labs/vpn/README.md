@@ -69,7 +69,7 @@ and you should be able to access the web server from VM2 using the browser:
 
 ![alt text](lab-vpn-web-fails.png "access VM2 fails")
 
-5. On VM2, download this [vpn server program](vpnserver.c), compile the vpn server program and run it.
+5. On VM3 (the VPN server), download this [vpn server program](vpnserver.c), compile the vpn server program and run it.
 
 ```console
 # gcc vpnserver.c -o vpnserver
