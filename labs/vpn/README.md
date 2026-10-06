@@ -174,7 +174,7 @@ on VM3:
 
 **Troubleshooting tips**:
 
-If the lab worked smoothly for you, you can ignore the following part. If at the end of the lab you just are not able to access Google, one thing you can do is, run these 3 commands on the VPN server side (VM3) as well:
+If the lab worked smoothly for you, you can ignore the following part. If at the end of the lab you just are not able to access the web server, one thing you can do is, run these 3 commands on the VPN server side (VM3) as well:
 
 ```console
 # sudo iptables -P INPUT ACCEPT
