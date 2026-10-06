@@ -87,7 +87,7 @@ this screenshot shows when the client and server are connected, a hello message 
 
 ![alt text](lab-vpn-start-vpn.png "vpn client and vpn server establish a connection successfully")
 
-7. on VM2, open a new terminal and configure the tun interface; and then enable ip forwarding.
+7. on VM3 (the VPN server), open a new terminal and configure the tun interface; and then enable ip forwarding.
 
 ```console
 # sudo ifconfig tun0 192.168.53.1/24 up
@@ -96,7 +96,7 @@ this screenshot shows when the client and server are connected, a hello message 
 
 **Explanation**: the first command sets up a tun0 interface, whose ip address is 192.168.53.1, whose subnet mask is 24, a.k.a., 255.255.255.0; the second command turns on ip forwarding.
 
-8. still on VM2, set up a routing rule for the 192.168.53.0/24 network.
+8. still on VM3 (the VPN server), set up a routing rule for the 192.168.53.0/24 network.
 
 ```console
 # sudo route add -net 192.168.53.0/24 tun0
@@ -160,7 +160,7 @@ on VM1:
 # sudo ufw status verbose
 ```
 
-on VM2:
+on VM3:
 ```console
 # sudo iptables -t nat -F
 # sudo iptables -t nat -L
