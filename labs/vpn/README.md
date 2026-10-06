@@ -76,6 +76,8 @@ and you should be able to access the web server from VM2 using the browser:
 # sudo ./vpnserver
 ```
 
+![alt text](lab-vpn-vpn-server.png "vpn server has started successfully")
+
 6. on VM1: download the [vpn client program](vpnclient.c), compile the vpn client program and run it.
 
 ```console
