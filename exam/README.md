@@ -23,11 +23,15 @@ For example:
 
 In other words, the wording, format, scenario, or specific task may change, but the exam question will aim to assess the same knowledge area as the submitted problem.
 
-## 3. Compiled Collection of Submitted Problems
+## 3. What Kinds of Problems Should You Submit?
+
+Submitted problems should be closely relevant to the materials covered in this course.
+
+## 4. Compiled Collection of Submitted Problems
 
 After the submission deadline, I will compile the submitted problems into a single PDF and post it on the **course calendar by 9:00 p.m. on Saturday (10/17/2026)**. Use this PDF to review the topics represented by the submitted problems.
 
-## 4. Exam Content and Weighting
+## 5. Exam Content and Weighting
 
 The exam will be divided into two parts:
 
@@ -41,7 +45,7 @@ The remaining 40% of the exam will cover:
 3. **IP addressing and network masks:** Given a network mask and two IP addresses, determine whether the addresses belong to the same network.
 4. **DNS troubleshooting:** Diagnose and troubleshoot DNS-related problems.
 
-## 5. Exam Materials and Prohibited Devices
+## 6. Exam Materials and Prohibited Devices
 
 - You may bring **crib sheets** to the exam, with **no limit on the number of pages**.
 - **Electronic devices, including watches and smartwatches, are not permitted.**
