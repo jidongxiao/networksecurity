@@ -18,4 +18,3 @@ The protocols and security technologies covered in this course are used in real 
 | **Firewalls, packet filtering, and ACLs** | [Amazon — Software Development Engineer, AWS Network Firewall](https://www.amazon.jobs/en/jobs/10569344/software-development-engineer-aws-network-firewall) |
 | **NAT and network address translation** | [Google — Network Engineer, Data Center Management](https://www.google.com/about/careers/applications/jobs/results/116772725707416262-network-engineer-data-center-management?q=network%20address%20translation) |
 | **ARP and local-network communication** | [Amazon — Senior Software Development Engineer, Amazon Leo Optical Inter-Satellite Link](https://www.amazon.jobs/en/jobs/10509436/senior-software-development-engineer-amazon-leo-optical-inter-satellite-link) |
-
