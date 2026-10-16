@@ -1,5 +1,7 @@
 ## Local DNS Attack
 
+**Note**: the lab instructions use 188.126.71.216 as the IP address of fakenews.com, but they recently changed its IP address to 5.178.75.155, so whenever you see 188.126.71.216, replace it with 5.178.75.155. This includes the 188.126.71.216 in the attacking script.
+
 ### Requirement
 
 In this lab, you will send forged DNS responses to a victim client such that the client who visits www.cnn.com will now go to fakenews.com.
@@ -95,13 +97,14 @@ $ dig www.cnn.com
 this screenshot shows the attack is successful: www.cnn.com is mapped to 188.126.71.216, which is the IP address of fakenews.com.
 ![alt text](lab-dns-attack-success-p1.png "attack success")
 
-3. on victim client, open firefox, and enter www.cnn.com.
+This proves that the attack is successful, and thus concludes the lab.
+<!-- 3. on victim client, open firefox, and enter www.cnn.com.
 
 these two screenshots once again show that the attack is successful: the victim who attempts to visit www.cnn.com, is now taken to the page of fakenews.com.
 ![alt text](lab-dns-attack-success-p2.png "attack success")
 ![alt text](lab-dns-attack-success-p3.png "attack success")
 
-Both step 2 and step 3 here proves that the attack is successful, and this concludes the lab.
+Both step 2 and step 3 here proves that the attack is successful, and this concludes the lab.-->
 
 ### Clean up
 
