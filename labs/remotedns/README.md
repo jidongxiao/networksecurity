@@ -1,6 +1,6 @@
 ## Remote DNS Cache Poisoning Attack (aka, the Dan Kaminsky Attack)
 
-**Note**: If you completed the [Subdomain Takeover Lab](https://github.com/jidongxiao/networksecurity/tree/main/labs/subdomain), you need to do the following clean up work on VM2 before start this lab.
+<!--**Note**: If you completed the [Subdomain Takeover Lab](https://github.com/jidongxiao/networksecurity/tree/main/labs/subdomain), you need to do the following clean up work on VM2 before start this lab.
 
 1.  delete /etc/bind/db.cnn.com
 
@@ -12,6 +12,15 @@ zone "cnn.com" {
     file "/etc/bind/db.cnn.com";
 };
 ```
+-->
+
+## Background: DNS Zones and Zone Files
+
+A **DNS zone** is a portion of the DNS namespace managed by an administrative authority. It contains DNS records for a domain and its subdomains, unless some subdomains are delegated to separate zones. For example, the `cnn.com` zone may contain records that map `www.cnn.com` to an IP address and identify the authoritative name servers for the domain.
+
+A **zone file** is a text file that stores the DNS records for a zone. In this lab, `attacker32.com.zone` is a zone file used to configure the attacker's DNS server with records for `attacker32.com`, including records that map hostnames to the attacker's IP address.
+
+In the DNS cache poisoning attack, the attacker attempts to poison the victim DNS server's cache with a forged NS record that directs queries for `cnn.com` to the attacker's name server. This changes the DNS information the victim resolver uses; it does not modify the legitimate `cnn.com` zone file.
 
 ### Requirement
 
