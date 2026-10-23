@@ -44,6 +44,8 @@ The following is the IP addresses for the VMs used in this README.
 | VM2 | 10.0.2.5      |   victim DNS server                   |
 | VM3 | 10.0.2.6      |   attacker, attacker's DNS server     |
 
+**Note**: this lab assumes that you have bind9 (DNS server software) installed on both VM2 and VM3. Refer to the previous lab ([Local DNS Attack](https://github.com/jidongxiao/networksecurity/tree/main/labs/dns)) for instructions on installing bind9.
+
 ### Steps
 
 #### Client Configuration
