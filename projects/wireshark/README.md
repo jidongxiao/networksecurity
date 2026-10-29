@@ -105,3 +105,7 @@ git diff v3.2.3 > patch.diff
 - Live Demonstration: (4pts)
 - The diff patch: (4pts)
 - README file: (4pts)
+
+## Demo Dates
+
+Live demonstrations will take place on **November 2 and November 5, 2026**. Students may choose either date to present their work.
