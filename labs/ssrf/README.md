@@ -1,5 +1,17 @@
 ## Server-Side Request Forgery (SSRF) Attack
 
+### Real-World Example: ShinyHunters Exploits an SSRF Vulnerability in Oracle PeopleSoft
+
+In October 2026, [The Hacker News reported](https://thehackernews.com/2026/10/shinyhunters-exploited-oracle.html) that the hacking group **ShinyHunters**, which has also been linked to a reported breach of an FBI system, exploited a critical vulnerability in Oracle PeopleSoft, identified as **CVE-2026-35273**.
+
+Security researchers discovered that the attack involved three chained vulnerabilities, beginning with a **Server-Side Request Forgery (SSRF)** vulnerability. The SSRF allowed attackers to send requests to an internal management interface that normally trusted requests originating from `127.0.0.1` (localhost). By exploiting this trust, attackers could bypass access restrictions and ultimately achieve remote code execution without authentication.
+
+The vulnerability was exploited as a zero-day beginning in May 2026, initially targeting universities, before expanding to other sectors.
+
+In this lab, we will demonstrate the same fundamental SSRF concept: **an attacker who cannot directly access a protected internal service can trick a vulnerable web server into accessing it on the attacker's behalf.**
+
+Our lab uses a simplified environment with three virtual machines and focuses on accessing a protected file rather than achieving remote code execution.
+
 ### Requirement
 
 In this lab, you will perform a Server-Side Request Forgery (SSRF) attack to access a protected internal web server.
