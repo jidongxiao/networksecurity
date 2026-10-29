@@ -210,7 +210,7 @@ The HTTP request reaching VM2 originates from VM1 (10.0.2.4), which is allowed b
 
 This demonstrates how an SSRF vulnerability can allow an attacker to bypass network access restrictions.
 
-**4. On VM2: Observe the network traffic.**
+**4. On VM2: Observe the network traffic.** (this step is optional)
 
 Run the following command in another terminal:
 
