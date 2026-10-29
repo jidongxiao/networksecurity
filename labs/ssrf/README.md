@@ -88,6 +88,9 @@ Verify the firewall rules:
 $ sudo iptables -L INPUT -n -v --line-numbers
 ```
 
+this screenshot shows the execution of the above firewall commands on VM2:
+![alt text](images/lab-ssrf-vm2-firewall.png "firewall setup on VM2")
+
 **4. On VM1 (Vulnerable Web Server): Install Apache2 and PHP.**
 
 Run the following commands:
