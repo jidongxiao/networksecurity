@@ -58,6 +58,9 @@ $ python3 -m http.server 8080 --bind 0.0.0.0
 
 The server listens on port 8080 and serves files from the current directory.
 
+this screenshot shows the execution of the above commands on VM2:
+![alt text](images/lab-ssrf-vm2-webserver.png "web server setup on VM2")
+
 The confidential file is now available at:
 
 `http://10.0.2.5:8080/secret.txt`
