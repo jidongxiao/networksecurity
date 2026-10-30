@@ -72,7 +72,9 @@ git diff v3.2.3 > patch.diff
 
 ## Build and Run Requirement
 
-After implementing your feature, you must be able to **compile and run your modified version of Wireshark in the course VM**.
+You must be able to **compile and run your modified version of Wireshark in the course VM**.
+
+You can follow the instructions [here](wireshark_build_instructions.md) to build the specified version of wireshark in the course VM.
 
 Your submitted patch must therefore contain changes that build successfully against **Wireshark v3.2.3** on the course VM and produce a working Wireshark executable with your feature implemented.
 
