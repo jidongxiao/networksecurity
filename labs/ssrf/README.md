@@ -200,7 +200,7 @@ Expected output:
 Confidential lab token: SSRF-LAB-2026
 ```
 
-this screenshot shows the execution of the failing command and the successful command on VM3:
+this screenshot shows the execution of the failing command (attack step 1) and the successful command (attack step 3) on VM3:
 ![alt text](images/lab-ssrf-vm3-success.png "attack success on VM3")
 
 The attack is successful!
