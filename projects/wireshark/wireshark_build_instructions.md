@@ -61,6 +61,12 @@ Download the official Wireshark 3.2.3 source code:
 wget https://www.wireshark.org/download/src/all-versions/wireshark-3.2.3.tar.xz
 ```
 
+If the downloading command fails and it asks you to provide the parameter of "--no-check-certificate", add it like this:
+
+```bash
+wget https://www.wireshark.org/download/src/all-versions/wireshark-3.2.3.tar.xz --no-check-certificate
+```
+
 Extract the archive:
 
 ```bash
