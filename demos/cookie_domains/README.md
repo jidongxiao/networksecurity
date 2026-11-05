@@ -94,6 +94,16 @@ The cookie is received by both websites because it was set with:
 
 The browser sends this cookie to the parent domain and its subdomains.
 
+Here is the screenshot results for step 3 and step 4:
+
+Step 3 screenshot:
+
+![alt text](images/demo-cookie-shop1.png "cookie sent to shop")
+
+Step 4 screenshot:
+
+![alt text](images/demo-cookie-login1.png "cookie sent to login")
+
 ## Step 5. Experiment Without the Domain Attribute
 
 Modify the `setcookie()` call in `index.php`:
@@ -122,6 +132,14 @@ Repeat the steps from Step 4:
 - `login.example.test`: Cookie not received.
 
 Without the `Domain` attribute, the browser creates a host-only cookie. It is sent only to the host that set it.
+
+Step 3 screenshot:
+
+![alt text](images/demo-cookie-shop2.png "cookie sent to shop")
+
+Step 4 screenshot:
+
+![alt text](images/demo-cookie-login2.png "cookie Not sent to login")
 
 ## Questions
 
