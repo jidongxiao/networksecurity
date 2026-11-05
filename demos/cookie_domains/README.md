@@ -1,5 +1,9 @@
 # Demo: Understanding the Cookie Domain Attribute
 
+The `Domain` attribute of an HTTP cookie specifies which hosts can receive the cookie. By default, a cookie is sent only to the host that created it (a **host-only cookie**). If the server specifies a `Domain` attribute, the browser can also send the cookie to the specified domain and its subdomains.
+
+For example, setting `Domain=example.test` allows the cookie to be sent to `example.test`, `shop.example.test`, and `login.example.test`.
+
 **Objective:** Understand how the `Domain` attribute controls which hosts can receive a cookie.
 
 ## Step 1. Install Apache and PHP
@@ -79,10 +83,10 @@ sudo systemctl enable --now apache2
 
 Open a browser and perform the following steps:
 
-1. Visit `http://shop.example.test/cookie-lab/`.
-2. Click **Set Cookie**.
-3. Return to `http://shop.example.test/cookie-lab/` and observe the cookie.
-4. Visit `http://login.example.test/cookie-lab/` and observe the cookie again.
+4.1. Visit `http://shop.example.test/cookie-lab/`.
+4.2. Click **Set Cookie**.
+4.3. Return to `http://shop.example.test/cookie-lab/` and observe the cookie.
+4.4. Visit `http://login.example.test/cookie-lab/` and observe the cookie again.
 
 **Expected result:**
 
@@ -94,13 +98,13 @@ The cookie is received by both websites because it was set with:
 
 The browser sends this cookie to the parent domain and its subdomains.
 
-Here is the screenshot results for step 3 and step 4:
+Here are the screenshot results for step 4.3 and step 4.4:
 
-Step 3 screenshot:
+Step 4.3 screenshot:
 
 ![alt text](images/demo-cookie-shop1.png "cookie sent to shop")
 
-Step 4 screenshot:
+Step 4.4 screenshot:
 
 ![alt text](images/demo-cookie-login1.png "cookie sent to login")
 
@@ -121,10 +125,10 @@ Before repeating the experiment, clear the existing `mycookie` cookie in your br
 
 Repeat the steps from Step 4:
 
-1. Visit `http://shop.example.test/cookie-lab/`.
-2. Click **Set Cookie**.
-3. Visit `http://shop.example.test/cookie-lab/` and observe the cookie.
-4. Visit `http://login.example.test/cookie-lab/` and observe the cookie again.
+5.1. Visit `http://shop.example.test/cookie-lab/`.
+5.2. Click **Set Cookie**.
+5.3. Visit `http://shop.example.test/cookie-lab/` and observe the cookie.
+5.4. Visit `http://login.example.test/cookie-lab/` and observe the cookie again.
 
 **Expected result:**
 
@@ -133,19 +137,15 @@ Repeat the steps from Step 4:
 
 Without the `Domain` attribute, the browser creates a host-only cookie. It is sent only to the host that set it.
 
-Step 3 screenshot:
+Here are the screenshot results for step 5.3 and step 5.4:
+
+Step 5.3 screenshot:
 
 ![alt text](images/demo-cookie-shop2.png "cookie sent to shop")
 
-Step 4 screenshot:
+Step 5.4 screenshot:
 
 ![alt text](images/demo-cookie-login2.png "cookie Not sent to login")
-
-## Questions
-
-1. Why can `login.example.test` receive the cookie when the Domain attribute is `example.test`?
-2. What happens when the Domain attribute is omitted?
-3. Does sharing a cookie between two subdomains mean they have the same origin?
 
 ## Key Takeaway
 
