@@ -26,9 +26,12 @@ $ npm install body-parser
 ```console
 $ mkdir banking
 $ cd banking/
-$ wget http://ns.cs.rpi.edu/labs/csrf/banking/index.html
-$ wget http://ns.cs.rpi.edu/labs/csrf/banking/server.js
 ```
+
+Save these 2 files in the banking folder:
+
+[index.html](banking/index.html) 
+[server.js](banking/server.js)
 
 - start the banking webserver:
 ```console
@@ -49,10 +52,13 @@ $ node server.js
 ```console
 $ mkdir attacker
 $ cd attacker/
-$ wget http://ns.cs.rpi.edu/labs/csrf/attacker/index.html
-$ wget http://ns.cs.rpi.edu/labs/csrf/attacker/cat.gif
-$ wget http://ns.cs.rpi.edu/labs/csrf/attacker/attacker-frame.html
 ```
+
+Save these 3 files in the attacker folder:
+
+[index.html](attacker/index.html) 
+[cat.gif](attacker/cat.gif) 
+[attacker-frame.html](attacker/attacker-frame.html)
 
 - start the attacker web server:
 ```console
