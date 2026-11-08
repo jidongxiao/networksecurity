@@ -22,9 +22,12 @@ Only one VM is sufficient. We will run a web server in this VM. The web server r
 ```console
 $ mkdir web 
 $ cd web/
-$ wget http://ns.cs.rpi.edu/cookies/index.html
-$ wget http://ns.cs.rpi.edu/cookies/server.js
 ```
+
+Save these 2 files in the web folder:
+
+[index.html](index.html)
+[server.js](server.js)
 
 2. install *node* inside the web folder:
 
