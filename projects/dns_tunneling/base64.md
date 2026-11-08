@@ -14,7 +14,29 @@ For instance, the word "cat" in ASCII bytes (`c = 99, a = 97, t = 116`) is repre
 
 ### Padding with `=`
 
-If the input data isn’t a multiple of 3 bytes, Base64 uses padding (`=`) to make the encoded output a multiple of 4 characters. This padding helps ensure consistent formatting in data transmission.
+Base64 converts every 3 input bytes (24 bits) into 4 Base64 characters (6 bits each).
+
+If the input contains fewer than 3 bytes in its final group, Base64 adds `=` padding characters to complete the group of 4 output characters.
+
+Here are three examples:
+
+| Input | Input bytes | Base64 characters before padding | Padding | Final Base64 |
+|---|---:|---|---|---|
+| `Man` | 3 | `TWFu` | None | `TWFu` |
+| `Ma` | 2 | `TWE` | `=` | `TWE=` |
+| `M` | 1 | `TQ` | `==` | `TQ==` |
+
+For example, encoding `Man`:
+
+1. Convert each character into 8-bit binary:
+   `01001101 01100001 01101110`
+2. Combine the 24 bits and divide them into four 6-bit groups:
+   `010011 010110 000101 101110`
+3. Convert each 6-bit group into its Base64 character:
+   `T W F u`
+4. No padding is needed because all 3 input bytes were processed.
+
+**Remember:** Base64 always produces groups of 4 output characters. The `=` character fills unused positions when the final input group contains fewer than 3 bytes.
 
 ## Decoding Base64
 
@@ -24,10 +46,10 @@ Decoding reverses the process:
 
 ## Example Encoding
 
-The word "hello" becomes `aGVsbG8A` in Base64:
+The word "hello" becomes `aGVsbG8=` in Base64:
 1. Binary of "hello": `01101000 01100101 01101100 01101100 01101111`
-2. Grouped into 6-bit chunks: `011010 000110 010101 101100 011011 000110 1111`
-3. Maps to characters: `aGVsbG8A`
+2. Grouped into 6-bit chunks (adding two zero bits at the end): `011010 000110 010101 101100 011011 000110 111100`
+3. Maps to characters: `aGVsbG8=`
 
 ## Use Cases
 
