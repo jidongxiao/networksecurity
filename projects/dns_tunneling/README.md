@@ -29,7 +29,7 @@ To simplify your task, the two programs (the DNS client and the DNS server) only
 
 However, given that the goal here is to communicate covertly, these 4 messages should not be directly visible to whoever is monitoring the network using tools such as wireshark. Instead, 
 
-1. Your client should use the [Base64 encoding](base64.md) to encode the message in the DNS query. For example, in Base64 encoding, *hello* is encoded as *aGVsbG8=*, therefore, in order to send the message "hello", your client can send a query asking for the IP address of aGVsbG8=.google.com.
+1. Your client should use the [Base64 encoding](base64.md) to encode the message in the DNS query. For example, in Base64 encoding, *hello* is encoded as *aGVsbG8=*, therefore, in order to send the message "hello", your client can send a query asking for the IP address of aGVsbG8=.apple.com.
 
 2. Once your server receives the DNS query, it parses the query so as to retrieve the part *aGVsbG8=*, and then it decodes *aGVsbG8=*, so as to get *hello*. After that, the server encodes the response message into its DNS response. Note that the server side encoding can be much easier and it does not use Base64 encoding, instead, it simply encodes the response message into the IPv4 address. For example, the characters *hell* can be represented as 104.101.108.108, because the ascii code of *h* is 104, the ascii code of *e* is 101, and the ascii code of *l* is 108.
 
@@ -73,9 +73,9 @@ When running the two programs, we should see 4 DNS messages in wireshark, and it
 You should also test your server program using the *dig* command (run twice in a row) like this:
 
 ```console
-$ dig @localhost aGk=.google.com
+$ dig @localhost aGk=.apple.com
 
-; <<>> DiG 9.16.1-Ubuntu <<>> @localhost aGk=.google.com
+; <<>> DiG 9.16.1-Ubuntu <<>> @localhost aGk=.apple.com
 ; (1 server found)
 ;; global options: +cmd
 ;; Got answer:
@@ -83,19 +83,19 @@ $ dig @localhost aGk=.google.com
 ;; flags: qr rd ra; QUERY: 1, ANSWER: 1, AUTHORITY: 0, ADDITIONAL: 0
 
 ;; QUESTION SECTION:
-;aGk=.google.com.		IN	A
+;aGk=.apple.com.		IN	A
 
 ;; ANSWER SECTION:
-aGk=.google.com.	60	IN	A	104.101.121.33
+aGk=.apple.com.	60	IN	A	104.101.121.33
 
 ;; Query time: 0 msec
 ;; SERVER: 127.0.0.1#53(127.0.0.1)
 ;; WHEN: Fri Nov 01 13:12:04 EDT 2024
 ;; MSG SIZE  rcvd: 49
 
-$ dig @localhost aGVsbG8=.google.com
+$ dig @localhost aGVsbG8=.apple.com
 
-; <<>> DiG 9.16.1-Ubuntu <<>> @localhost aGVsbG8=.google.com
+; <<>> DiG 9.16.1-Ubuntu <<>> @localhost aGVsbG8=.apple.com
 ; (1 server found)
 ;; global options: +cmd
 ;; Got answer:
@@ -103,12 +103,12 @@ $ dig @localhost aGVsbG8=.google.com
 ;; flags: qr rd ra; QUERY: 1, ANSWER: 3, AUTHORITY: 0, ADDITIONAL: 0
 
 ;; QUESTION SECTION:
-;aGVsbG8=.google.com.		IN	A
+;aGVsbG8=.apple.com.		IN	A
 
 ;; ANSWER SECTION:
-aGVsbG8=.google.com.	60	IN	A	104.101.108.108
-aGVsbG8=.google.com.	60	IN	A	111.32.99.108
-aGVsbG8=.google.com.	60	IN	A	105.101.110.116
+aGVsbG8=.apple.com.	60	IN	A	104.101.108.108
+aGVsbG8=.apple.com.	60	IN	A	111.32.99.108
+aGVsbG8=.apple.com.	60	IN	A	105.101.110.116
 
 ;; Query time: 16 msec
 ;; SERVER: 127.0.0.1#53(127.0.0.1)
@@ -118,20 +118,49 @@ aGVsbG8=.google.com.	60	IN	A	105.101.110.116
 
 These 2 dig commands should not report any error or malformed DNS responses.
 
+### Explanation of the Second `dig` Command
+
+The second command queries the DNS server using `aGVsbG8=.apple.com`. Notice that the query name contains `aGVsbG8=`, which is the Base64 encoding of the word `hello`.
+
+The server responds with three DNS A records:
+
+```text
+aGVsbG8=.apple.com.  60  IN  A  104.101.108.108
+aGVsbG8=.apple.com.  60  IN  A  111.32.99.108
+aGVsbG8=.apple.com.  60  IN  A  105.101.110.116
+```
+
+Decode each A record:
+
+| DNS A record | ASCII decimal values | Decoded text |
+|---|---|---|
+| `104.101.108.108` | 104, 101, 108, 108 | `hell` |
+| `111.32.99.108` | 111, 32, 99, 108 | `o cl` |
+| `105.101.110.116` | 105, 101, 110, 116 | `ient` |
+
+For example, ASCII decimal value 104 represents `h`, 101 represents `e`, and 32 represents a space.
+
+Combining the decoded text from all three A records, in the order returned, gives:
+
+**`hello client`**
+
+This demonstrates how a DNS server can use A records to carry arbitrary text data rather than simply returning IP addresses for network communication.
+
 ## Submission
 
-Due: 11:59pm, Friday, Nov 21st, 2025.
+Due: 11:59pm, Friday, December 4th, 2026.
 
 Your submission (via submitty) should include your source code and a README file. The README file should describe how to compile and run your program, and you should also include your test results in the README.
 
 ## Grading Rubric
 
-10 pts
+12 pts
 
  - No compilation warnings or errors. (1 pts)
  - Client side produces expected output. (3 pts)
  - Server side produces expected output, including the output of the dig command. (3 pts)
  - No suspicious traffic observed in wireshark. (2 pts)
    - 4 DNS messages must be observed: 2 queries, 2 responses.
- - A completed README file provided. (1 pts)
+ - A completed README file provided. (3 pts)
+ - Late submission penalty - within the 3 late day window. (-1 pts)
 
