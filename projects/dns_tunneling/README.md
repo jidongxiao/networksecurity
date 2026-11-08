@@ -2,7 +2,7 @@
 
 ## Overview
 
-In this assignment, you will write a DNS server program and a DNS client program, the two of which communicate secretly. Your program must run in the provided virtual machine. Submissions that fail to compile or run in the provided virtual machine will not be graded.
+In this assignment, you will write a DNS server program and a DNS client program, the two of which communicate secretly. 
 
 ## Learning Objectives
 
