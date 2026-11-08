@@ -29,9 +29,9 @@ To simplify your task, the two programs (the DNS client and the DNS server) only
 
 However, given that the goal here is to communicate covertly, these 4 messages should not be directly visible to whoever is monitoring the network using tools such as wireshark. Instead, 
 
-1. Your client should use the [Base64 encoding](base64.md) to encode the message in the DNS query. For example, in Base64 encoding, *hello* is encoded as *aGVsbG8A* (why? read [here](hello.md)), therefore, in order to send the message "hello", your client can send a query asking for the IP address of aGVsbG8A.google.com.
+1. Your client should use the [Base64 encoding](base64.md) to encode the message in the DNS query. For example, in Base64 encoding, *hello* is encoded as *aGVsbG8=*, therefore, in order to send the message "hello", your client can send a query asking for the IP address of aGVsbG8=.google.com.
 
-2. Once your server receives the DNS query, it parses the query so as to retrieve the part *aGVsbG8A*, and then it decodes *aGVsbG8A*, so as to get *hello*. After that, the server encodes the response message into its DNS response. Note that the server side encoding can be much easier and it does not use Base64 encoding, instead, it simply encodes the response message into the IPv4 address. For example, the characters *hell* can be represented as 104.101.108.108, because the ascii code of *h* is 104, the ascii code of *e* is 101, and the ascii code of *l* is 108.
+2. Once your server receives the DNS query, it parses the query so as to retrieve the part *aGVsbG8=*, and then it decodes *aGVsbG8=*, so as to get *hello*. After that, the server encodes the response message into its DNS response. Note that the server side encoding can be much easier and it does not use Base64 encoding, instead, it simply encodes the response message into the IPv4 address. For example, the characters *hell* can be represented as 104.101.108.108, because the ascii code of *h* is 104, the ascii code of *e* is 101, and the ascii code of *l* is 108.
 
 3. Once the client receives the DNS response, it parses the response and decodes the IP address, so as to get the message, after that, the client should print the received message.
 
@@ -44,10 +44,10 @@ When running the programs, you are expected to get the following results:
 ```console
 $ sudo ./server
 DNS server listening on port 53...
-Encoded Query Name: aGkA
+Encoded Query Name: aGk=
 Decoded Data: hi
 DNS response sent with message "hey!" encoded in A records.
-Encoded Query Name: aGVsbG8A
+Encoded Query Name: aGVsbG8=
 Decoded Data: hello
 DNS response sent with message "hello client" encoded in A records.
 ```
@@ -57,10 +57,10 @@ DNS response sent with message "hello client" encoded in A records.
 ```console
 $ ./client
 Message to send: hi
-Encoded data to send: aGkA
+Encoded data to send: aGk=
 Decoded message from server: hey!
 Message to send: hello
-Encoded data to send: aGVsbG8A
+Encoded data to send: aGVsbG8=
 Decoded message from server: hello client
 ```
 
@@ -73,9 +73,9 @@ When running the two programs, we should see 4 DNS messages in wireshark, and it
 You should also test your server program using the *dig* command (run twice in a row) like this:
 
 ```console
-$ dig @localhost aGkA.google.com
+$ dig @localhost aGk=.google.com
 
-; <<>> DiG 9.16.1-Ubuntu <<>> @localhost aGkA.google.com
+; <<>> DiG 9.16.1-Ubuntu <<>> @localhost aGk=.google.com
 ; (1 server found)
 ;; global options: +cmd
 ;; Got answer:
@@ -83,19 +83,19 @@ $ dig @localhost aGkA.google.com
 ;; flags: qr rd ra; QUERY: 1, ANSWER: 1, AUTHORITY: 0, ADDITIONAL: 0
 
 ;; QUESTION SECTION:
-;aGkA.google.com.		IN	A
+;aGk=.google.com.		IN	A
 
 ;; ANSWER SECTION:
-aGkA.google.com.	60	IN	A	104.101.121.33
+aGk=.google.com.	60	IN	A	104.101.121.33
 
 ;; Query time: 0 msec
 ;; SERVER: 127.0.0.1#53(127.0.0.1)
 ;; WHEN: Fri Nov 01 13:12:04 EDT 2024
 ;; MSG SIZE  rcvd: 49
 
-$ dig @localhost aGVsbG8A.google.com
+$ dig @localhost aGVsbG8=.google.com
 
-; <<>> DiG 9.16.1-Ubuntu <<>> @localhost aGVsbG8A.google.com
+; <<>> DiG 9.16.1-Ubuntu <<>> @localhost aGVsbG8=.google.com
 ; (1 server found)
 ;; global options: +cmd
 ;; Got answer:
@@ -103,12 +103,12 @@ $ dig @localhost aGVsbG8A.google.com
 ;; flags: qr rd ra; QUERY: 1, ANSWER: 3, AUTHORITY: 0, ADDITIONAL: 0
 
 ;; QUESTION SECTION:
-;aGVsbG8A.google.com.		IN	A
+;aGVsbG8=.google.com.		IN	A
 
 ;; ANSWER SECTION:
-aGVsbG8A.google.com.	60	IN	A	104.101.108.108
-aGVsbG8A.google.com.	60	IN	A	111.32.99.108
-aGVsbG8A.google.com.	60	IN	A	105.101.110.116
+aGVsbG8=.google.com.	60	IN	A	104.101.108.108
+aGVsbG8=.google.com.	60	IN	A	111.32.99.108
+aGVsbG8=.google.com.	60	IN	A	105.101.110.116
 
 ;; Query time: 16 msec
 ;; SERVER: 127.0.0.1#53(127.0.0.1)
