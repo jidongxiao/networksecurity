@@ -84,7 +84,7 @@ $ python3 -m http.server 8000
 
 The attacker website contains a hidden iframe that automatically submits a POST request to the banking website. The request attempts to transfer $1,000 from Jessica's account to Alice's account.
 
-9. Open the browser's Developer Tools (F12), select the Network tab, and visit the attacker website again:
+9. Open the browser's Developer Tools, select the Network tab, and visit the attacker website again:
 
 `http://attacker.example:8000`
 
