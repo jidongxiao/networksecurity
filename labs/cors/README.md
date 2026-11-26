@@ -110,9 +110,9 @@ You should see the attacker's website.
 
 Click the **View your surprise!** button.
 
-If the attack is successful, the attacker's website will display Jessica's username and account balance.
+If the attack is successful, the attacker's website will display Jessica's username and account balance. The attacker has successfully retrieved sensitive information from the banking website without knowing Jessica's username, password, or session cookie. This screenshot shows that the attack was successful:
 
-The attacker has successfully retrieved sensitive information from the banking website without knowing Jessica's username, password, or session cookie.
+![alt text](images/lab-cors-attack-success.png "Lab CORS - Attack Success")
 
 ## Understanding the Attack
 
@@ -197,6 +197,9 @@ To test the fix:
 6. Click **View your surprise!** again.
 
 This time, the attack should fail. The request may still reach the banking server, and the server may still return the account information, but the browser will not allow JavaScript running on `http://localhost:8000` to read the response because that origin is not in the allowlist.
+
+This screenshot shows that the attack failed:
+![alt text](images/lab-cors-attack-failure.png "Lab CORS - Attack Failed")
 
 Observe the difference: the insecure server reflects `http://localhost:8000` in `Access-Control-Allow-Origin`, whereas the secure server does not return that header for the attacker's origin.
 
