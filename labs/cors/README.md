@@ -6,11 +6,12 @@ In this lab, you will demonstrate a CORS vulnerability caused by insecure origin
 
 A simulated online banking website allows users to log in and view their account balances. An attacker-controlled website attempts to retrieve the victim's account information using JavaScript.
 
-The banking server contains an insecure CORS configuration: it copies the request's `Origin` header directly into the `Access-Control-Allow-Origin` response header and allows credentials.
+The lab provides two versions of the banking server:
 
-As a result, when a logged-in victim visits the attacker's website, the attacker's JavaScript can retrieve and read the victim's account information using the victim's authenticated session.
+- **Insecure version (`server.js`):** Copies the request's `Origin` header directly into the `Access-Control-Allow-Origin` response header and allows credentials, regardless of the requesting origin.
+- **Secure version (`server_secure.js`):** Uses an origin allowlist to grant cross-origin access only to explicitly trusted origins.
 
-You will also modify the banking server to fix the vulnerability and observe how the browser enforces the corrected CORS policy.
+You will first run the insecure version to demonstrate how an attacker can read the victim's account information using the victim's authenticated session. You will then switch to the secure version and observe how the browser prevents the attacker's JavaScript from accessing the response.
 
 ## Requirements
 
@@ -58,7 +59,7 @@ $ npm install cookie-parser
 $ npm install body-parser
 ```
 
-Start the banking web server:
+Start the (insecure version of) banking web server:
 
 ```console
 $ node server.js
