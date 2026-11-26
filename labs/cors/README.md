@@ -191,9 +191,10 @@ To test the fix:
    $ node server_secure.js
    ```
 
-3. Make sure you are still logged in to the banking website.
-4. Revisit the attacker's website at `http://localhost:8000`.
-5. Click **View your surprise!** again.
+3. Refresh the banking website and log in again using Jessica's credentials (jessica / 50505). This is necessary because restarting the server clears all existing session information stored in memory.
+4. Keep the banking website open and logged in.
+5. Revisit the attacker's website at `http://localhost:8000`.
+6. Click **View your surprise!** again.
 
 This time, the attack should fail. The request may still reach the banking server, and the server may still return the account information, but the browser will not allow JavaScript running on `http://localhost:8000` to read the response because that origin is not in the allowlist.
 
