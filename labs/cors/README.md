@@ -199,6 +199,7 @@ To test the fix:
 This time, the attack should fail. The request may still reach the banking server, and the server may still return the account information, but the browser will not allow JavaScript running on `http://localhost:8000` to read the response because that origin is not in the allowlist.
 
 This screenshot shows that the attack failed:
+
 ![alt text](images/lab-cors-attack-failure.png "Lab CORS - Attack Failed")
 
 Observe the difference: the insecure server reflects `http://localhost:8000` in `Access-Control-Allow-Origin`, whereas the secure server does not return that header for the attacker's origin.
