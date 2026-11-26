@@ -83,10 +83,14 @@ app.get('/api/account', (req, res) => {
         });
     }
 
-    res.json({
+    const account = {
         username: username,
         balance: BALANCES[username]
-    });
+    };
+
+    console.log('Returning account information:', account);
+
+    res.json(account);
 });
 
 app.listen(4000, () => {

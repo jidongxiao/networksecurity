@@ -48,6 +48,7 @@ Save the following files in the `banking` directory:
 
 - [index.html](banking/index.html)
 - [server.js](banking/server.js)
+- [server_secure.js](banking/server_secure.js)
 
 Install the required Node.js packages:
 
@@ -160,35 +161,42 @@ The attacker does not need to steal or read the session cookie. The victim's bro
 
 ## Fixing the Vulnerability
 
-The vulnerability occurs because the banking server trusts arbitrary origins.
+The vulnerability occurs because the banking server trusts arbitrary origins by reflecting the request's `Origin` header in the `Access-Control-Allow-Origin` response header.
 
-Modify `banking/server.js` to allow only explicitly trusted origins.
+A secure implementation should allow only explicitly trusted origins.
 
-For example, replace the insecure origin-reflection logic with the following allowlist:
+We have provided a second server implementation, `banking/server_secure.js`, which uses an origin allowlist:
 
 ```javascript
 const ALLOWED_ORIGINS = [
     'http://localhost:4000'
 ];
 
-app.get('/api/account', (req, res) => {
-    const origin = req.headers.origin;
-
-    if (ALLOWED_ORIGINS.includes(origin)) {
-        res.set('Access-Control-Allow-Origin', origin);
-        res.set('Access-Control-Allow-Credentials', 'true');
-        res.set('Vary', 'Origin');
-    }
-
-    // Keep the existing authentication and account lookup code here.
-});
+if (ALLOWED_ORIGINS.includes(origin)) {
+    res.set('Access-Control-Allow-Origin', origin);
+    res.set('Access-Control-Allow-Credentials', 'true');
+    res.set('Vary', 'Origin');
+}
 ```
 
-Restart the banking server and revisit the attacker's website.
+The key difference is that the server now checks whether the requesting origin appears in `ALLOWED_ORIGINS` before granting cross-origin access.
 
-Click **View your surprise!** again.
+To test the fix:
 
-This time, the attack should fail. The request may still reach the banking server, but the browser will not allow JavaScript running on `http://localhost:8000` to read the response because that origin is not authorized.
+1. Stop the original banking server by pressing `Ctrl+C` in the terminal running `server.js`.
+2. Start the secure version:
+
+   ```console
+   $ node server_secure.js
+   ```
+
+3. Make sure you are still logged in to the banking website.
+4. Revisit the attacker's website at `http://localhost:8000`.
+5. Click **View your surprise!** again.
+
+This time, the attack should fail. The request may still reach the banking server, and the server may still return the account information, but the browser will not allow JavaScript running on `http://localhost:8000` to read the response because that origin is not in the allowlist.
+
+Observe the difference: the insecure server reflects `http://localhost:8000` in `Access-Control-Allow-Origin`, whereas the secure server does not return that header for the attacker's origin.
 
 ## References
 
