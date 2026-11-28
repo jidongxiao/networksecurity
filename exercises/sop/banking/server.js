@@ -1,7 +1,15 @@
 const express = require('express');
 const crypto = require('crypto');
+const path = require('path');
 
 const app = express();
+
+// Server configuration.
+const HOST = '0.0.0.0';
+const PORT = 4000;
+
+// Change this when deploying the lab on another domain.
+const ATTACKER_ORIGIN = 'http://localhost:8000';
 
 app.use(express.urlencoded({ extended: false }));
 
@@ -14,17 +22,36 @@ const USERS = {
 
 const SESSIONS = {};
 
+
+// Retrieve the authenticated user.
 function getUser(req) {
-    const sessionId = req.headers.cookie
+    const match = req.headers.cookie
         ? req.headers.cookie.match(/(?:^|;\s*)sessionId=([^;]+)/)
         : null;
 
-    if (!sessionId) {
+    if (!match) {
         return null;
     }
 
-    return SESSIONS[sessionId[1]] || null;
+    return SESSIONS[match[1]] || null;
 }
+
+
+// Escape user-provided text before inserting it into HTML.
+function escapeHTML(value) {
+    return String(value).replace(/[&<>"']/g, character => {
+        const entities = {
+            '&': '&amp;',
+            '<': '&lt;',
+            '>': '&gt;',
+            '"': '&quot;',
+            "'": '&#39;'
+        };
+
+        return entities[character];
+    });
+}
+
 
 // Log incoming requests.
 app.use((req, res, next) => {
@@ -37,39 +64,13 @@ app.use((req, res, next) => {
     next();
 });
 
+
 // Banking homepage.
 app.get('/', (req, res) => {
     const username = getUser(req);
 
     if (!username) {
-        return res.send(`
-            <!DOCTYPE html>
-            <html>
-            <head>
-                <title>Online Banking</title>
-            </head>
-            <body>
-                <h1>Online Banking</h1>
-
-                <h2>Login</h2>
-
-                <form method="POST" action="/login">
-                    Username:
-                    <input name="username" required>
-                    <br><br>
-
-                    Password:
-                    <input type="password"
-                           name="password" required>
-                    <br><br>
-
-                    <button type="submit">Login</button>
-                </form>
-
-                <p>Demo account: jessica / 50505</p>
-            </body>
-            </html>
-        `);
+        return res.sendFile(path.join(__dirname, 'index.html'));
     }
 
     res.send(`
@@ -81,7 +82,7 @@ app.get('/', (req, res) => {
         <body>
             <h1>Online Banking</h1>
 
-            <h2>Welcome, ${username}!</h2>
+            <h2>Welcome, ${escapeHTML(username)}!</h2>
 
             <p>Your account balance:
                $${USERS[username].balance}</p>
@@ -105,13 +106,14 @@ app.get('/', (req, res) => {
     `);
 });
 
+
 // Login.
 app.post('/login', (req, res) => {
     const username = req.body.username;
     const user = USERS[username];
 
     if (!user || user.password !== req.body.password) {
-        return res.send('Invalid username or password.');
+        return res.status(401).send('Invalid username or password.');
     }
 
     const sessionId = crypto.randomBytes(16).toString('hex');
@@ -129,21 +131,24 @@ app.post('/login', (req, res) => {
     res.redirect('/');
 });
 
+
 // Logout.
 app.get('/logout', (req, res) => {
-    const sessionId = req.headers.cookie
+    const match = req.headers.cookie
         ? req.headers.cookie.match(/(?:^|;\s*)sessionId=([^;]+)/)
         : null;
 
-    if (sessionId) {
-        delete SESSIONS[sessionId[1]];
+    if (match) {
+        delete SESSIONS[match[1]];
     }
 
     res.clearCookie('sessionId', { path: '/' });
+
     res.redirect('/');
 });
 
-// Private page for iframe experiments.
+
+// Private page for iframe and postMessage experiments.
 app.get('/private', (req, res) => {
     const username = getUser(req);
 
@@ -160,7 +165,7 @@ app.get('/private', (req, res) => {
         <body>
             <h1>Private Banking Information</h1>
 
-            <p>Username: ${username}</p>
+            <p>Username: ${escapeHTML(username)}</p>
 
             <p>Account Balance:
                $${USERS[username].balance}</p>
@@ -171,7 +176,7 @@ app.get('/private', (req, res) => {
 
             <script>
                 window.addEventListener('message', event => {
-                    if (event.origin !== 'http://localhost:8000') {
+                    if (event.origin !== ${JSON.stringify(ATTACKER_ORIGIN)}) {
                         return;
                     }
 
@@ -183,6 +188,7 @@ app.get('/private', (req, res) => {
         </html>
     `);
 });
+
 
 // Account API.
 app.get('/api/account', (req, res) => {
@@ -200,7 +206,8 @@ app.get('/api/account', (req, res) => {
     });
 });
 
-// JavaScript resource.
+
+// Cross-origin JavaScript resource.
 app.get('/resources/target.js', (req, res) => {
     res.type('application/javascript').send(`
         console.log('Banking JavaScript executed!');
@@ -208,7 +215,8 @@ app.get('/resources/target.js', (req, res) => {
     `);
 });
 
-// CSS resource.
+
+// Cross-origin CSS resource.
 app.get('/resources/target.css', (req, res) => {
     res.type('text/css').send(`
         .bank-style {
@@ -218,6 +226,7 @@ app.get('/resources/target.css', (req, res) => {
         }
     `);
 });
+
 
 // Cross-origin image.
 app.get('/images/vault.svg', (req, res) => {
@@ -235,18 +244,32 @@ app.get('/images/vault.svg', (req, res) => {
     `);
 });
 
+
 // Cross-origin form submission.
 app.post('/submit', (req, res) => {
-    console.log('Received cross-origin form submission:', req.body);
+    const message = escapeHTML(req.body.message || '');
+
+    console.log('Received form submission:', req.body);
 
     res.send(`
-        <h1>Banking Server</h1>
-        <p>Your form was successfully received.</p>
-        <p>Message: ${String(req.body.message || '')}</p>
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <title>Form Submission Result</title>
+        </head>
+        <body>
+            <h1>Banking Server</h1>
+            <p>Your form was successfully received.</p>
+            <p>Message: ${message}</p>
+        </body>
+        </html>
     `);
 });
 
-app.listen(4000, () => {
-    console.log('Banking server listening on http://localhost:4000');
+
+// Start the server.
+app.listen(PORT, HOST, () => {
+    console.log(`Banking server listening on port ${PORT}`);
+    console.log(`Expected attacker origin: ${ATTACKER_ORIGIN}`);
     console.log('CORS is not enabled.');
 });

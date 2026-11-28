@@ -2,7 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>SOP Security Laboratory</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Same-Origin Policy Security Laboratory</title>
 
     <style>
         body {
@@ -24,10 +25,15 @@
             cursor: pointer;
         }
 
+        input {
+            padding: 7px;
+        }
+
         pre {
             background: #eee;
             padding: 12px;
             white-space: pre-wrap;
+            overflow-wrap: anywhere;
         }
 
         iframe {
@@ -43,6 +49,13 @@
         .bank-style {
             padding: 10px;
         }
+
+        .site-info {
+            background: #e8f0fe;
+            padding: 12px;
+            border-left: 4px solid #4285f4;
+            overflow-wrap: anywhere;
+        }
     </style>
 </head>
 
@@ -52,11 +65,23 @@
 
 <p>
     This website represents an attacker-controlled website.
-    The banking website runs at
-    <b>http://localhost:4000</b>.
+    It attempts to interact with resources hosted by a separate
+    banking website.
 </p>
 
-<img src="cat.gif" width="150">
+<div class="site-info">
+    <p>
+        <strong>Attacker origin:</strong>
+        <span id="attackerOrigin"></span>
+    </p>
+
+    <p>
+        <strong>Banking origin:</strong>
+        <span id="bankingOrigin"></span>
+    </p>
+</div>
+
+<img src="cat.gif" width="150" alt="Cat">
 
 <hr>
 
@@ -80,6 +105,7 @@
 
 </div>
 
+
 <h2>Experiment 2: Cross-Origin JavaScript</h2>
 
 <div class="experiment">
@@ -96,6 +122,7 @@
     <pre id="scriptResult"></pre>
 
 </div>
+
 
 <h2>Experiment 3: Cross-Origin CSS</h2>
 
@@ -119,6 +146,7 @@
 
 </div>
 
+
 <h2>Experiment 4: Cross-Origin iframe</h2>
 
 <div class="experiment">
@@ -127,9 +155,7 @@
         Display the banking website inside an iframe.
     </p>
 
-    <iframe id="bankFrame"
-            src="http://localhost:4000/private">
-    </iframe>
+    <iframe id="bankFrame" title="Banking website"></iframe>
 
     <br><br>
 
@@ -144,6 +170,7 @@
     <pre id="frameResult"></pre>
 
 </div>
+
 
 <h2>Experiment 5: Cross-Origin Fetch</h2>
 
@@ -162,6 +189,7 @@
 
 </div>
 
+
 <h2>Experiment 6: Cross-Origin Form Submission</h2>
 
 <div class="experiment">
@@ -171,12 +199,14 @@
     </p>
 
     <form method="POST"
-          action="http://localhost:4000/submit"
+          id="bankForm"
           target="formResult">
 
         Message:
-        <input name="message"
-               value="Hello from the attacker website">
+        <input
+            name="message"
+            value="Hello from the attacker website"
+        >
 
         <button type="submit">
             Submit to Banking Website
@@ -191,6 +221,7 @@
     </iframe>
 
 </div>
+
 
 <h2>Experiment 7: Cross-Origin Canvas Access</h2>
 
@@ -213,6 +244,7 @@
 
 </div>
 
+
 <h2>Experiment 8: Cross-Origin Communication</h2>
 
 <div class="experiment">
@@ -230,9 +262,45 @@
 
 </div>
 
+
+<!-- Load the configuration before running the experiments. -->
+<script src="config.js"></script>
+
 <script>
 
+if (!window.SOP_CONFIG ||
+    !window.SOP_CONFIG.bankingOrigin) {
+
+    document.body.innerHTML =
+        '<h1>Configuration Error</h1>' +
+        '<p>Please configure bankingOrigin in config.js.</p>';
+
+    throw new Error('Missing bankingOrigin in config.js');
+}
+
+const BANKING_ORIGIN = new URL(
+    window.SOP_CONFIG.bankingOrigin
+).origin;
+
+
+// Display the two origins.
+document.getElementById('attackerOrigin').textContent =
+    window.location.origin;
+
+document.getElementById('bankingOrigin').textContent =
+    BANKING_ORIGIN;
+
+
+// Configure the banking iframe and form.
+document.getElementById('bankFrame').src =
+    BANKING_ORIGIN + '/private';
+
+document.getElementById('bankForm').action =
+    BANKING_ORIGIN + '/submit';
+
+
 function loadImage() {
+
     const image = document.getElementById('bankImage');
 
     image.onload = function () {
@@ -245,14 +313,16 @@ function loadImage() {
             'FAILED: Image could not be loaded.';
     };
 
-    image.src = 'http://localhost:4000/images/vault.svg';
+    image.src = BANKING_ORIGIN + '/images/vault.svg';
 }
 
 
 function loadScript() {
+
     const script = document.createElement('script');
 
-    script.src = 'http://localhost:4000/resources/target.js';
+    script.src =
+        BANKING_ORIGIN + '/resources/target.js';
 
     script.onload = function () {
         document.getElementById('scriptResult').textContent =
@@ -271,10 +341,13 @@ function loadScript() {
 
 
 function loadCSS() {
+
     const link = document.createElement('link');
 
     link.rel = 'stylesheet';
-    link.href = 'http://localhost:4000/resources/target.css';
+
+    link.href =
+        BANKING_ORIGIN + '/resources/target.css';
 
     link.onload = function () {
         document.getElementById('cssResult').textContent =
@@ -291,15 +364,19 @@ function loadCSS() {
 
 
 function readFrame() {
+
     const frame = document.getElementById('bankFrame');
 
     try {
-        const content = frame.contentWindow.document.body.innerText;
+
+        const content =
+            frame.contentWindow.document.body.innerText;
 
         document.getElementById('frameResult').textContent =
             'SUCCESS: ' + content;
 
     } catch (error) {
+
         document.getElementById('frameResult').textContent =
             'BLOCKED BY SOP: ' + error;
     }
@@ -307,9 +384,11 @@ function readFrame() {
 
 
 function readStorage() {
+
     const frame = document.getElementById('bankFrame');
 
     try {
+
         const value =
             frame.contentWindow.localStorage.getItem('bankSecret');
 
@@ -317,6 +396,7 @@ function readStorage() {
             'Storage value: ' + value;
 
     } catch (error) {
+
         document.getElementById('frameResult').textContent =
             'BLOCKED BY SOP: ' + error;
     }
@@ -324,20 +404,24 @@ function readStorage() {
 
 
 function fetchAccount() {
+
     const output = document.getElementById('fetchResult');
 
     output.textContent = 'Sending request...';
 
-    fetch('http://localhost:4000/api/account', {
+    fetch(BANKING_ORIGIN + '/api/account', {
         credentials: 'include'
     })
     .then(response => response.json())
     .then(data => {
+
         output.textContent =
             'SUCCESS: Account information obtained.\n' +
             JSON.stringify(data, null, 2);
+
     })
     .catch(error => {
+
         output.textContent =
             'BLOCKED: JavaScript could not access the response.\n' +
             error;
@@ -346,10 +430,13 @@ function fetchAccount() {
 
 
 function readPixels() {
+
     const image = new Image();
 
     image.onload = function () {
+
         const canvas = document.getElementById('canvas');
+
         const context = canvas.getContext('2d');
 
         canvas.width = image.width;
@@ -358,29 +445,39 @@ function readPixels() {
         context.drawImage(image, 0, 0);
 
         try {
-            const pixels = context.getImageData(0, 0, 1, 1);
+
+            const pixels =
+                context.getImageData(0, 0, 1, 1);
 
             document.getElementById('canvasResult').textContent =
                 'SUCCESS: Pixel data obtained: ' +
                 Array.from(pixels.data).join(', ');
 
         } catch (error) {
+
             document.getElementById('canvasResult').textContent =
                 'BLOCKED: Canvas pixel access denied.\n' +
                 error;
         }
     };
 
-    image.src = 'http://localhost:4000/images/vault.svg';
+    image.onerror = function () {
+
+        document.getElementById('canvasResult').textContent =
+            'FAILED: Banking image could not be loaded.';
+    };
+
+    image.src = BANKING_ORIGIN + '/images/vault.svg';
 }
 
 
 function sendMessage() {
+
     const frame = document.getElementById('bankFrame');
 
     frame.contentWindow.postMessage(
         'Hello from the attacker website!',
-        'http://localhost:4000'
+        BANKING_ORIGIN
     );
 
     document.getElementById('messageResult').textContent =
