@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SOP Security Laboratory</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 30px;
+            background: #f5f5f5;
+        }
+
+        .experiment {
+            background: white;
+            padding: 15px;
+            margin: 15px 0;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+        }
+
+        button {
+            padding: 7px 12px;
+            cursor: pointer;
+        }
+
+        pre {
+            background: #eee;
+            padding: 12px;
+            white-space: pre-wrap;
+        }
+
+        iframe {
+            width: 100%;
+            height: 180px;
+            border: 2px solid #888;
+        }
+
+        #bankImage {
+            max-width: 200px;
+        }
+
+        .bank-style {
+            padding: 10px;
+        }
+    </style>
+</head>
+
+<body>
+
+<h1>Same-Origin Policy (SOP) Laboratory</h1>
+
+<p>
+    This website represents an attacker-controlled website.
+    The banking website runs at
+    <b>http://localhost:4000</b>.
+</p>
+
+<img src="cat.gif" width="150">
+
+<hr>
+
+<h2>Experiment 1: Cross-Origin Image Loading</h2>
+
+<div class="experiment">
+
+    <p>
+        Load an image from the banking website.
+    </p>
+
+    <button onclick="loadImage()">
+        Load Banking Image
+    </button>
+
+    <p>
+        <img id="bankImage" alt="Banking image">
+    </p>
+
+    <pre id="imageResult"></pre>
+
+</div>
+
+<h2>Experiment 2: Cross-Origin JavaScript</h2>
+
+<div class="experiment">
+
+    <p>
+        Load and execute a JavaScript file hosted by
+        the banking website.
+    </p>
+
+    <button onclick="loadScript()">
+        Load Banking JavaScript
+    </button>
+
+    <pre id="scriptResult"></pre>
+
+</div>
+
+<h2>Experiment 3: Cross-Origin CSS</h2>
+
+<div class="experiment">
+
+    <p>
+        Load a stylesheet from the banking website.
+    </p>
+
+    <div id="cssTarget" class="bank-style">
+        This element will be styled by the banking website.
+    </div>
+
+    <br>
+
+    <button onclick="loadCSS()">
+        Load Banking CSS
+    </button>
+
+    <pre id="cssResult"></pre>
+
+</div>
+
+<h2>Experiment 4: Cross-Origin iframe</h2>
+
+<div class="experiment">
+
+    <p>
+        Display the banking website inside an iframe.
+    </p>
+
+    <iframe id="bankFrame"
+            src="http://localhost:4000/private">
+    </iframe>
+
+    <br><br>
+
+    <button onclick="readFrame()">
+        Read Banking Page
+    </button>
+
+    <button onclick="readStorage()">
+        Read Banking localStorage
+    </button>
+
+    <pre id="frameResult"></pre>
+
+</div>
+
+<h2>Experiment 5: Cross-Origin Fetch</h2>
+
+<div class="experiment">
+
+    <p>
+        Attempt to retrieve account information
+        from the banking API.
+    </p>
+
+    <button onclick="fetchAccount()">
+        Fetch Account Information
+    </button>
+
+    <pre id="fetchResult"></pre>
+
+</div>
+
+<h2>Experiment 6: Cross-Origin Form Submission</h2>
+
+<div class="experiment">
+
+    <p>
+        Submit a form to the banking website.
+    </p>
+
+    <form method="POST"
+          action="http://localhost:4000/submit"
+          target="formResult">
+
+        Message:
+        <input name="message"
+               value="Hello from the attacker website">
+
+        <button type="submit">
+            Submit to Banking Website
+        </button>
+
+    </form>
+
+    <br>
+
+    <iframe name="formResult"
+            title="Form submission result">
+    </iframe>
+
+</div>
+
+<h2>Experiment 7: Cross-Origin Canvas Access</h2>
+
+<div class="experiment">
+
+    <p>
+        Draw the banking image onto a canvas and
+        attempt to read its pixel data.
+    </p>
+
+    <button onclick="readPixels()">
+        Read Image Pixels
+    </button>
+
+    <br><br>
+
+    <canvas id="canvas"></canvas>
+
+    <pre id="canvasResult"></pre>
+
+</div>
+
+<h2>Experiment 8: Cross-Origin Communication</h2>
+
+<div class="experiment">
+
+    <p>
+        Send a message to the banking page using
+        window.postMessage().
+    </p>
+
+    <button onclick="sendMessage()">
+        Send Message to Banking Website
+    </button>
+
+    <pre id="messageResult"></pre>
+
+</div>
+
+<script>
+
+function loadImage() {
+    const image = document.getElementById('bankImage');
+
+    image.onload = function () {
+        document.getElementById('imageResult').textContent =
+            'SUCCESS: The cross-origin image was loaded.';
+    };
+
+    image.onerror = function () {
+        document.getElementById('imageResult').textContent =
+            'FAILED: Image could not be loaded.';
+    };
+
+    image.src = 'http://localhost:4000/images/vault.svg';
+}
+
+
+function loadScript() {
+    const script = document.createElement('script');
+
+    script.src = 'http://localhost:4000/resources/target.js';
+
+    script.onload = function () {
+        document.getElementById('scriptResult').textContent =
+            'SUCCESS: Banking JavaScript was loaded and executed.\n' +
+            'window.bankScriptExecuted = ' +
+            window.bankScriptExecuted;
+    };
+
+    script.onerror = function () {
+        document.getElementById('scriptResult').textContent =
+            'FAILED: JavaScript could not be loaded.';
+    };
+
+    document.body.appendChild(script);
+}
+
+
+function loadCSS() {
+    const link = document.createElement('link');
+
+    link.rel = 'stylesheet';
+    link.href = 'http://localhost:4000/resources/target.css';
+
+    link.onload = function () {
+        document.getElementById('cssResult').textContent =
+            'SUCCESS: Banking CSS was loaded.';
+    };
+
+    link.onerror = function () {
+        document.getElementById('cssResult').textContent =
+            'FAILED: CSS could not be loaded.';
+    };
+
+    document.head.appendChild(link);
+}
+
+
+function readFrame() {
+    const frame = document.getElementById('bankFrame');
+
+    try {
+        const content = frame.contentWindow.document.body.innerText;
+
+        document.getElementById('frameResult').textContent =
+            'SUCCESS: ' + content;
+
+    } catch (error) {
+        document.getElementById('frameResult').textContent =
+            'BLOCKED BY SOP: ' + error;
+    }
+}
+
+
+function readStorage() {
+    const frame = document.getElementById('bankFrame');
+
+    try {
+        const value =
+            frame.contentWindow.localStorage.getItem('bankSecret');
+
+        document.getElementById('frameResult').textContent =
+            'Storage value: ' + value;
+
+    } catch (error) {
+        document.getElementById('frameResult').textContent =
+            'BLOCKED BY SOP: ' + error;
+    }
+}
+
+
+function fetchAccount() {
+    const output = document.getElementById('fetchResult');
+
+    output.textContent = 'Sending request...';
+
+    fetch('http://localhost:4000/api/account', {
+        credentials: 'include'
+    })
+    .then(response => response.json())
+    .then(data => {
+        output.textContent =
+            'SUCCESS: Account information obtained.\n' +
+            JSON.stringify(data, null, 2);
+    })
+    .catch(error => {
+        output.textContent =
+            'BLOCKED: JavaScript could not access the response.\n' +
+            error;
+    });
+}
+
+
+function readPixels() {
+    const image = new Image();
+
+    image.onload = function () {
+        const canvas = document.getElementById('canvas');
+        const context = canvas.getContext('2d');
+
+        canvas.width = image.width;
+        canvas.height = image.height;
+
+        context.drawImage(image, 0, 0);
+
+        try {
+            const pixels = context.getImageData(0, 0, 1, 1);
+
+            document.getElementById('canvasResult').textContent =
+                'SUCCESS: Pixel data obtained: ' +
+                Array.from(pixels.data).join(', ');
+
+        } catch (error) {
+            document.getElementById('canvasResult').textContent =
+                'BLOCKED: Canvas pixel access denied.\n' +
+                error;
+        }
+    };
+
+    image.src = 'http://localhost:4000/images/vault.svg';
+}
+
+
+function sendMessage() {
+    const frame = document.getElementById('bankFrame');
+
+    frame.contentWindow.postMessage(
+        'Hello from the attacker website!',
+        'http://localhost:4000'
+    );
+
+    document.getElementById('messageResult').textContent =
+        'Message sent using postMessage().';
+}
+
+</script>
+
+</body>
+</html>
